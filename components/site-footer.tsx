@@ -1,5 +1,5 @@
 import Link from "next/link";
-// import { Icons } from "@/components/icons";
+import { Icons } from "@/components/icons";
 import { ModeSwitcher } from "@/components/mode-switcher";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -62,14 +62,10 @@ export function SiteFooter() {
 				<div className="mx-auto max-w-(--breakpoint-xl)">
 					<div className="grid grid-cols-2 gap-x-8 gap-y-10 px-6 py-12 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-7 xl:px-0">
 						<div className="col-span-full xl:col-span-2">
-							<Button variant="ghost" asChild>
-								<Link href="/">
-									{/* <Icons.logo className="size-5 text-primary" /> */}
-									<span className="text-[1.25rem] font-bold tracking-tight translate-y-[3px]">
-										{siteConfig.name}
-									</span>
-								</Link>
-							</Button>
+							<Link href="/" className="flex items-center gap-2 shrink-0">
+								<Icons.logo className="size-8" />
+								<span className="font-medium text-base">{siteConfig.name}</span>
+							</Link>
 
 							<p className="mt-4 text-muted-foreground">
 								AI-powered math learning that builds real understanding, not

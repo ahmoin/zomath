@@ -101,7 +101,7 @@ export function UserAuthForm({
 					toast.success("Account created successfully");
 					setIsLoading(false);
 				},
-				onError: (ctx) => {
+				onError: (ctx: { error: { message: string } }) => {
 					toast.error(ctx.error.message);
 					setIsLoading(false);
 				},
@@ -124,7 +124,7 @@ export function UserAuthForm({
 					toast.success("Logged in successfully");
 					setIsLoading(false);
 				},
-				onError: (ctx) => {
+				onError: (ctx: { error: { message: string } }) => {
 					toast.error(ctx.error.message);
 					setIsLoading(false);
 				},
