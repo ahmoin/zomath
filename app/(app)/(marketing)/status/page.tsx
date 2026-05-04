@@ -482,7 +482,7 @@ export default function StatusPage() {
 									className="rounded-xl border bg-card overflow-hidden"
 								>
 									<Accordion type="single" collapsible>
-										<AccordionItem value={incident.id} border="none">
+										<AccordionItem value={incident.id} className="border-none">
 											<AccordionTrigger className="px-6 py-5 hover:no-underline">
 												<div className="flex items-center gap-4 text-left flex-1">
 													<div
