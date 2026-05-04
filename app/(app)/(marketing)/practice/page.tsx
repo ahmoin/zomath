@@ -275,7 +275,7 @@ export default function PracticePage() {
 						</p>
 						<div className="mt-8 flex flex-col sm:flex-row gap-3">
 							<Button size="lg" className="text-base" asChild>
-								<Link href="/signup">
+								<Link href="/sign-up">
 									Start practicing free
 									<HugeiconsIcon
 										icon={ArrowRight02Icon}
@@ -626,7 +626,7 @@ export default function PracticePage() {
 							</p>
 							<div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
 								<Button size="lg" className="text-base" asChild>
-									<Link href="/signup">
+									<Link href="/sign-up">
 										Start your first drill
 										<HugeiconsIcon
 											icon={ArrowRight02Icon}

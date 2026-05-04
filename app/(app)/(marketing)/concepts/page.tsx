@@ -217,7 +217,7 @@ export default function ConceptsPage() {
 						</p>
 						<div className="flex flex-col sm:flex-row gap-3 justify-center">
 							<Button size="lg" asChild>
-								<Link href="/signup">
+								<Link href="/sign-up">
 									Explore the map
 									<HugeiconsIcon
 										icon={ArrowRight02Icon}
@@ -637,7 +637,7 @@ export default function ConceptsPage() {
 								))}
 							</div>
 							<Button size="lg" asChild>
-								<Link href="/signup">
+								<Link href="/sign-up">
 									Start learning with Newton
 									<HugeiconsIcon
 										icon={ArrowRight02Icon}
@@ -898,7 +898,7 @@ export default function ConceptsPage() {
 						</p>
 						<div className="flex flex-col sm:flex-row gap-3 justify-center">
 							<Button size="lg" asChild>
-								<Link href="/signup">
+								<Link href="/sign-up">
 									Get started for free
 									<HugeiconsIcon
 										icon={ArrowRight02Icon}

@@ -682,7 +682,7 @@ export default function ContactPage() {
 							className="text-base px-8"
 							asChild
 						>
-							<Link href="/signup">
+							<Link href="/sign-up">
 								Start free trial
 								<HugeiconsIcon
 									icon={ArrowRight02Icon}

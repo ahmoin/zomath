@@ -544,7 +544,7 @@ export default function AboutPage() {
 						</p>
 						<div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
 							<Button asChild size="lg" className="gap-2 text-base">
-								<Link href="/signup">
+								<Link href="/sign-up">
 									Start learning for free
 									<HugeiconsIcon
 										icon={ArrowRight02Icon}

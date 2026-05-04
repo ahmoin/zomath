@@ -191,7 +191,7 @@ export default function CommunityPage() {
 						</p>
 						<div className="flex flex-col sm:flex-row items-center justify-center gap-4">
 							<Button size="lg" asChild>
-								<Link href="/signup">
+								<Link href="/sign-up">
 									Join the community
 									<HugeiconsIcon
 										icon={ArrowRight02Icon}
@@ -542,7 +542,7 @@ export default function CommunityPage() {
 						</p>
 						<div className="flex flex-col sm:flex-row items-center justify-center gap-4">
 							<Button size="lg" asChild>
-								<Link href="/signup">
+								<Link href="/sign-up">
 									Get started for free
 									<HugeiconsIcon
 										icon={ArrowRight02Icon}

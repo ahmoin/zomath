@@ -499,7 +499,7 @@ export default function BlogPage() {
 						practice can change the way you understand math.
 					</p>
 					<div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
-						<Link href="/signup">
+						<Link href="/sign-up">
 							<Button size="lg" className="rounded-xl">
 								Get started free
 								<HugeiconsIcon

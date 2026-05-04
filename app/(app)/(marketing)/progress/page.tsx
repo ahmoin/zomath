@@ -178,7 +178,7 @@ export default function ProgressPage() {
 						</p>
 						<div className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
 							<Button asChild size="lg">
-								<Link href="/signup">
+								<Link href="/sign-up">
 									Start tracking for free
 									<HugeiconsIcon
 										icon={ArrowRight02Icon}
@@ -894,7 +894,7 @@ export default function ProgressPage() {
 						</p>
 						<div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
 							<Button asChild size="lg">
-								<Link href="/signup">
+								<Link href="/sign-up">
 									Get started free
 									<HugeiconsIcon
 										icon={ArrowRight02Icon}

@@ -1,0 +1,49 @@
+import type { Metadata } from "next";
+import { headers } from "next/headers";
+import Image from "next/image";
+import { redirect } from "next/navigation";
+import { UserAuthForm } from "@/components/user-auth-form";
+import { auth } from "@/lib/auth";
+
+export const metadata: Metadata = {
+	title: "Sign up for Zomath",
+	description: "Sign up to create an account on Zomath",
+};
+
+export default async function AuthenticationPage() {
+	// return redirect("/");
+	const session = await auth.api.getSession({
+		headers: await headers(),
+	});
+	if (session) {
+		return redirect("/");
+	}
+
+	return (
+		<>
+			<div className="md:hidden">
+				<Image
+					src="/examples/authentication-light.png"
+					width={1280}
+					height={843}
+					alt="Authentication"
+					className="block dark:hidden"
+					priority
+				/>
+				<Image
+					src="/examples/authentication-dark.png"
+					width={1280}
+					height={843}
+					alt="Authentication"
+					className="hidden dark:block"
+					priority
+				/>
+			</div>
+			<div className="flex items-center justify-center h-screen lg:p-8">
+				<div className="mx-auto flex w-full flex-col justify-center gap-6 sm:w-[350px]">
+					<UserAuthForm initialState="sign-up" />
+				</div>
+			</div>
+		</>
+	);
+}

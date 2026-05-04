@@ -188,7 +188,7 @@ export default function CalculusPage() {
 						</p>
 						<div className="flex flex-wrap gap-3">
 							<Button size="lg" asChild>
-								<Link href="/signup">
+								<Link href="/sign-up">
 									Start learning calculus free
 									<HugeiconsIcon
 										icon={ArrowRight02Icon}
@@ -632,7 +632,7 @@ export default function CalculusPage() {
 						</p>
 						<div className="flex flex-wrap justify-center gap-3">
 							<Button size="lg" asChild>
-								<Link href="/signup">
+								<Link href="/sign-up">
 									Start learning calculus free
 									<HugeiconsIcon
 										icon={ArrowRight02Icon}

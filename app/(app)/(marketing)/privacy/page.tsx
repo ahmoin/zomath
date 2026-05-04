@@ -695,7 +695,7 @@ export default function PrivacyPage() {
 						</p>
 						<div className="flex flex-col sm:flex-row items-center justify-center gap-4">
 							<Button asChild size="lg">
-								<Link href="/signup">
+								<Link href="/sign-up">
 									Start learning with Newton
 									<HugeiconsIcon
 										icon={ArrowRight02Icon}

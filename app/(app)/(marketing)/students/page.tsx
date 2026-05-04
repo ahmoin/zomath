@@ -175,7 +175,7 @@ export default function StudentsPage() {
 						</p>
 						<div className="mt-8 flex flex-col sm:flex-row gap-3">
 							<Button size="lg" asChild>
-								<Link href="/signup">
+								<Link href="/sign-up">
 									Start learning for free
 									<HugeiconsIcon
 										icon={ArrowRight02Icon}
@@ -479,7 +479,7 @@ export default function StudentsPage() {
 						</p>
 						<div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
 							<Button size="lg" asChild>
-								<Link href="/signup">
+								<Link href="/sign-up">
 									Create your free account
 									<HugeiconsIcon
 										icon={ArrowRight02Icon}

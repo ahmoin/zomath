@@ -165,7 +165,7 @@ export default function NewtonPage() {
 							answers.
 						</p>
 						<div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-							<Link href="/signup">
+							<Link href="/sign-up">
 								<Button size="lg" className="text-base px-6">
 									Start learning with Newton
 									<HugeiconsIcon
@@ -440,7 +440,7 @@ export default function NewtonPage() {
 							Stop memorizing. Start discovering. Newton is here to guide you
 							every step of the way.
 						</p>
-						<Link href="/signup">
+						<Link href="/sign-up">
 							<Button size="lg" variant="secondary" className="text-base px-6">
 								Get started for free
 								<HugeiconsIcon
