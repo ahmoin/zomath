@@ -19,11 +19,11 @@ const FOOTER_SECTIONS = [
 	{
 		title: "Topics",
 		links: [
-			{ title: "Algebra", href: "/topics/algebra" },
-			{ title: "Geometry", href: "/topics/geometry" },
-			{ title: "Calculus", href: "/topics/calculus" },
-			{ title: "Statistics", href: "/topics/statistics" },
-			{ title: "Competition Math", href: "/topics/competition" },
+			{ title: "Algebra", href: "/algebra" },
+			{ title: "Geometry", href: "/geometry" },
+			{ title: "Calculus", href: "/calculus" },
+			{ title: "Statistics", href: "/statistics" },
+			{ title: "Competition Math", href: "/competition" },
 		],
 	},
 	{

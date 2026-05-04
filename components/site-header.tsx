@@ -39,7 +39,7 @@ export function SiteHeader() {
 
 					<div className="flex items-center gap-2">
 						<Button asChild variant="outline" size="sm">
-							<Link href="/signup">Get started free</Link>
+							<Link href="/sign-up">Get started free</Link>
 						</Button>
 					</div>
 				</div>
