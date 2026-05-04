@@ -1,11 +1,22 @@
 import { AudienceSection } from "@/components/sections/audience";
+import { DashboardSection } from "@/components/sections/dashboard";
 import { FeaturesSection } from "@/components/sections/features";
 import { HeroSection } from "@/components/sections/hero";
 import { StackSection } from "@/components/sections/stack";
 import { TestimonialSection } from "@/components/sections/testimonial";
 import { WhySection } from "@/components/sections/why";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
 
-export default function Page() {
+export default async function Page() {
+	const session = await auth.api.getSession({
+		headers: await headers(),
+	});
+
+	if (session) {
+		return <DashboardSection name={session.user.name} />;
+	}
+
 	return (
 		<main className="flex min-h-svh flex-col">
 			<HeroSection />

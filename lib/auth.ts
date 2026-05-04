@@ -1,18 +1,20 @@
-import { Pool } from "@neondatabase/serverless";
-import { betterAuth } from "better-auth";
+import { betterAuth } from 'better-auth';
+import { drizzleAdapter } from 'better-auth/adapters/drizzle';
+import { db } from '@/lib/db';
+import * as schema from '@/lib/schema';
 
 export const auth = betterAuth({
-	database: new Pool({ connectionString: process.env.DATABASE_URL }),
-	baseURL: process.env.BETTER_AUTH_URL ?? "http://localhost:3000",
-	emailAndPassword: { enabled: true },
+	database: drizzleAdapter(db, {
+		provider: 'pg',
+		schema,
+	}),
+	emailAndPassword: {
+		enabled: true,
+	},
 	socialProviders: {
 		github: {
-			clientId: process.env.GITHUB_CLIENT_ID!,
-			clientSecret: process.env.GITHUB_CLIENT_SECRET!,
-		},
-		google: {
-			clientId: process.env.GOOGLE_CLIENT_ID!,
-			clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+			clientId: process.env.GITHUB_CLIENT_ID as string,
+			clientSecret: process.env.GITHUB_CLIENT_SECRET as string,
 		},
 	},
 });
