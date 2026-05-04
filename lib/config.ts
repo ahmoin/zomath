@@ -8,6 +8,11 @@ export const siteConfig = {
 		twitter: "https://twitter.com/zomath",
 		github: "https://github.com/ahmoin/zomath",
 	},
+	navItems: [
+		{ href: "/features", label: "Features" },
+		{ href: "/pricing", label: "Pricing" },
+		{ href: "/blog", label: "Blog" },
+	],
 };
 
 export const META_THEME_COLORS = {

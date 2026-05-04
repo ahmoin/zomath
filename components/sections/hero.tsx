@@ -36,8 +36,8 @@ export function HeroSection() {
 				</div>
 				<div className="mt-10 flex items-center justify-center lg:justify-start gap-4 flex-wrap">
 					<Button asChild size="lg">
-						<Link href="/solve">
-							Start solving
+						<Link href="/sign-up">
+							Try for free
 							<HugeiconsIcon
 								icon={ArrowRight02Icon}
 								size={16}
