@@ -1,3 +1,5 @@
+"use client";
+
 import {
 	BookOpen01Icon,
 	BrainIcon,
@@ -6,7 +8,7 @@ import {
 	PathIcon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { NativeTabs } from "@/components/uitripled/native-tabs-shadcnui";
 import { cn } from "@/lib/utils";
 
 const FEATURES = [
@@ -207,18 +209,12 @@ export function FeaturesSection() {
 					</h2>
 				</div>
 
-				<Tabs defaultValue={FEATURES[0].id}>
-					<TabsList className="w-full">
-						{FEATURES.map((f) => (
-							<TabsTrigger key={f.id} value={f.id}>
-								<HugeiconsIcon icon={f.icon} size={14} strokeWidth={2} />
-								{f.label}
-							</TabsTrigger>
-						))}
-					</TabsList>
-
-					{FEATURES.map((f) => (
-						<TabsContent key={f.id} value={f.id}>
+				<NativeTabs
+					className="max-w-none"
+					items={FEATURES.map((f) => ({
+						id: f.id,
+						label: f.label,
+						content: (
 							<div className={cn("overflow-hidden rounded-3xl", f.color)}>
 								<div className="grid items-center gap-8 p-8 lg:grid-cols-2 lg:gap-16 lg:p-12">
 									<div className={cn("flex flex-col gap-5", f.textColor)}>
@@ -240,9 +236,9 @@ export function FeaturesSection() {
 									<div>{f.ui}</div>
 								</div>
 							</div>
-						</TabsContent>
-					))}
-				</Tabs>
+						),
+					}))}
+				/>
 			</div>
 		</section>
 	);
