@@ -1,37 +1,29 @@
 "use client";
 
 import {
-	Analytics01Icon,
 	ApronIcon,
-	ArrowDown01Icon,
 	ArrowRight02Icon,
 	ArrowUp01Icon,
 	BarChartIcon,
 	BendToolIcon,
 	BookOpen01Icon,
 	Brain02Icon,
-	Calendar03Icon,
 	CalendarCheckIn01Icon,
 	Certificate01Icon,
-	ChartDownIcon,
 	ChartLineData01Icon,
 	CheckmarkCircle02Icon,
 	Clock01Icon,
-	Compass01Icon,
 	Copy01Icon,
 	DashboardSpeed01Icon,
 	EyeIcon,
 	Fire02Icon,
 	LightbulbOffIcon,
-	Medicine01Icon,
 	PieChart02Icon,
 	RouterIcon,
 	Satellite01Icon,
-	Shield01Icon,
 	SparklesIcon,
 	StarIcon,
 	Target01Icon,
-	UserGroupIcon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import Link from "next/link";

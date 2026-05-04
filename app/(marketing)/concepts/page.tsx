@@ -1,10 +1,7 @@
 "use client";
 
 import {
-	ApronIcon,
 	ArrowRight02Icon,
-	ArtboardIcon,
-	BookOpen01Icon,
 	BrainIcon,
 	Calendar01Icon,
 	CallUnlocked02Icon,
@@ -12,14 +9,12 @@ import {
 	Compass01Icon,
 	Copy01Icon,
 	EyeIcon,
-	FileInputIcon,
 	FlowIcon,
 	FolderTreeIcon,
 	GraduateFemaleIcon,
 	LightbulbOffIcon,
 	Link02Icon,
 	ListXIcon,
-	ParaglidingIcon,
 	PuzzleIcon,
 	Rocket01Icon,
 	RouterIcon,

@@ -7,18 +7,13 @@ import {
 	BrainIcon,
 	CalculatorIcon,
 	ChartBubble01Icon,
-	CheckmarkCircle02Icon,
-	Clock01Icon,
 	ElearningExchangeIcon,
 	GraduateFemaleIcon,
 	LayerIcon,
 	LightbulbOffIcon,
-	MessageCancel01Icon,
 	QuoteDownIcon,
 	SparklesIcon,
-	StarIcon,
 	TangentIcon,
-	UserCircleIcon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import Link from "next/link";

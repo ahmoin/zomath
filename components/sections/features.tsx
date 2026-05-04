@@ -7,7 +7,6 @@ import {
 	ChartLineData02Icon,
 	PathIcon,
 } from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
 import { NativeTabs } from "@/components/uitripled/native-tabs-shadcnui";
 import { cn } from "@/lib/utils";
 

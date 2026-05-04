@@ -1,24 +1,12 @@
 "use client";
 
 import {
-	AiPhone01Icon,
 	ArrowRight02Icon,
-	BarChartIcon,
-	BookHeartIcon,
 	BookOpen01Icon,
 	BrainIcon,
 	Camera02Icon,
-	Chatting01Icon,
-	ChatUser01Icon,
-	GraduationScrollIcon,
-	HonourStarIcon,
-	LightbulbOffIcon,
 	PuzzleIcon,
 	Rocket02Icon,
-	Shield01Icon,
-	SparklesIcon,
-	Tap01Icon,
-	Target01Icon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import Link from "next/link";
@@ -29,7 +17,6 @@ import {
 	AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
 
 function ValueCard({
 	icon,

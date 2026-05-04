@@ -8,8 +8,6 @@ import {
 	Brain01Icon,
 	Camera01Icon,
 	Chat01Icon,
-	CheckmarkCircle01Icon,
-	Clock01Icon,
 	FlashIcon,
 	GraduationScrollIcon,
 	SparklesIcon,

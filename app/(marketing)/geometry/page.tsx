@@ -8,13 +8,11 @@ import {
 	BrainIcon,
 	Camera01Icon,
 	CheckmarkCircle01Icon,
-	Clock01Icon,
 	CompassIcon,
 	Copy01Icon,
 	EyeIcon,
 	FavouriteSquareIcon,
 	GraduationScrollIcon,
-	HashtagIcon,
 	InformationCircleIcon,
 	LayerIcon,
 	LigatureIcon,
@@ -918,7 +916,7 @@ export default function GeometryPage() {
 					</div>
 
 					<div className="space-y-6">
-						{learningPaths.map((path, idx) => (
+						{learningPaths.map((path, _idx) => (
 							<div
 								key={path.level}
 								className="rounded-xl border bg-card p-6 lg:p-8"

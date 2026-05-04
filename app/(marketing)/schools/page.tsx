@@ -4,7 +4,6 @@ import {
 	Analytics01Icon,
 	ArrowRight02Icon,
 	Book02Icon,
-	BookOpen01Icon,
 	BrainIcon,
 	Building03Icon,
 	Call02Icon,
@@ -24,7 +23,6 @@ import {
 	UserMultipleIcon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import Link from "next/link";
 import {
 	Accordion,
 	AccordionContent,

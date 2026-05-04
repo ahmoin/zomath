@@ -10,17 +10,14 @@ import {
 	CardExchange01Icon,
 	CheckmarkCircle01Icon,
 	ForkIcon,
-	HashtagIcon,
 	Layers01Icon,
 	LightbulbOffIcon,
 	PencilEdit01Icon,
 	RefreshIcon,
-	Shield01Icon,
 	SmartphoneNfcIcon,
 	SparklesIcon,
 	StarIcon,
 	Target01Icon,
-	TimeQuarter02Icon,
 	Upload01Icon,
 	Video01Icon,
 } from "@hugeicons/core-free-icons";
@@ -33,7 +30,6 @@ import {
 	AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
 
 const faqs = [
 	{
