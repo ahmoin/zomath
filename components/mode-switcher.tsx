@@ -17,7 +17,7 @@ export function ModeSwitcher() {
 	] as const;
 
 	return (
-		<div className="flex w-fit items-center border border-border bg-background p-0.5">
+		<div className="flex w-fit items-center border border-border bg-background p-0.5 rounded-full">
 			{options.map(({ value, icon: Icon, label }) => (
 				<span key={value}>
 					<input
@@ -30,7 +30,7 @@ export function ModeSwitcher() {
 					/>
 					<label
 						htmlFor={`theme-switch-${value}`}
-						className="relative flex size-7 cursor-pointer items-center justify-center text-muted-foreground transition-colors peer-checked:bg-muted peer-checked:text-foreground hover:text-foreground"
+						className="relative flex size-7 cursor-pointer items-center justify-center text-muted-foreground transition-colors peer-checked:bg-muted peer-checked:text-foreground hover:text-foreground rounded-full"
 						title={label}
 					>
 						<HugeiconsIcon icon={Icon} className="size-4" />
