@@ -88,8 +88,8 @@ const services = [
 const incidents = [
 	{
 		id: "inc-024",
-		title: "Newton AI experiencing slow responses",
-		date: "June 12, 2025",
+		title: "Site experiencing slow responses",
+		date: "May 5, 2026",
 		severity: "degraded" as const,
 		resolved: true,
 		timeline: [
@@ -97,7 +97,7 @@ const incidents = [
 				time: "2:15 PM UTC",
 				label: "Investigating",
 				detail:
-					"We detected increased latency in Newton AI responses. Average response time rose from 0.8s to 3.5s.",
+					"We detected increased latency in site responses. Average response time rose from 0.8s to 3.5s.",
 			},
 			{
 				time: "2:40 PM UTC",
@@ -115,67 +115,14 @@ const incidents = [
 				time: "3:45 PM UTC",
 				label: "Resolved",
 				detail:
-					"Newton AI is fully operational. Response times are back to expected levels. We are adjusting our rollout strategy to prevent recurrence.",
-			},
-		],
-	},
-	{
-		id: "inc-023",
-		title: "Solve photo recognition intermittent failures",
-		date: "June 8, 2025",
-		severity: "major" as const,
-		resolved: true,
-		timeline: [
-			{
-				time: "9:30 AM UTC",
-				label: "Investigating",
-				detail:
-					"Multiple reports of photo recognition returning errors. Affecting approximately 15% of Solve requests.",
-			},
-			{
-				time: "10:05 AM UTC",
-				label: "Identified",
-				detail:
-					"A misconfigured image preprocessing pipeline was rejecting valid uploads above a certain resolution threshold.",
-			},
-			{
-				time: "10:30 AM UTC",
-				label: "Resolved",
-				detail:
-					"Fix deployed. Photo recognition is processing all image sizes correctly. We added additional automated tests for image pipeline configurations.",
-			},
-		],
-	},
-	{
-		id: "inc-022",
-		title: "Scheduled maintenance: database migration",
-		date: "June 1, 2025",
-		severity: "maintenance" as const,
-		resolved: true,
-		timeline: [
-			{
-				time: "6:00 AM UTC",
-				label: "In Progress",
-				detail:
-					"Scheduled maintenance began. Read-only mode enabled for Progress Dashboard and Concept Map.",
-			},
-			{
-				time: "6:22 AM UTC",
-				label: "Completed",
-				detail:
-					"Database migration completed successfully. All services restored to full operation ahead of schedule.",
+					"Site is fully operational. Response times are back to expected levels. We are adjusting our rollout strategy to prevent recurrence.",
 			},
 		],
 	},
 ];
 
 const uptimeHistory = [
-	{ month: "Jan", uptime: 99.96 },
-	{ month: "Feb", uptime: 99.99 },
-	{ month: "Mar", uptime: 99.94 },
-	{ month: "Apr", uptime: 99.98 },
-	{ month: "May", uptime: 99.97 },
-	{ month: "Jun", uptime: 99.98 },
+	{ month: "May", uptime: 99.96 },
 ];
 
 function getStatusConfig(status: string) {
@@ -624,7 +571,7 @@ export default function StatusPage() {
 									strokeWidth={1.5}
 								/>
 								<span className="text-sm text-muted-foreground">
-									Last maintenance: June 1, 2025
+									Last maintenance: May 5, 2026
 								</span>
 							</div>
 						</div>

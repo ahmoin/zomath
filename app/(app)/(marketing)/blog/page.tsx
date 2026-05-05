@@ -29,135 +29,14 @@ const categories = [
 
 const posts = [
 	{
-		slug: "ai-changing-math-education",
-		title: "How AI Is Changing the Way Students Learn Math",
+		slug: "release",
+		title: "release",
 		excerpt:
-			"From static textbooks to adaptive tutoring, artificial intelligence is reshaping math education. Here is what it means for students and teachers.",
+			"Release",
 		category: "deep-dives",
-		date: "2025-03-15",
+		date: "2026-05-05",
 		readTime: "8 min read",
 		featured: true,
-		icon: Brain02Icon,
-	},
-	{
-		slug: "5-common-calculus-mistakes",
-		title: "5 Common Mistakes in Calculus and How to Avoid Them",
-		excerpt:
-			"From chain rule confusion to improper integral limits, these are the pitfalls that catch students off guard every semester.",
-		category: "learning-tips",
-		date: "2025-03-10",
-		readTime: "6 min read",
-		featured: false,
-		icon: Brain02Icon,
-	},
-	{
-		slug: "concept-map-feature-launch",
-		title: "Introducing Concept Maps: See How Math Connects",
-		excerpt:
-			"Our newest feature visualizes the relationships between mathematical concepts so you never learn in isolation again.",
-		category: "product",
-		date: "2025-03-05",
-		readTime: "5 min read",
-		featured: false,
-		icon: Brain02Icon,
-	},
-	{
-		slug: "getting-started-amc",
-		title: "Competition Math: Getting Started with the AMC",
-		excerpt:
-			"A practical guide for students considering the American Mathematics Competitions, including study schedules and resource recommendations.",
-		category: "competition",
-		date: "2025-02-28",
-		readTime: "10 min read",
-		featured: false,
-		icon: Brain02Icon,
-	},
-	{
-		slug: "understanding-vs-memorization",
-		title: "Why Understanding Beats Memorization Every Time",
-		excerpt:
-			"Rote learning might get you through the test, but genuine understanding is what carries you through higher-level math and real problem solving.",
-		category: "study-strategies",
-		date: "2025-02-22",
-		readTime: "7 min read",
-		featured: false,
-		icon: Brain02Icon,
-	},
-	{
-		slug: "photo-to-solution-how-it-works",
-		title: "Photo to Solution: How Zomath's Solve Feature Works",
-		excerpt:
-			"Snap a photo of any math problem and get a step-by-step walkthrough. Here is a look under the hood at how we make it happen.",
-		category: "product",
-		date: "2025-02-15",
-		readTime: "6 min read",
-		featured: false,
-		icon: Camera02Icon,
-	},
-	{
-		slug: "building-intuition-linear-algebra",
-		title: "Building Intuition for Linear Algebra",
-		excerpt:
-			"Matrices and vectors can feel abstract until you develop the right mental models. This guide walks through the geometric intuition behind the algebra.",
-		category: "deep-dives",
-		date: "2025-02-08",
-		readTime: "12 min read",
-		featured: false,
-		icon: Brain02Icon,
-	},
-	{
-		slug: "study-schedules-math-competitions",
-		title: "How to Build a Study Schedule for Math Competitions",
-		excerpt:
-			"Consistent practice beats cramming. Learn how to structure your preparation over weeks and months for peak performance on test day.",
-		category: "competition",
-		date: "2025-01-30",
-		readTime: "8 min read",
-		featured: false,
-		icon: Target03Icon,
-	},
-	{
-		slug: "science-of-spaced-repetition",
-		title: "The Science Behind Spaced Repetition in Math",
-		excerpt:
-			"Research shows that spacing out your practice leads to stronger long-term retention. Here is how to apply it to your math studies with Zomath.",
-		category: "study-strategies",
-		date: "2025-01-22",
-		readTime: "9 min read",
-		featured: false,
-		icon: Brain02Icon,
-	},
-	{
-		slug: "whats-new-march-2025",
-		title: "What Is New in Zomath: March 2025",
-		excerpt:
-			"New practice modes, improved Newton conversations, and faster concept map loading. Here is everything we shipped this month.",
-		category: "product",
-		date: "2025-01-15",
-		readTime: "4 min read",
-		featured: false,
-		icon: Rocket02Icon,
-	},
-	{
-		slug: "reading-math-textbooks-effectively",
-		title: "How to Read a Math Textbook Without Falling Asleep",
-		excerpt:
-			"Math textbooks demand active reading. These strategies will help you engage with the material instead of passively skimming pages.",
-		category: "learning-tips",
-		date: "2025-01-08",
-		readTime: "7 min read",
-		featured: false,
-		icon: BookOpen02Icon,
-	},
-	{
-		slug: "newton-step-by-step-approach",
-		title: "How Newton Explains Math Step by Step",
-		excerpt:
-			"Our AI tutor does not just give answers. It walks you through each step, adapts to your level, and checks understanding along the way.",
-		category: "product",
-		date: "2024-12-20",
-		readTime: "6 min read",
-		featured: false,
 		icon: Brain02Icon,
 	},
 ];

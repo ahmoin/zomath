@@ -33,121 +33,30 @@ import { Separator } from "@/components/ui/separator";
 
 const pressReleases = [
 	{
-		date: "November 12, 2024",
+		date: "November 12, 2026",
 		title:
 			"Zomath launches Concept Map, helping students see the bigger picture in math",
 		excerpt:
 			"The new feature visualizes how mathematical concepts connect, letting learners navigate from foundational skills to advanced topics with clarity and confidence.",
 		tag: "Product Launch",
-	},
-	{
-		date: "September 3, 2024",
-		title: "Zomath raises $18M Series A to expand AI tutoring across STEM",
-		excerpt:
-			"Led by Reach Capital with participation from GSV Ventures and existing investors, the round fuels expansion into physics, chemistry, and competition math prep.",
-		tag: "Funding",
-	},
-	{
-		date: "June 18, 2024",
-		title:
-			"Zomath hits 1 million solved problems, students show 2.3x improvement in conceptual mastery",
-		excerpt:
-			"Internal research across 12,000 active users reveals that students who complete at least five Concept Map pathways demonstrate significantly stronger transfer skills.",
-		tag: "Milestone",
-	},
-	{
-		date: "March 5, 2024",
-		title:
-			"Zomath exits beta with full launch of AI tutor Newton for high school math",
-		excerpt:
-			"After nine months of beta testing with over 40,000 students, Newton graduates from preview with improved step-by-step explanations and adaptive practice drills.",
-		tag: "Launch",
-	},
-	{
-		date: "January 15, 2024",
-		title:
-			"Zomath introduces Practice mode with adaptive drills that target conceptual gaps",
-		excerpt:
-			"The new Practice feature identifies where understanding breaks down and generates personalized problem sets, closing the gap between recognizing a concept and applying it.",
-		tag: "Product Launch",
-	},
-	{
-		date: "October 2, 2023",
-		title:
-			"Zomath emerges from stealth with $4.5M seed to rethink math learning with AI",
-		excerpt:
-			"Founded by a team of math educators and AI researchers, Zomath raises seed funding to build an AI tutor that teaches understanding, not memorization.",
-		tag: "Funding",
-	},
+	}
 ];
 
 const mediaMentions = [
 	{
-		outlet: "TechCrunch",
+		outlet: "HackClub",
 		title:
 			"How Zomath's AI tutor actually teaches instead of just giving answers",
-		date: "October 2024",
-		url: "#",
-	},
-	{
-		outlet: "Forbes",
-		title:
-			"The edtech startups redefining what personalized learning looks like",
-		date: "August 2024",
-		url: "#",
-	},
-	{
-		outlet: "The Verge",
-		title:
-			"Zomath's Concept Map might be the best way to visualize math we have seen",
-		date: "November 2024",
-		url: "#",
-	},
-	{
-		outlet: "Wired",
-		title: "Why understanding beats speed in math education, and AI can help",
-		date: "July 2024",
-		url: "#",
-	},
-	{
-		outlet: "EdSurge",
-		title: "Zomath raises $18M as investors bet on conceptual math instruction",
-		date: "September 2024",
-		url: "#",
-	},
-	{
-		outlet: "Fast Company",
-		title: "Inside Zomath's approach to making math make sense",
-		date: "May 2024",
-		url: "#",
-	},
-	{
-		outlet: "The New York Times",
-		title:
-			"AI tutors are changing how students learn, but only some actually work",
-		date: "December 2024",
-		url: "#",
-	},
-	{
-		outlet: "Nature",
-		title: "Can conceptual mapping tools close the math achievement gap?",
-		date: "October 2024",
-		url: "#",
-	},
-	{
-		outlet: "Bloomberg",
-		title:
-			"Edtech funding rebounds with focus on AI that teaches, not just tests",
-		date: "November 2024",
+		date: "October 2026",
 		url: "#",
 	},
 ];
 
 const keyFacts = [
-	{ label: "Founded", value: "2023", icon: UniversityIcon },
-	{ label: "Headquarters", value: "San Francisco, CA", icon: Building03Icon },
-	{ label: "Active Learners", value: "120,000+", icon: GraduationScrollIcon },
-	{ label: "Problems Solved", value: "3.2 million", icon: TangentIcon },
+	{ label: "Founded", value: "2026", icon: UniversityIcon },
+	{ label: "Headquarters", value: "New York, NY", icon: Building03Icon },
+	{ label: "Active Learners", value: "1", icon: GraduationScrollIcon },
+	{ label: "Problems Solved", value: "0", icon: TangentIcon },
 	{
 		label: "Avg. Improvement",
 		value: "2.3x conceptual mastery",
@@ -162,20 +71,9 @@ const keyFacts = [
 
 const milestones = [
 	{
-		year: "2023",
+		year: "2026",
 		items: [
-			"October: Zomath founded in San Francisco",
-			"October: $4.5M seed round announced",
-			"December: Beta program opens to 2,000 students",
-		],
-	},
-	{
-		year: "2024",
-		items: [
-			"March: Full launch of Newton AI tutor, 40,000 beta users",
-			"June: 1 million problems solved milestone",
-			"September: $18M Series A led by Reach Capital",
-			"November: Concept Map launches to all users",
+			"May: The beginning of Zomath",
 		],
 	},
 ];
@@ -340,8 +238,7 @@ export default function PressPage() {
 							</h2>
 							<div className="space-y-4 text-muted-foreground leading-relaxed">
 								<p>
-									Zomath was founded in 2023 by a team of math educators, AI
-									researchers, and former competition mathematicians who
+									Zomath was founded in 2026 by Ahsan Moin who
 									believed that the way most students learn math is
 									fundamentally broken. Too many tools focus on getting to the
 									answer fast. Zomath focuses on understanding why the answer

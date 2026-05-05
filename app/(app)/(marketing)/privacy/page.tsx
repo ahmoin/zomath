@@ -367,9 +367,9 @@ export default function PrivacyPage() {
 							over your information.
 						</p>
 						<div className="mt-6 flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
-							<span>Effective date: June 15, 2025</span>
+							<span>Effective date: May 5, 2026</span>
 							<span className="size-1 rounded-full bg-muted-foreground/40" />
-							<span>Last updated: June 15, 2025</span>
+							<span>Last updated: May 5, 2026</span>
 						</div>
 					</div>
 				</div>
@@ -716,7 +716,7 @@ export default function PrivacyPage() {
 				<div className="max-w-7xl mx-auto px-4 lg:px-12">
 					<div className="max-w-3xl">
 						<p className="text-xs text-muted-foreground leading-relaxed">
-							This privacy policy is effective as of June 15, 2025 and applies
+							This privacy policy is effective as of May 5, 2026 and applies
 							to all users of Zomath's website, mobile applications, and related
 							services. We may update this policy from time to time. When we do,
 							we will revise the "Last updated" date at the top of this page

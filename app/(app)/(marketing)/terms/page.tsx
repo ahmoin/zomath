@@ -137,7 +137,7 @@ export default function TermsPage() {
 									className="size-4"
 									strokeWidth={1.5}
 								/>
-								Effective: June 15, 2025
+								Effective: May 5, 2026
 							</span>
 							<span className="hidden sm:block size-1 rounded-full bg-border" />
 							<span className="flex items-center gap-2">
@@ -146,7 +146,7 @@ export default function TermsPage() {
 									className="size-4"
 									strokeWidth={1.5}
 								/>
-								Last updated: June 15, 2025
+								Last updated: May 5, 2026
 							</span>
 						</div>
 					</div>
@@ -987,7 +987,7 @@ export default function TermsPage() {
 			<section className="border-t py-12">
 				<div className="max-w-7xl mx-auto px-4 lg:px-12">
 					<div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-muted-foreground">
-						<p>Last updated: June 15, 2025</p>
+						<p>Last updated: May 5, 2026</p>
 						<div className="flex items-center gap-4">
 							<Link
 								href="/privacy"
