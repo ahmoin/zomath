@@ -146,7 +146,7 @@ export function UserAuthForm({
 		<>
 			<div className="flex flex-col gap-2 text-center">
 				<h1 className="text-2xl font-semibold tracking-tight">
-					{state === "log-in" ? "Log in" : "Sign up"} to Ardemy
+					{state === "log-in" ? "Log in" : "Sign up"} to Zomath
 				</h1>
 			</div>
 			<div className={cn("grid gap-6", className)} {...props}>
