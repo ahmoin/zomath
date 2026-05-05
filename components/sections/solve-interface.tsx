@@ -9,8 +9,8 @@ import {
 	Upload01Icon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import Image from "next/image";
 import { upload } from "@vercel/blob/client";
+import Image from "next/image";
 import { useCallback, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 
@@ -82,14 +82,7 @@ export function SolveInterface() {
 				const { done, value } = await reader.read();
 				if (done) break;
 				const chunk = decoder.decode(value, { stream: true });
-				for (const line of chunk.split("\n")) {
-					if (line.startsWith("0:")) {
-						try {
-							const text = JSON.parse(line.slice(2));
-							setCompletion((prev) => prev + text);
-						} catch {}
-					}
-				}
+				setCompletion((prev) => prev + chunk);
 			}
 		} finally {
 			setIsLoading(false);
