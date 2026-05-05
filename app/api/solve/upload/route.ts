@@ -24,6 +24,7 @@ export async function POST(req: Request): Promise<NextResponse> {
 				],
 				maximumSizeInBytes: 10 * 1024 * 1024,
 				access: "private",
+				addRandomSuffix: true,
 			}),
 			onUploadCompleted: async () => {},
 		});

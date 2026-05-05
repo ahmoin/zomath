@@ -32,12 +32,7 @@ export async function POST(req: Request) {
 	const base64 = Buffer.from(arrayBuffer).toString("base64");
 
 	const result = streamText({
-		model: openrouter("google/gemma-4-31b-it:free"),
-		providerOptions: {
-			openrouter: {
-				thinking: { type: "disabled" },
-			},
-		},
+		model: openrouter("tencent/hy3-preview:free"),
 		system: SYSTEM_PROMPT,
 		messages: [
 			{
