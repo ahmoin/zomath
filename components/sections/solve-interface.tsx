@@ -5,6 +5,7 @@ import {
 	Camera02Icon,
 	Cancel01Icon,
 	ImageUploadIcon,
+	SparklesIcon,
 	Upload01Icon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
@@ -15,14 +16,33 @@ import { Button } from "@/components/ui/button";
 export function SolveInterface() {
 	const [preview, setPreview] = useState<string | null>(null);
 	const [dragging, setDragging] = useState(false);
+	const [fileData, setFileData] = useState<{
+		base64: string;
+		mimeType: string;
+	} | null>(null);
 	const fileInputRef = useRef<HTMLInputElement>(null);
 	const cameraInputRef = useRef<HTMLInputElement>(null);
 
-	const handleFile = useCallback((file: File) => {
-		if (!file.type.startsWith("image/")) return;
-		const url = URL.createObjectURL(file);
-		setPreview(url);
-	}, []);
+	const [completion, setCompletion] = useState("");
+	const [isLoading, setIsLoading] = useState(false);
+
+	const handleFile = useCallback(
+		(file: File) => {
+			if (!file.type.startsWith("image/")) return;
+			const url = URL.createObjectURL(file);
+			setPreview(url);
+			setCompletion("");
+
+			const reader = new FileReader();
+			reader.onload = (e) => {
+				const dataUrl = e.target?.result as string;
+				const base64 = dataUrl.split(",")[1];
+				setFileData({ base64, mimeType: file.type });
+			};
+			reader.readAsDataURL(file);
+		},
+		[setCompletion],
+	);
 
 	const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const file = e.target.files?.[0];
@@ -43,14 +63,50 @@ export function SolveInterface() {
 
 	const onDragLeave = () => setDragging(false);
 
-	const clearPreview = () => {
+	const clearAll = () => {
 		setPreview(null);
+		setFileData(null);
+		setCompletion("");
 		if (fileInputRef.current) fileInputRef.current.value = "";
 		if (cameraInputRef.current) cameraInputRef.current.value = "";
 	};
 
+	const handleSolve = async () => {
+		if (!fileData) return;
+		setIsLoading(true);
+		setCompletion("");
+		try {
+			const res = await fetch("/api/solve", {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({
+					imageBase64: fileData.base64,
+					mimeType: fileData.mimeType,
+				}),
+			});
+			if (!res.ok || !res.body) throw new Error("Request failed");
+			const reader = res.body.getReader();
+			const decoder = new TextDecoder();
+			while (true) {
+				const { done, value } = await reader.read();
+				if (done) break;
+				const chunk = decoder.decode(value, { stream: true });
+				for (const line of chunk.split("\n")) {
+					if (line.startsWith("0:")) {
+						try {
+							const text = JSON.parse(line.slice(2));
+							setCompletion((prev) => prev + text);
+						} catch {}
+					}
+				}
+			}
+		} finally {
+			setIsLoading(false);
+		}
+	};
+
 	return (
-		<main className="flex min-h-svh flex-col items-center justify-center px-4 py-16">
+		<main className="flex min-h-svh flex-col items-center px-4 py-16">
 			<div className="w-full max-w-2xl">
 				<div className="text-center mb-10">
 					<div className="inline-flex items-center gap-2 rounded-full border border-border bg-muted px-4 py-1.5 text-sm text-muted-foreground mb-6">
@@ -83,7 +139,8 @@ export function SolveInterface() {
 							<Button
 								variant="outline"
 								className="flex-1"
-								onClick={clearPreview}
+								onClick={clearAll}
+								disabled={isLoading}
 							>
 								<HugeiconsIcon
 									icon={Cancel01Icon}
@@ -92,13 +149,30 @@ export function SolveInterface() {
 								/>
 								Clear
 							</Button>
-							<Button className="flex-1">
-								Solve with Newton
-								<HugeiconsIcon
-									icon={ArrowRight02Icon}
-									className="size-4 ml-2"
-									strokeWidth={1.5}
-								/>
+							<Button
+								className="flex-1"
+								onClick={handleSolve}
+								disabled={isLoading || !fileData}
+							>
+								{isLoading ? (
+									<>
+										<HugeiconsIcon
+											icon={SparklesIcon}
+											className="size-4 mr-2 animate-pulse"
+											strokeWidth={1.5}
+										/>
+										Newton is thinking...
+									</>
+								) : (
+									<>
+										Solve with Newton
+										<HugeiconsIcon
+											icon={ArrowRight02Icon}
+											className="size-4 ml-2"
+											strokeWidth={1.5}
+										/>
+									</>
+								)}
 							</Button>
 						</div>
 					</div>
@@ -183,6 +257,23 @@ export function SolveInterface() {
 							/>
 							Take photo
 						</Button>
+					</div>
+				)}
+
+				{(completion || isLoading) && (
+					<div className="mt-6 rounded-2xl border border-border bg-muted p-6">
+						<div className="flex items-center gap-2 mb-4">
+							<div className="size-2 rounded-full bg-primary" />
+							<span className="text-sm font-medium text-foreground">
+								Newton
+							</span>
+						</div>
+						<div className="text-sm text-foreground leading-relaxed whitespace-pre-wrap">
+							{completion}
+							{isLoading && (
+								<span className="inline-block w-1.5 h-4 bg-primary ml-0.5 animate-pulse align-middle" />
+							)}
+						</div>
 					</div>
 				)}
 			</div>
