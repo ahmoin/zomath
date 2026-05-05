@@ -8,6 +8,7 @@ import {
 	UserCircle02Icon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
+import { useRouter } from "next/navigation";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
 	DropdownMenu,
@@ -24,7 +25,6 @@ import {
 	SidebarMenuItem,
 	useSidebar,
 } from "@/components/ui/sidebar";
-import { useRouter } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
 
 export function NavUser({
@@ -55,7 +55,9 @@ export function NavUser({
 						>
 							<Avatar className="h-8 w-8 rounded-lg grayscale">
 								<AvatarImage src={user.avatar ?? undefined} alt={user.name} />
-								<AvatarFallback className="rounded-lg">{user.name.slice(0, 2) ?? user.email.slice(0, 2) ?? ""}</AvatarFallback>
+								<AvatarFallback className="rounded-lg">
+									{user.name.slice(0, 2) ?? user.email.slice(0, 2) ?? ""}
+								</AvatarFallback>
 							</Avatar>
 							<div className="grid flex-1 text-left text-sm leading-tight">
 								<span className="truncate font-medium">{user.name}</span>

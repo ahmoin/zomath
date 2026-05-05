@@ -30,6 +30,8 @@ import {
 	SidebarMenuButton,
 	SidebarMenuItem,
 } from "@/components/ui/sidebar";
+import { siteConfig } from "@/lib/config";
+import { Icons } from "./icons";
 
 const data = {
 	navMain: [
@@ -163,12 +165,10 @@ export function AppSidebar({
 							className="data-[slot=sidebar-menu-button]:p-1.5!"
 						>
 							<a href="#">
-								<HugeiconsIcon
-									icon={CommandIcon}
-									strokeWidth={2}
-									className="size-5!"
-								/>
-								<span className="text-base font-semibold">Acme Inc.</span>
+								<Icons.logo className="size-5!" />
+								<span className="text-base font-semibold">
+									{siteConfig.name}
+								</span>
 							</a>
 						</SidebarMenuButton>
 					</SidebarMenuItem>

@@ -1,6 +1,12 @@
 "use client";
 
-import { ChartDownIcon, ChartUpIcon } from "@hugeicons/core-free-icons";
+import {
+	BookOpen01Icon,
+	BrainIcon,
+	ChartUpIcon,
+	FireIcon,
+	Target01Icon,
+} from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -17,106 +23,93 @@ export function SectionCards() {
 		<div className="grid grid-cols-1 gap-4 px-4 *:data-[slot=card]:bg-gradient-to-t *:data-[slot=card]:from-primary/5 *:data-[slot=card]:to-card *:data-[slot=card]:shadow-xs lg:px-6 @xl/main:grid-cols-2 @5xl/main:grid-cols-4 dark:*:data-[slot=card]:bg-card">
 			<Card className="@container/card">
 				<CardHeader>
-					<CardDescription>Total Revenue</CardDescription>
+					<CardDescription>Problems solved</CardDescription>
 					<CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
-						$1,250.00
+						0
 					</CardTitle>
 					<CardAction>
 						<Badge variant="outline">
-							<HugeiconsIcon icon={ChartUpIcon} strokeWidth={2} />
-							+12.5%
+							<HugeiconsIcon icon={Target01Icon} strokeWidth={2} />
+							All time
 						</Badge>
 					</CardAction>
 				</CardHeader>
 				<CardFooter className="flex-col items-start gap-1.5 text-sm">
 					<div className="line-clamp-1 flex gap-2 font-medium">
-						Trending up this month{" "}
+						Start solving to see progress
+					</div>
+					<div className="text-muted-foreground">Snap a problem to begin</div>
+				</CardFooter>
+			</Card>
+			<Card className="@container/card">
+				<CardHeader>
+					<CardDescription>Current streak</CardDescription>
+					<CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
+						0 days
+					</CardTitle>
+					<CardAction>
+						<Badge variant="outline">
+							<HugeiconsIcon icon={FireIcon} strokeWidth={2} />
+							Daily
+						</Badge>
+					</CardAction>
+				</CardHeader>
+				<CardFooter className="flex-col items-start gap-1.5 text-sm">
+					<div className="line-clamp-1 flex gap-2 font-medium">
+						No streak yet
+					</div>
+					<div className="text-muted-foreground">
+						Practice daily to build a streak
+					</div>
+				</CardFooter>
+			</Card>
+			<Card className="@container/card">
+				<CardHeader>
+					<CardDescription>Topics mastered</CardDescription>
+					<CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
+						0
+					</CardTitle>
+					<CardAction>
+						<Badge variant="outline">
+							<HugeiconsIcon icon={BookOpen01Icon} strokeWidth={2} />
+							Topics
+						</Badge>
+					</CardAction>
+				</CardHeader>
+				<CardFooter className="flex-col items-start gap-1.5 text-sm">
+					<div className="line-clamp-1 flex gap-2 font-medium">
+						No topics mastered yet
+					</div>
+					<div className="text-muted-foreground">
+						Reach 80% to master a topic
+					</div>
+				</CardFooter>
+			</Card>
+			<Card className="@container/card">
+				<CardHeader>
+					<CardDescription>Newton conversations</CardDescription>
+					<CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
+						0
+					</CardTitle>
+					<CardAction>
+						<Badge variant="outline">
+							<HugeiconsIcon icon={ChartUpIcon} strokeWidth={2} />
+							All time
+						</Badge>
+					</CardAction>
+				</CardHeader>
+				<CardFooter className="flex-col items-start gap-1.5 text-sm">
+					<div className="line-clamp-1 flex gap-2 font-medium">
+						Ask Newton anything{" "}
 						<HugeiconsIcon
-							icon={ChartUpIcon}
+							icon={BrainIcon}
 							strokeWidth={2}
 							className="size-4"
 						/>
 					</div>
 					<div className="text-muted-foreground">
-						Visitors for the last 6 months
+						Get explanations, not just answers
 					</div>
-				</CardFooter>
-			</Card>
-			<Card className="@container/card">
-				<CardHeader>
-					<CardDescription>New Customers</CardDescription>
-					<CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
-						1,234
-					</CardTitle>
-					<CardAction>
-						<Badge variant="outline">
-							<HugeiconsIcon icon={ChartDownIcon} strokeWidth={2} />
-							-20%
-						</Badge>
-					</CardAction>
-				</CardHeader>
-				<CardFooter className="flex-col items-start gap-1.5 text-sm">
-					<div className="line-clamp-1 flex gap-2 font-medium">
-						Down 20% this period{" "}
-						<HugeiconsIcon
-							icon={ChartDownIcon}
-							strokeWidth={2}
-							className="size-4"
-						/>
-					</div>
-					<div className="text-muted-foreground">
-						Acquisition needs attention
-					</div>
-				</CardFooter>
-			</Card>
-			<Card className="@container/card">
-				<CardHeader>
-					<CardDescription>Active Accounts</CardDescription>
-					<CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
-						45,678
-					</CardTitle>
-					<CardAction>
-						<Badge variant="outline">
-							<HugeiconsIcon icon={ChartUpIcon} strokeWidth={2} />
-							+12.5%
-						</Badge>
-					</CardAction>
-				</CardHeader>
-				<CardFooter className="flex-col items-start gap-1.5 text-sm">
-					<div className="line-clamp-1 flex gap-2 font-medium">
-						Strong user retention{" "}
-						<HugeiconsIcon
-							icon={ChartUpIcon}
-							strokeWidth={2}
-							className="size-4"
-						/>
-					</div>
-					<div className="text-muted-foreground">Engagement exceed targets</div>
-				</CardFooter>
-			</Card>
-			<Card className="@container/card">
-				<CardHeader>
-					<CardDescription>Growth Rate</CardDescription>
-					<CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
-						4.5%
-					</CardTitle>
-					<CardAction>
-						<Badge variant="outline">
-							<HugeiconsIcon icon={ChartUpIcon} strokeWidth={2} />
-							+4.5%
-						</Badge>
-					</CardAction>
-				</CardHeader>
-				<CardFooter className="flex-col items-start gap-1.5 text-sm">
-					<div className="line-clamp-1 flex gap-2 font-medium">
-						Steady performance increase{" "}
-						<HugeiconsIcon
-							icon={ChartUpIcon}
-							strokeWidth={2}
-							className="size-4"
-						/>
-					</div>
-					<div className="text-muted-foreground">Meets growth projections</div>
 				</CardFooter>
 			</Card>
 		</div>
