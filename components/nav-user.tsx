@@ -24,6 +24,7 @@ import {
 	SidebarMenuItem,
 	useSidebar,
 } from "@/components/ui/sidebar";
+import { useRouter } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
 
 export function NavUser({
@@ -36,9 +37,11 @@ export function NavUser({
 	};
 }) {
 	const { isMobile } = useSidebar();
+	const router = useRouter();
 
 	const handleLogOut = async () => {
 		await authClient.signOut();
+		router.push("/");
 	};
 
 	return (
