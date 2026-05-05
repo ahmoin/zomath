@@ -23,6 +23,7 @@ export async function POST(req: Request): Promise<NextResponse> {
 					"image/heic",
 				],
 				maximumSizeInBytes: 10 * 1024 * 1024,
+				access: "private",
 			}),
 			onUploadCompleted: async () => {},
 		});

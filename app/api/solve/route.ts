@@ -1,4 +1,5 @@
 import { createOpenRouter } from "@openrouter/ai-sdk-provider";
+import { get } from "@vercel/blob";
 import { streamText } from "ai";
 
 const openrouter = createOpenRouter({
@@ -24,8 +25,19 @@ Be encouraging but focus on understanding, not flattery.`;
 export async function POST(req: Request) {
 	const { imageUrl } = await req.json();
 
+	const blob = await get(imageUrl, { access: "private" });
+	if (!blob) return new Response("Image not found", { status: 404 });
+
+	const arrayBuffer = await new Response(blob.stream).arrayBuffer();
+	const base64 = Buffer.from(arrayBuffer).toString("base64");
+
 	const result = streamText({
-		model: openrouter("nvidia/nemotron-3-nano-30b-a3b:free"),
+		model: openrouter("google/gemma-4-31b-it:free"),
+		providerOptions: {
+			openrouter: {
+				thinking: { type: "disabled" },
+			},
+		},
 		system: SYSTEM_PROMPT,
 		messages: [
 			{
@@ -33,7 +45,7 @@ export async function POST(req: Request) {
 				content: [
 					{
 						type: "image",
-						image: new URL(imageUrl),
+						image: `data:${blob.blob.contentType};base64,${base64}`,
 					},
 					{
 						type: "text",

@@ -67,7 +67,7 @@ export function SolveInterface() {
 		setCompletion("");
 		try {
 			const { url } = await upload(file.name, file, {
-				access: "public",
+				access: "private",
 				handleUploadUrl: "/api/solve/upload",
 			});
 			const res = await fetch("/api/solve", {
