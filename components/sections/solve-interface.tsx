@@ -10,16 +10,14 @@ import {
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import Image from "next/image";
+import { upload } from "@vercel/blob/client";
 import { useCallback, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 
 export function SolveInterface() {
 	const [preview, setPreview] = useState<string | null>(null);
 	const [dragging, setDragging] = useState(false);
-	const [fileData, setFileData] = useState<{
-		base64: string;
-		mimeType: string;
-	} | null>(null);
+	const [file, setFile] = useState<File | null>(null);
 	const fileInputRef = useRef<HTMLInputElement>(null);
 	const cameraInputRef = useRef<HTMLInputElement>(null);
 
@@ -27,19 +25,11 @@ export function SolveInterface() {
 	const [isLoading, setIsLoading] = useState(false);
 
 	const handleFile = useCallback(
-		(file: File) => {
-			if (!file.type.startsWith("image/")) return;
-			const url = URL.createObjectURL(file);
-			setPreview(url);
+		(f: File) => {
+			if (!f.type.startsWith("image/")) return;
+			setPreview(URL.createObjectURL(f));
+			setFile(f);
 			setCompletion("");
-
-			const reader = new FileReader();
-			reader.onload = (e) => {
-				const dataUrl = e.target?.result as string;
-				const base64 = dataUrl.split(",")[1];
-				setFileData({ base64, mimeType: file.type });
-			};
-			reader.readAsDataURL(file);
 		},
 		[setCompletion],
 	);
@@ -65,24 +55,25 @@ export function SolveInterface() {
 
 	const clearAll = () => {
 		setPreview(null);
-		setFileData(null);
+		setFile(null);
 		setCompletion("");
 		if (fileInputRef.current) fileInputRef.current.value = "";
 		if (cameraInputRef.current) cameraInputRef.current.value = "";
 	};
 
 	const handleSolve = async () => {
-		if (!fileData) return;
+		if (!file) return;
 		setIsLoading(true);
 		setCompletion("");
 		try {
+			const { url } = await upload(file.name, file, {
+				access: "public",
+				handleUploadUrl: "/api/solve/upload",
+			});
 			const res = await fetch("/api/solve", {
 				method: "POST",
 				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify({
-					imageBase64: fileData.base64,
-					mimeType: fileData.mimeType,
-				}),
+				body: JSON.stringify({ imageUrl: url }),
 			});
 			if (!res.ok || !res.body) throw new Error("Request failed");
 			const reader = res.body.getReader();
@@ -152,7 +143,7 @@ export function SolveInterface() {
 							<Button
 								className="flex-1"
 								onClick={handleSolve}
-								disabled={isLoading || !fileData}
+								disabled={isLoading || !file}
 							>
 								{isLoading ? (
 									<>

@@ -22,7 +22,7 @@ Format your response in clear sections:
 Be encouraging but focus on understanding, not flattery.`;
 
 export async function POST(req: Request) {
-	const { imageBase64, mimeType } = await req.json();
+	const { imageUrl } = await req.json();
 
 	const result = streamText({
 		model: openrouter("nvidia/nemotron-3-nano-30b-a3b:free"),
@@ -33,8 +33,7 @@ export async function POST(req: Request) {
 				content: [
 					{
 						type: "image",
-						image: imageBase64,
-						mimeType,
+						image: new URL(imageUrl),
 					},
 					{
 						type: "text",
