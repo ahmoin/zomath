@@ -18,6 +18,7 @@ export function SolveInterface() {
 	const [preview, setPreview] = useState<string | null>(null);
 	const [dragging, setDragging] = useState(false);
 	const [file, setFile] = useState<File | null>(null);
+	const [blobUrl, setBlobUrl] = useState<string | null>(null);
 	const fileInputRef = useRef<HTMLInputElement>(null);
 	const cameraInputRef = useRef<HTMLInputElement>(null);
 
@@ -29,6 +30,7 @@ export function SolveInterface() {
 			if (!f.type.startsWith("image/")) return;
 			setPreview(URL.createObjectURL(f));
 			setFile(f);
+			setBlobUrl(null);
 			setCompletion("");
 		},
 		[setCompletion],
@@ -56,6 +58,7 @@ export function SolveInterface() {
 	const clearAll = () => {
 		setPreview(null);
 		setFile(null);
+		setBlobUrl(null);
 		setCompletion("");
 		if (fileInputRef.current) fileInputRef.current.value = "";
 		if (cameraInputRef.current) cameraInputRef.current.value = "";
@@ -66,10 +69,15 @@ export function SolveInterface() {
 		setIsLoading(true);
 		setCompletion("");
 		try {
-			const { url } = await upload(file.name, file, {
-				access: "private",
-				handleUploadUrl: "/api/solve/upload",
-			});
+			const url =
+				blobUrl ??
+				(
+					await upload(file.name, file, {
+						access: "private",
+						handleUploadUrl: "/api/solve/upload",
+					})
+				).url;
+			setBlobUrl(url);
 			const res = await fetch("/api/solve", {
 				method: "POST",
 				headers: { "Content-Type": "application/json" },
