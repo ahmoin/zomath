@@ -121,9 +121,7 @@ const incidents = [
 	},
 ];
 
-const uptimeHistory = [
-	{ month: "May", uptime: 99.96 },
-];
+const uptimeHistory = [{ month: "May", uptime: 99.96 }];
 
 function getStatusConfig(status: string) {
 	switch (status) {

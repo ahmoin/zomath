@@ -31,8 +31,7 @@ const posts = [
 	{
 		slug: "release",
 		title: "release",
-		excerpt:
-			"Release",
+		excerpt: "Release",
 		category: "deep-dives",
 		date: "2026-05-05",
 		readTime: "8 min read",

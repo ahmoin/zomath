@@ -33,13 +33,13 @@ import { Separator } from "@/components/ui/separator";
 
 const pressReleases = [
 	{
-		date: "November 12, 2026",
+		date: "May 5, 2026",
 		title:
 			"Zomath launches Concept Map, helping students see the bigger picture in math",
 		excerpt:
 			"The new feature visualizes how mathematical concepts connect, letting learners navigate from foundational skills to advanced topics with clarity and confidence.",
 		tag: "Product Launch",
-	}
+	},
 ];
 
 const mediaMentions = [
@@ -47,7 +47,7 @@ const mediaMentions = [
 		outlet: "HackClub",
 		title:
 			"How Zomath's AI tutor actually teaches instead of just giving answers",
-		date: "October 2026",
+		date: "May 2026",
 		url: "#",
 	},
 ];
@@ -72,9 +72,7 @@ const keyFacts = [
 const milestones = [
 	{
 		year: "2026",
-		items: [
-			"May: The beginning of Zomath",
-		],
+		items: ["May: The beginning of Zomath"],
 	},
 ];
 
@@ -238,11 +236,10 @@ export default function PressPage() {
 							</h2>
 							<div className="space-y-4 text-muted-foreground leading-relaxed">
 								<p>
-									Zomath was founded in 2026 by Ahsan Moin who
-									believed that the way most students learn math is
-									fundamentally broken. Too many tools focus on getting to the
-									answer fast. Zomath focuses on understanding why the answer
-									works.
+									Zomath was founded in 2026 by Ahsan Moin who believed that the
+									way most students learn math is fundamentally broken. Too many
+									tools focus on getting to the answer fast. Zomath focuses on
+									understanding why the answer works.
 								</p>
 								<p>
 									Our AI tutor, Newton, guides students through problems step by
