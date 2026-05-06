@@ -38,7 +38,7 @@ export async function POST(req: Request) {
 	const base64 = Buffer.from(arrayBuffer).toString("base64");
 
 	const result = streamText({
-		model: openrouter("nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free"),
+		model: openrouter("qwen/qwen3.6-35b-a3b"),
 		system: SYSTEM_PROMPT,
 		messages: [
 			{
