@@ -26,7 +26,6 @@ export async function POST(req: Request): Promise<NextResponse> {
 				access: "private",
 				addRandomSuffix: true,
 			}),
-			onUploadCompleted: async () => {},
 		});
 		return NextResponse.json(jsonResponse);
 	} catch (error) {

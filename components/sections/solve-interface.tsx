@@ -93,7 +93,12 @@ export function SolveInterface() {
 				const { done, value } = await reader.read();
 				if (done) break;
 				const chunk = decoder.decode(value, { stream: true });
-				setCompletion((prev) => prev + chunk);
+				const normalized = chunk
+					.replace(/\\\[/g, "$$")
+					.replace(/\\\]/g, "$$")
+					.replace(/\\\(/g, "$$")
+					.replace(/\\\)/g, "$$");
+				setCompletion((prev) => prev + normalized);
 			}
 		} finally {
 			setIsLoading(false);
