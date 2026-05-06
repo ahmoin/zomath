@@ -15,7 +15,6 @@ import Image from "next/image";
 import { useCallback, useRef, useState } from "react";
 import "katex/dist/katex.min.css";
 import { Streamdown } from "streamdown";
-import "streamdown/styles.css";
 import { Button } from "@/components/ui/button";
 
 export function SolveInterface() {
