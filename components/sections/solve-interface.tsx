@@ -9,9 +9,11 @@ import {
 	Upload01Icon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
+import { math } from "@streamdown/math";
 import { upload } from "@vercel/blob/client";
 import Image from "next/image";
 import { useCallback, useRef, useState } from "react";
+import "katex/dist/katex.min.css";
 import { Streamdown } from "streamdown";
 import "streamdown/styles.css";
 import { Button } from "@/components/ui/button";
@@ -269,6 +271,7 @@ export function SolveInterface() {
 								easing: "ease-out",
 							}}
 							isAnimating={isLoading}
+							plugins={{ math }}
 							className="text-sm text-foreground leading-relaxed"
 						>
 							{completion}
