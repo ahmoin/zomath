@@ -12,6 +12,7 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import { upload } from "@vercel/blob/client";
 import Image from "next/image";
 import { useCallback, useRef, useState } from "react";
+import { Streamdown } from "streamdown";
 import { Button } from "@/components/ui/button";
 
 export function SolveInterface() {
@@ -260,12 +261,11 @@ export function SolveInterface() {
 								Newton
 							</span>
 						</div>
-						<div className="text-sm text-foreground leading-relaxed whitespace-pre-wrap">
-							{completion}
-							{isLoading && (
-								<span className="inline-block w-1.5 h-4 bg-primary ml-0.5 animate-pulse align-middle" />
-							)}
-						</div>
+						<Streamdown
+							content={completion}
+							streaming={isLoading}
+							className="text-sm text-foreground leading-relaxed"
+						/>
 					</div>
 				)}
 			</div>
