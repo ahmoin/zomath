@@ -13,6 +13,7 @@ import { upload } from "@vercel/blob/client";
 import Image from "next/image";
 import { useCallback, useRef, useState } from "react";
 import { Streamdown } from "streamdown";
+import "streamdown/styles.css";
 import { Button } from "@/components/ui/button";
 
 export function SolveInterface() {
@@ -262,10 +263,16 @@ export function SolveInterface() {
 							</span>
 						</div>
 						<Streamdown
-							content={completion}
-							streaming={isLoading}
+							animated={{
+								animation: "blurIn",
+								duration: 200,
+								easing: "ease-out",
+							}}
+							isAnimating={isLoading}
 							className="text-sm text-foreground leading-relaxed"
-						/>
+						>
+							{completion}
+						</Streamdown>
 					</div>
 				)}
 			</div>
