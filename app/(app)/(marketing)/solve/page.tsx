@@ -9,7 +9,12 @@ export default async function SolvePage() {
 	});
 
 	if (session) {
-		return <SolveInterface />;
+		return (
+			<>
+				<div className="h-8" />
+				<SolveInterface />
+			</>
+		);
 	}
 
 	return <SolveMarketing />;

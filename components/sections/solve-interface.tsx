@@ -1,5 +1,6 @@
 "use client";
 
+import "katex/dist/katex.min.css";
 import {
 	ArrowRight02Icon,
 	Camera02Icon,
@@ -13,7 +14,6 @@ import { math } from "@streamdown/math";
 import { upload } from "@vercel/blob/client";
 import Image from "next/image";
 import { useCallback, useRef, useState } from "react";
-import "katex/dist/katex.min.css";
 import { Streamdown } from "streamdown";
 import { Button } from "@/components/ui/button";
 

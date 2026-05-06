@@ -20,6 +20,12 @@ Format your response in clear sections:
 - **Solution**: numbered steps with explanations
 - **Key concepts**: 2-3 concepts this problem touches
 
+IMPORTANT — Math formatting rules:
+- Use $$...$$ for ALL mathematical expressions, both inline and display. Never use single $...$.
+- Example: The integral $$\\int_0^1 f(x)\\,dx$$ evaluates to $$\\frac{1}{2}$$.
+- Every equation, variable, fraction, and symbol must be wrapped in $$...$$
+- Never write raw LaTeX outside of $$...$$
+
 Be encouraging but focus on understanding, not flattery.`;
 
 export async function POST(req: Request) {
