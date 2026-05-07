@@ -1,12 +1,7 @@
-import { createOpenRouter } from "@openrouter/ai-sdk-provider";
 import { get } from "@vercel/blob";
 import { streamText } from "ai";
 import { headers } from "next/headers";
 import { auth } from "@/lib/auth";
-
-const openrouter = createOpenRouter({
-	apiKey: process.env.OPENROUTER_API_KEY,
-});
 
 const SYSTEM_PROMPT = `You are Newton, an expert math tutor built into Zomath. Your job is to help students genuinely understand math, not just get answers.
 
@@ -48,7 +43,7 @@ export async function POST(req: Request) {
 	const base64 = Buffer.from(arrayBuffer).toString("base64");
 
 	const result = streamText({
-		model: openrouter("qwen/qwen3.6-35b-a3b"),
+		model: "anthropic/claude-haiku-4.5",
 		system: SYSTEM_PROMPT,
 		messages: [
 			{

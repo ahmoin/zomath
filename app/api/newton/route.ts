@@ -1,11 +1,6 @@
-import { createOpenRouter } from "@openrouter/ai-sdk-provider";
 import { streamText } from "ai";
 import { headers } from "next/headers";
 import { auth } from "@/lib/auth";
-
-const openrouter = createOpenRouter({
-	apiKey: process.env.OPENROUTER_API_KEY,
-});
 
 const SYSTEM_PROMPT = `You are Newton, an AI math tutor built into Zomath. Your goal is to build genuine understanding, not hand out answers.
 
@@ -27,7 +22,7 @@ export async function POST(req: Request) {
 	const { messages }: { messages: Message[] } = await req.json();
 
 	const result = streamText({
-		model: openrouter("qwen/qwen3.6-35b-a3b"),
+		model: "anthropic/claude-haiku-4.5",
 		system: SYSTEM_PROMPT,
 		messages,
 	});
