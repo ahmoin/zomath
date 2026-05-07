@@ -2,6 +2,7 @@
 
 import { Mail01Icon, PlusSignCircleIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import {
 	SidebarGroup,
@@ -45,9 +46,11 @@ export function NavMain({
 				<SidebarMenu>
 					{items.map((item) => (
 						<SidebarMenuItem key={item.title}>
-							<SidebarMenuButton tooltip={item.title}>
-								{item.icon}
-								<span>{item.title}</span>
+							<SidebarMenuButton asChild tooltip={item.title}>
+								<Link href={item.url}>
+									{item.icon}
+									<span>{item.title}</span>
+								</Link>
 							</SidebarMenuButton>
 						</SidebarMenuItem>
 					))}

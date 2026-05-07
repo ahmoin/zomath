@@ -18,7 +18,17 @@ import {
 	CardTitle,
 } from "@/components/ui/card";
 
-export function SectionCards() {
+interface SectionCardsProps {
+	memberSince: Date;
+	sessionCount: number;
+}
+
+export function SectionCards({ memberSince, sessionCount }: SectionCardsProps) {
+	const memberSinceFormatted = memberSince.toLocaleDateString("en-US", {
+		month: "short",
+		year: "numeric",
+	});
+
 	return (
 		<div className="grid grid-cols-1 gap-4 px-4 *:data-[slot=card]:bg-gradient-to-t *:data-[slot=card]:from-primary/5 *:data-[slot=card]:to-card *:data-[slot=card]:shadow-xs lg:px-6 @xl/main:grid-cols-2 @5xl/main:grid-cols-4 dark:*:data-[slot=card]:bg-card">
 			<Card className="@container/card">
@@ -65,31 +75,31 @@ export function SectionCards() {
 			</Card>
 			<Card className="@container/card">
 				<CardHeader>
-					<CardDescription>Topics mastered</CardDescription>
+					<CardDescription>Member since</CardDescription>
 					<CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
-						0
+						{memberSinceFormatted}
 					</CardTitle>
 					<CardAction>
 						<Badge variant="outline">
 							<HugeiconsIcon icon={BookOpen01Icon} strokeWidth={2} />
-							Topics
+							Joined
 						</Badge>
 					</CardAction>
 				</CardHeader>
 				<CardFooter className="flex-col items-start gap-1.5 text-sm">
 					<div className="line-clamp-1 flex gap-2 font-medium">
-						No topics mastered yet
+						Welcome to Zomath
 					</div>
 					<div className="text-muted-foreground">
-						Reach 80% to master a topic
+						Your math journey starts here
 					</div>
 				</CardFooter>
 			</Card>
 			<Card className="@container/card">
 				<CardHeader>
-					<CardDescription>Newton conversations</CardDescription>
+					<CardDescription>Sessions</CardDescription>
 					<CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
-						0
+						{sessionCount}
 					</CardTitle>
 					<CardAction>
 						<Badge variant="outline">

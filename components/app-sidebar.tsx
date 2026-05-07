@@ -1,19 +1,15 @@
 "use client";
 
 import {
-	Analytics01Icon,
-	Camera01Icon,
+	BookOpen01Icon,
+	Camera02Icon,
 	ChartHistogramIcon,
-	CommandIcon,
+	Clock01Icon,
 	DashboardSquare01Icon,
-	Database01Icon,
-	File01Icon,
-	Folder01Icon,
 	HelpCircleIcon,
-	Menu01Icon,
-	SearchIcon,
 	Settings05Icon,
-	UserGroupIcon,
+	SparklesIcon,
+	Trophy,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import type * as React from "react";
@@ -37,78 +33,31 @@ const data = {
 	navMain: [
 		{
 			title: "Dashboard",
-			url: "#",
+			url: "/",
 			icon: <HugeiconsIcon icon={DashboardSquare01Icon} strokeWidth={2} />,
 		},
 		{
-			title: "Lifecycle",
-			url: "#",
-			icon: <HugeiconsIcon icon={Menu01Icon} strokeWidth={2} />,
+			title: "Solve",
+			url: "/solve",
+			icon: <HugeiconsIcon icon={Camera02Icon} strokeWidth={2} />,
 		},
 		{
-			title: "Analytics",
+			title: "History",
 			url: "#",
+			icon: <HugeiconsIcon icon={Clock01Icon} strokeWidth={2} />,
+		},
+		{
+			title: "Progress",
+			url: "/progress",
 			icon: <HugeiconsIcon icon={ChartHistogramIcon} strokeWidth={2} />,
 		},
 		{
-			title: "Projects",
-			url: "#",
-			icon: <HugeiconsIcon icon={Folder01Icon} strokeWidth={2} />,
-		},
-		{
-			title: "Team",
-			url: "#",
-			icon: <HugeiconsIcon icon={UserGroupIcon} strokeWidth={2} />,
+			title: "Practice",
+			url: "/practice",
+			icon: <HugeiconsIcon icon={BookOpen01Icon} strokeWidth={2} />,
 		},
 	],
-	navClouds: [
-		{
-			title: "Capture",
-			icon: <HugeiconsIcon icon={Camera01Icon} strokeWidth={2} />,
-			isActive: true,
-			url: "#",
-			items: [
-				{
-					title: "Active Proposals",
-					url: "#",
-				},
-				{
-					title: "Archived",
-					url: "#",
-				},
-			],
-		},
-		{
-			title: "Proposal",
-			icon: <HugeiconsIcon icon={File01Icon} strokeWidth={2} />,
-			url: "#",
-			items: [
-				{
-					title: "Active Proposals",
-					url: "#",
-				},
-				{
-					title: "Archived",
-					url: "#",
-				},
-			],
-		},
-		{
-			title: "Prompts",
-			icon: <HugeiconsIcon icon={File01Icon} strokeWidth={2} />,
-			url: "#",
-			items: [
-				{
-					title: "Active Proposals",
-					url: "#",
-				},
-				{
-					title: "Archived",
-					url: "#",
-				},
-			],
-		},
-	],
+	navClouds: [],
 	navSecondary: [
 		{
 			title: "Settings",
@@ -116,31 +65,21 @@ const data = {
 			icon: <HugeiconsIcon icon={Settings05Icon} strokeWidth={2} />,
 		},
 		{
-			title: "Get Help",
-			url: "#",
+			title: "Help",
+			url: "/help",
 			icon: <HugeiconsIcon icon={HelpCircleIcon} strokeWidth={2} />,
-		},
-		{
-			title: "Search",
-			url: "#",
-			icon: <HugeiconsIcon icon={SearchIcon} strokeWidth={2} />,
 		},
 	],
 	documents: [
 		{
-			name: "Data Library",
-			url: "#",
-			icon: <HugeiconsIcon icon={Database01Icon} strokeWidth={2} />,
+			name: "Newton AI",
+			url: "/newton",
+			icon: <HugeiconsIcon icon={SparklesIcon} strokeWidth={2} />,
 		},
 		{
-			name: "Reports",
-			url: "#",
-			icon: <HugeiconsIcon icon={Analytics01Icon} strokeWidth={2} />,
-		},
-		{
-			name: "Word Assistant",
-			url: "#",
-			icon: <HugeiconsIcon icon={File01Icon} strokeWidth={2} />,
+			name: "Competitions",
+			url: "/competition",
+			icon: <HugeiconsIcon icon={Trophy} strokeWidth={2} />,
 		},
 	],
 };

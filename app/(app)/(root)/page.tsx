@@ -1,3 +1,4 @@
+import { count, eq } from "drizzle-orm";
 import { headers } from "next/headers";
 import { AppSidebar } from "@/components/app-sidebar";
 import { ChartAreaInteractive } from "@/components/chart-area-interactive";
@@ -14,13 +15,20 @@ import { SiteFooter } from "@/components/site-footer";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { auth } from "@/lib/auth";
+import { db } from "@/lib/db";
+import { session as sessionTable } from "@/lib/schema";
 
 export default async function Page() {
-	const session = await auth.api.getSession({
+	const authSession = await auth.api.getSession({
 		headers: await headers(),
 	});
 
-	if (session) {
+	if (authSession) {
+		const [{ value: sessionCount }] = await db
+			.select({ value: count() })
+			.from(sessionTable)
+			.where(eq(sessionTable.userId, authSession.user.id));
+
 		return (
 			<>
 				<TooltipProvider>
@@ -35,17 +43,20 @@ export default async function Page() {
 						<AppSidebar
 							variant="inset"
 							user={{
-								name: session.user.name,
-								email: session.user.email,
-								avatar: session.user.image,
+								name: authSession.user.name,
+								email: authSession.user.email,
+								avatar: authSession.user.image,
 							}}
 						/>
 						<SidebarInset>
-							<DashboardHeader />
+							<DashboardHeader name={authSession.user.name} />
 							<div className="flex flex-1 flex-col">
 								<div className="@container/main flex flex-1 flex-col gap-2">
 									<div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
-										<SectionCards />
+										<SectionCards
+											memberSince={authSession.user.createdAt}
+											sessionCount={sessionCount}
+										/>
 										<div className="px-4 lg:px-6">
 											<ChartAreaInteractive />
 										</div>

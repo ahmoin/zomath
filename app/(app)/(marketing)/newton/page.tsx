@@ -1,5 +1,3 @@
-"use client";
-
 import {
 	AiBrain01Icon,
 	ArrowRight02Icon,
@@ -16,7 +14,9 @@ import {
 	TangentIcon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
+import { headers } from "next/headers";
 import Link from "next/link";
+import { NewtonHeroSection } from "@/components/sections/newton-hero";
 import {
 	Accordion,
 	AccordionContent,
@@ -25,6 +25,7 @@ import {
 } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import { auth } from "@/lib/auth";
 
 const capabilities = [
 	{
@@ -141,49 +142,20 @@ const faqs = [
 	},
 ];
 
-export default function NewtonPage() {
+export default async function NewtonPage() {
+	const session = await auth.api.getSession({ headers: await headers() });
+
+	if (session) {
+		return (
+			<main className="flex flex-col">
+				<NewtonHeroSection isAuthed />
+			</main>
+		);
+	}
+
 	return (
 		<main className="flex flex-col">
-			<section className="py-24 lg:py-32">
-				<div className="max-w-7xl mx-auto px-4 lg:px-12">
-					<div className="max-w-3xl mx-auto text-center">
-						<div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-muted text-sm text-muted-foreground mb-8">
-							<HugeiconsIcon
-								icon={SparklesIcon}
-								className="size-4 text-primary"
-								strokeWidth={1.5}
-							/>
-							Your AI math tutor
-						</div>
-						<h1 className="text-5xl lg:text-7xl font-semibold tracking-tight text-foreground mb-6">
-							Meet Newton
-						</h1>
-						<p className="text-lg lg:text-xl text-muted-foreground leading-relaxed mb-10">
-							An AI tutor that actually teaches. Newton guides you to
-							understanding with questions, hints, and conversations, so you
-							build real mathematical intuition instead of just collecting
-							answers.
-						</p>
-						<div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-							<Link href="/sign-up">
-								<Button size="lg" className="text-base px-6">
-									Start learning with Newton
-									<HugeiconsIcon
-										icon={ArrowRight02Icon}
-										className="size-5 ml-1"
-										strokeWidth={1.5}
-									/>
-								</Button>
-							</Link>
-							<Link href="#how-it-works">
-								<Button variant="outline" size="lg" className="text-base px-6">
-									See how it works
-								</Button>
-							</Link>
-						</div>
-					</div>
-				</div>
-			</section>
+			<NewtonHeroSection isAuthed={false} />
 
 			<section className="py-24 lg:py-32 bg-muted">
 				<div className="max-w-7xl mx-auto px-4 lg:px-12">
