@@ -1,6 +1,8 @@
 import { createOpenRouter } from "@openrouter/ai-sdk-provider";
 import { get } from "@vercel/blob";
 import { streamText } from "ai";
+import { headers } from "next/headers";
+import { auth } from "@/lib/auth";
 
 const openrouter = createOpenRouter({
 	apiKey: process.env.OPENROUTER_API_KEY,
@@ -28,8 +30,16 @@ IMPORTANT — Math formatting rules:
 
 Be encouraging but focus on understanding, not flattery.`;
 
+type HistoryMessage = { role: "user" | "assistant"; text: string };
+
 export async function POST(req: Request) {
-	const { imageUrl } = await req.json();
+	const session = await auth.api.getSession({ headers: await headers() });
+	if (!session) return new Response("Unauthorized", { status: 401 });
+
+	const {
+		imageUrl,
+		history = [],
+	}: { imageUrl: string; history: HistoryMessage[] } = await req.json();
 
 	const blob = await get(imageUrl, { access: "private" });
 	if (!blob) return new Response("Image not found", { status: 404 });
@@ -54,6 +64,10 @@ export async function POST(req: Request) {
 					},
 				],
 			},
+			...history.map((m) => ({
+				role: m.role,
+				content: m.text,
+			})),
 		],
 	});
 

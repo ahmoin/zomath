@@ -1,21 +1,14 @@
-# Next.js template
+# Zomath
 
-This is a Next.js template with shadcn/ui.
+Zomath helps you actually understand math, not just get answers.
 
-## Adding components
+Snap or upload a photo of any math problem and Newton, our AI tutor, walks you through the solution step by step with clear explanations at every stage. Ask follow up questions, dig deeper into concepts, and learn at your own pace.
 
-To add components to your app, run the following command:
+## What it does
 
-```bash
-npx shadcn@latest add button
-```
+- Solves problems from photos, handwriting, printed text, and whiteboard photos all work
+- Explains every step, never skipping the "why"
 
-This will place the ui components in the `components` directory.
+## Who it's for
 
-## Using components
-
-To use the components in your app, import them as follows:
-
-```tsx
-import { Button } from "@/components/ui/button";
-```
+Students who want to understand the material, not just copy an answer.

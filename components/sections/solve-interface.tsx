@@ -15,6 +15,7 @@ import { upload } from "@vercel/blob/client";
 import Image from "next/image";
 import { useCallback, useRef, useState } from "react";
 import { Streamdown } from "streamdown";
+import { Shimmer } from "@/components/ai-elements/shimmer";
 import { Button } from "@/components/ui/button";
 
 export function SolveInterface() {
@@ -27,6 +28,11 @@ export function SolveInterface() {
 
 	const [completion, setCompletion] = useState("");
 	const [isLoading, setIsLoading] = useState(false);
+	const [history, setHistory] = useState<
+		{ role: "user" | "assistant"; text: string }[]
+	>([]);
+	const [followUp, setFollowUp] = useState("");
+	const bottomRef = useRef<HTMLDivElement>(null);
 
 	const handleFile = useCallback(
 		(f: File) => {
@@ -63,14 +69,55 @@ export function SolveInterface() {
 		setFile(null);
 		setBlobUrl(null);
 		setCompletion("");
+		setHistory([]);
+		setFollowUp("");
 		if (fileInputRef.current) fileInputRef.current.value = "";
 		if (cameraInputRef.current) cameraInputRef.current.value = "";
+	};
+
+	const streamResponse = async (
+		url: string,
+		hist: { role: "user" | "assistant"; text: string }[],
+	) => {
+		const res = await fetch("/api/solve", {
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify({ imageUrl: url, history: hist }),
+		});
+		if (!res.ok || !res.body) throw new Error("Request failed");
+		const reader = res.body.getReader();
+		const decoder = new TextDecoder();
+		let accumulated = "";
+		let rafId: number | null = null;
+
+		const flush = () => {
+			setCompletion(accumulated);
+			rafId = null;
+		};
+
+		while (true) {
+			const { done, value } = await reader.read();
+			if (done) break;
+			const chunk = decoder.decode(value, { stream: true });
+			const normalized = chunk
+				.replace(/\\\[/g, "$$")
+				.replace(/\\\]/g, "$$")
+				.replace(/\\\(/g, "$$")
+				.replace(/\\\)/g, "$$");
+			accumulated += normalized;
+			if (rafId === null) rafId = requestAnimationFrame(flush);
+		}
+
+		if (rafId !== null) cancelAnimationFrame(rafId);
+		setCompletion(accumulated);
+		return accumulated;
 	};
 
 	const handleSolve = async () => {
 		if (!file) return;
 		setIsLoading(true);
 		setCompletion("");
+		setHistory([]);
 		try {
 			const url =
 				blobUrl ??
@@ -81,27 +128,36 @@ export function SolveInterface() {
 					})
 				).url;
 			setBlobUrl(url);
-			const res = await fetch("/api/solve", {
-				method: "POST",
-				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify({ imageUrl: url }),
-			});
-			if (!res.ok || !res.body) throw new Error("Request failed");
-			const reader = res.body.getReader();
-			const decoder = new TextDecoder();
-			while (true) {
-				const { done, value } = await reader.read();
-				if (done) break;
-				const chunk = decoder.decode(value, { stream: true });
-				const normalized = chunk
-					.replace(/\\\[/g, "$$")
-					.replace(/\\\]/g, "$$")
-					.replace(/\\\(/g, "$$")
-					.replace(/\\\)/g, "$$");
-				setCompletion((prev) => prev + normalized);
-			}
+			const response = await streamResponse(url, []);
+			setHistory([{ role: "assistant", text: response }]);
+			setCompletion("");
 		} finally {
 			setIsLoading(false);
+			setTimeout(
+				() => bottomRef.current?.scrollIntoView({ behavior: "smooth" }),
+				100,
+			);
+		}
+	};
+
+	const handleFollowUp = async () => {
+		if (!followUp.trim() || !blobUrl || isLoading) return;
+		const userMsg = { role: "user" as const, text: followUp.trim() };
+		const nextHistory = [...history, userMsg];
+		setHistory(nextHistory);
+		setFollowUp("");
+		setIsLoading(true);
+		setCompletion("");
+		try {
+			const response = await streamResponse(blobUrl, nextHistory);
+			setHistory((prev) => [...prev, { role: "assistant", text: response }]);
+			setCompletion("");
+		} finally {
+			setIsLoading(false);
+			setTimeout(
+				() => bottomRef.current?.scrollIntoView({ behavior: "smooth" }),
+				100,
+			);
 		}
 	};
 
@@ -161,7 +217,7 @@ export function SolveInterface() {
 											className="size-4 mr-2 animate-pulse"
 											strokeWidth={1.5}
 										/>
-										Newton is thinking...
+										<Shimmer as="span">Newton is thinking...</Shimmer>
 									</>
 								) : (
 									<>
@@ -260,28 +316,95 @@ export function SolveInterface() {
 					</div>
 				)}
 
-				{(completion || isLoading) && (
-					<div className="mt-6 rounded-2xl border border-border bg-muted p-6">
-						<div className="flex items-center gap-2 mb-4">
-							<div className="size-2 rounded-full bg-primary" />
-							<span className="text-sm font-medium text-foreground">
-								Newton
-							</span>
-						</div>
-						<Streamdown
-							animated={{
-								animation: "blurIn",
-								duration: 200,
-								easing: "ease-out",
-							}}
-							isAnimating={isLoading}
-							plugins={{ math }}
-							className="text-sm text-foreground leading-relaxed"
-						>
-							{completion}
-						</Streamdown>
+				{(history.length > 0 || completion || isLoading) && (
+					<div className="mt-6 flex flex-col gap-4">
+						{history.map((msg, i) =>
+							msg.role === "user" ? (
+								<div key={i} className="flex justify-end">
+									<div className="max-w-[85%] rounded-2xl bg-primary px-4 py-3 text-sm text-primary-foreground">
+										{msg.text}
+									</div>
+								</div>
+							) : (
+								<div
+									key={i}
+									className="rounded-2xl border border-border bg-muted p-6"
+								>
+									<div className="flex items-center gap-2 mb-4">
+										<div className="size-2 rounded-full bg-primary" />
+										<span className="text-sm font-medium text-foreground">
+											Newton
+										</span>
+									</div>
+									<Streamdown
+										plugins={{ math }}
+										className="text-sm text-foreground leading-relaxed"
+									>
+										{msg.text}
+									</Streamdown>
+								</div>
+							),
+						)}
+
+						{(completion || isLoading) && (
+							<div className="rounded-2xl border border-border bg-muted p-6">
+								<div className="flex items-center gap-2 mb-4">
+									<div className="size-2 rounded-full bg-primary" />
+									{isLoading && !completion ? (
+										<Shimmer as="span" className="text-sm font-medium">
+											Newton is thinking...
+										</Shimmer>
+									) : (
+										<span className="text-sm font-medium text-foreground">
+											Newton
+										</span>
+									)}
+								</div>
+								<Streamdown
+									animated={{
+										animation: "blurIn",
+										duration: 200,
+										easing: "ease-out",
+									}}
+									isAnimating={isLoading}
+									plugins={{ math }}
+									className="text-sm text-foreground leading-relaxed"
+								>
+									{completion}
+								</Streamdown>
+							</div>
+						)}
 					</div>
 				)}
+
+				{history.length > 0 && !isLoading && blobUrl && (
+					<div className="mt-4 flex gap-2">
+						<input
+							type="text"
+							value={followUp}
+							onChange={(e) => setFollowUp(e.target.value)}
+							onKeyDown={(e) =>
+								e.key === "Enter" && !e.shiftKey && handleFollowUp()
+							}
+							placeholder="Ask Newton a follow-up..."
+							className="flex-1 rounded-xl border border-border bg-muted px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground outline-none focus:border-primary transition-colors"
+						/>
+						<Button
+							onClick={handleFollowUp}
+							disabled={!followUp.trim()}
+							size="icon"
+							className="rounded-xl size-12 shrink-0"
+						>
+							<HugeiconsIcon
+								icon={ArrowRight02Icon}
+								className="size-4"
+								strokeWidth={1.5}
+							/>
+						</Button>
+					</div>
+				)}
+
+				<div ref={bottomRef} />
 			</div>
 		</main>
 	);
