@@ -43,7 +43,7 @@ export async function POST(req: Request) {
 		voice: "JBFqnCBsd6RMkjVDRZzb",
 	});
 
-const segments = estimateSegments(text);
+	const segments = estimateSegments(text);
 
 	return Response.json({
 		audio: result.audio,

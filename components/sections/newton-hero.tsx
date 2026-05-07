@@ -13,9 +13,6 @@ import type { HugeiconsIconProps } from "@hugeicons/react";
 import { HugeiconsIcon } from "@hugeicons/react";
 import Link from "next/link";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import type { PersonaState } from "@/components/ai-elements/persona";
-import { Persona } from "@/components/ai-elements/persona";
-import { SpeechInput } from "@/components/ai-elements/speech-input";
 import {
 	AudioPlayer,
 	AudioPlayerControlBar,
@@ -24,6 +21,9 @@ import {
 	AudioPlayerTimeDisplay,
 	AudioPlayerTimeRange,
 } from "@/components/ai-elements/audio-player";
+import type { PersonaState } from "@/components/ai-elements/persona";
+import { Persona } from "@/components/ai-elements/persona";
+import { SpeechInput } from "@/components/ai-elements/speech-input";
 import {
 	Transcription,
 	TranscriptionSegment,
@@ -86,7 +86,9 @@ function AuthedPersona() {
 
 	const audioBlobUrl = useMemo(() => {
 		if (!speechData) return null;
-		const bytes = new Uint8Array(Object.values(speechData.audio.uint8ArrayData));
+		const bytes = new Uint8Array(
+			Object.values(speechData.audio.uint8ArrayData),
+		);
 		const blob = new Blob([bytes], { type: speechData.audio.mediaType });
 		return URL.createObjectURL(blob);
 	}, [speechData]);
@@ -99,11 +101,17 @@ function AuthedPersona() {
 
 	useEffect(() => {
 		const audio = audioRef.current;
-		if (!audio) return;
+		if (!audio || !audioBlobUrl) return;
 		const onTimeUpdate = () => setCurrentTime(audio.currentTime);
+		const onEnded = () => setPersonaState("idle");
 		audio.addEventListener("timeupdate", onTimeUpdate);
-		return () => audio.removeEventListener("timeupdate", onTimeUpdate);
-	}, [speechData]);
+		audio.addEventListener("ended", onEnded);
+		audio.play().catch(() => {});
+		return () => {
+			audio.removeEventListener("timeupdate", onTimeUpdate);
+			audio.removeEventListener("ended", onEnded);
+		};
+	}, [audioBlobUrl]);
 
 	const fetchSpeech = useCallback(async (text: string) => {
 		const res = await fetch("/api/newton/speech", {
@@ -112,7 +120,7 @@ function AuthedPersona() {
 			body: JSON.stringify({ text }),
 		});
 		if (!res.ok) return;
-		const data = await res.json() as SpeechData;
+		const data = (await res.json()) as SpeechData;
 		setSpeechData(data);
 		setPersonaState("speaking");
 	}, []);
@@ -193,7 +201,11 @@ function AuthedPersona() {
 			{speechData ? (
 				<div className="flex w-full max-w-md flex-col gap-3">
 					<AudioPlayer>
-						<AudioPlayerElement ref={audioRef} src={audioBlobUrl ?? ""} />
+						<AudioPlayerElement
+							ref={audioRef}
+							src={audioBlobUrl ?? ""}
+							autoPlay
+						/>
 						<AudioPlayerControlBar>
 							<AudioPlayerPlayButton />
 							<AudioPlayerTimeDisplay />
@@ -203,9 +215,9 @@ function AuthedPersona() {
 					<Transcription
 						currentTime={currentTime}
 						onSeek={(time) => {
-						setCurrentTime(time);
-						if (audioRef.current) audioRef.current.currentTime = time;
-					}}
+							setCurrentTime(time);
+							if (audioRef.current) audioRef.current.currentTime = time;
+						}}
 						segments={speechData.segments}
 						className="max-w-md"
 					>
@@ -219,7 +231,8 @@ function AuthedPersona() {
 					</Transcription>
 				</div>
 			) : (
-				!busy && messages.length === 0 && (
+				!busy &&
+				messages.length === 0 && (
 					<p className="text-sm text-muted-foreground">
 						Tap the mic and ask Newton anything
 					</p>
