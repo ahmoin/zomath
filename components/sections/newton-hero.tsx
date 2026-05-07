@@ -72,7 +72,7 @@ function StateButton({ state, currentState, onStateChange }: StateButtonProps) {
 type Message = { role: "user" | "assistant"; content: string };
 
 type SpeechData = {
-	audio: { base64: string; mediaType: string };
+	audio: { uint8ArrayData: Record<number, number>; mediaType: string };
 	segments: { text: string; startSecond: number; endSecond: number }[];
 };
 
@@ -86,7 +86,7 @@ function AuthedPersona() {
 
 	const audioBlobUrl = useMemo(() => {
 		if (!speechData) return null;
-		const bytes = Uint8Array.from(atob(speechData.audio.base64), (c) => c.charCodeAt(0));
+		const bytes = new Uint8Array(Object.values(speechData.audio.uint8ArrayData));
 		const blob = new Blob([bytes], { type: speechData.audio.mediaType });
 		return URL.createObjectURL(blob);
 	}, [speechData]);
