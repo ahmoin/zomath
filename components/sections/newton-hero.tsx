@@ -83,6 +83,15 @@ function AuthedPersona() {
 	const [currentTime, setCurrentTime] = useState(0);
 	const [speechData, setSpeechData] = useState<SpeechData | null>(null);
 	const abortRef = useRef<AbortController | null>(null);
+	const audioRef = useRef<HTMLAudioElement>(null);
+
+	useEffect(() => {
+		const audio = audioRef.current;
+		if (!audio) return;
+		const onTimeUpdate = () => setCurrentTime(audio.currentTime);
+		audio.addEventListener("timeupdate", onTimeUpdate);
+		return () => audio.removeEventListener("timeupdate", onTimeUpdate);
+	}, [speechData]);
 
 	const fetchSpeech = useCallback(async (text: string) => {
 		const res = await fetch("/api/newton/speech", {
@@ -172,7 +181,7 @@ function AuthedPersona() {
 			{speechData ? (
 				<div className="flex w-full max-w-md flex-col gap-3">
 					<AudioPlayer>
-						<AudioPlayerElement data={speechData.audio} />
+						<AudioPlayerElement ref={audioRef} data={speechData.audio} />
 						<AudioPlayerControlBar>
 							<AudioPlayerPlayButton />
 							<AudioPlayerTimeDisplay />
@@ -181,7 +190,10 @@ function AuthedPersona() {
 					</AudioPlayer>
 					<Transcription
 						currentTime={currentTime}
-						onSeek={setCurrentTime}
+						onSeek={(time) => {
+						setCurrentTime(time);
+						if (audioRef.current) audioRef.current.currentTime = time;
+					}}
 						segments={speechData.segments}
 						className="max-w-md"
 					>
