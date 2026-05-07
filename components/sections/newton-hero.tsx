@@ -11,9 +11,8 @@ import {
 } from "@hugeicons/core-free-icons";
 import type { HugeiconsIconProps } from "@hugeicons/react";
 import { HugeiconsIcon } from "@hugeicons/react";
-import type { Experimental_SpeechResult as SpeechResult } from "ai";
 import Link from "next/link";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { PersonaState } from "@/components/ai-elements/persona";
 import { Persona } from "@/components/ai-elements/persona";
 import { SpeechInput } from "@/components/ai-elements/speech-input";
@@ -73,7 +72,7 @@ function StateButton({ state, currentState, onStateChange }: StateButtonProps) {
 type Message = { role: "user" | "assistant"; content: string };
 
 type SpeechData = {
-	audio: SpeechResult["audio"];
+	audio: { base64: string; mediaType: string };
 	segments: { text: string; startSecond: number; endSecond: number }[];
 };
 
@@ -84,6 +83,19 @@ function AuthedPersona() {
 	const [speechData, setSpeechData] = useState<SpeechData | null>(null);
 	const abortRef = useRef<AbortController | null>(null);
 	const audioRef = useRef<HTMLAudioElement>(null);
+
+	const audioBlobUrl = useMemo(() => {
+		if (!speechData) return null;
+		const bytes = Uint8Array.from(atob(speechData.audio.base64), (c) => c.charCodeAt(0));
+		const blob = new Blob([bytes], { type: speechData.audio.mediaType });
+		return URL.createObjectURL(blob);
+	}, [speechData]);
+
+	useEffect(() => {
+		return () => {
+			if (audioBlobUrl) URL.revokeObjectURL(audioBlobUrl);
+		};
+	}, [audioBlobUrl]);
 
 	useEffect(() => {
 		const audio = audioRef.current;
@@ -181,7 +193,7 @@ function AuthedPersona() {
 			{speechData ? (
 				<div className="flex w-full max-w-md flex-col gap-3">
 					<AudioPlayer>
-						<AudioPlayerElement ref={audioRef} data={speechData.audio} />
+						<AudioPlayerElement ref={audioRef} src={audioBlobUrl ?? ""} />
 						<AudioPlayerControlBar>
 							<AudioPlayerPlayButton />
 							<AudioPlayerTimeDisplay />
