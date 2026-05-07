@@ -12,9 +12,10 @@ import {
 import type { HugeiconsIconProps } from "@hugeicons/react";
 import { HugeiconsIcon } from "@hugeicons/react";
 import Link from "next/link";
-import { memo, useCallback, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import type { PersonaState } from "@/components/ai-elements/persona";
 import { Persona } from "@/components/ai-elements/persona";
+import { SpeechInput } from "@/components/ai-elements/speech-input";
 import { Button } from "@/components/ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";
 import {
@@ -25,7 +26,7 @@ import {
 
 type HugeIcon = HugeiconsIconProps["icon"];
 
-const states: { state: PersonaState; icon: HugeIcon; label: string }[] = [
+const stateButtons: { state: PersonaState; icon: HugeIcon; label: string }[] = [
 	{ state: "idle", icon: RadioIcon, label: "Idle" },
 	{ state: "listening", icon: Mic01Icon, label: "Listening" },
 	{ state: "thinking", icon: AiBrain01Icon, label: "Thinking" },
@@ -34,60 +35,138 @@ const states: { state: PersonaState; icon: HugeIcon; label: string }[] = [
 ];
 
 interface StateButtonProps {
-	state: (typeof states)[0];
+	state: (typeof stateButtons)[0];
 	currentState: PersonaState;
-	onStateChange: (state: PersonaState) => void;
+	onStateChange: (s: PersonaState) => void;
 }
 
-const StateButton = memo(
-	({ state, currentState, onStateChange }: StateButtonProps) => {
-		const handleClick = useCallback(
-			() => onStateChange(state.state),
-			[onStateChange, state.state],
-		);
-		return (
-			<Tooltip>
-				<TooltipTrigger asChild>
-					<Button
-						onClick={handleClick}
-						size="icon-sm"
-						variant={currentState === state.state ? "default" : "outline"}
-					>
-						<HugeiconsIcon
-							icon={state.icon}
-							strokeWidth={2}
-							className="size-4"
-						/>
-					</Button>
-				</TooltipTrigger>
-				<TooltipContent>{state.label}</TooltipContent>
-			</Tooltip>
-		);
-	},
-);
+function StateButton({ state, currentState, onStateChange }: StateButtonProps) {
+	return (
+		<Tooltip>
+			<TooltipTrigger asChild>
+				<Button
+					onClick={() => onStateChange(state.state)}
+					size="icon-sm"
+					variant={currentState === state.state ? "default" : "outline"}
+				>
+					<HugeiconsIcon icon={state.icon} strokeWidth={2} className="size-4" />
+				</Button>
+			</TooltipTrigger>
+			<TooltipContent>{state.label}</TooltipContent>
+		</Tooltip>
+	);
+}
 
-StateButton.displayName = "StateButton";
+type Message = { role: "user" | "assistant"; content: string };
 
 function AuthedPersona() {
-	const [currentState, setCurrentState] = useState<PersonaState>("idle");
+	const [personaState, setPersonaState] = useState<PersonaState>("idle");
+	const [messages, setMessages] = useState<Message[]>([]);
+	const [response, setResponse] = useState("");
 
-	const handleStateChange = useCallback((state: PersonaState) => {
-		setCurrentState(state);
+	const synthRef = useRef<SpeechSynthesisUtterance | null>(null);
+	const abortRef = useRef<AbortController | null>(null);
+
+	const speak = useCallback((text: string, onEnd: () => void) => {
+		window.speechSynthesis.cancel();
+		const utterance = new SpeechSynthesisUtterance(text);
+		utterance.rate = 1.05;
+		utterance.onend = onEnd;
+		synthRef.current = utterance;
+		window.speechSynthesis.speak(utterance);
 	}, []);
 
+	const sendToNewton = useCallback(
+		async (userText: string) => {
+			setPersonaState("thinking");
+			setResponse("");
+			abortRef.current?.abort();
+
+			const updated: Message[] = [
+				...messages,
+				{ role: "user", content: userText },
+			];
+			setMessages(updated);
+
+			abortRef.current = new AbortController();
+			const res = await fetch("/api/newton", {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({ messages: updated }),
+				signal: abortRef.current.signal,
+			});
+
+			if (!res.ok || !res.body) {
+				setPersonaState("idle");
+				return;
+			}
+
+			const reader = res.body.getReader();
+			const decoder = new TextDecoder();
+			let full = "";
+
+			while (true) {
+				const { done, value } = await reader.read();
+				if (done) break;
+				full += decoder.decode(value, { stream: true });
+				setResponse(full);
+			}
+
+			setMessages((prev) => [...prev, { role: "assistant", content: full }]);
+			setPersonaState("speaking");
+			speak(full, () => setPersonaState("idle"));
+		},
+		[messages, speak],
+	);
+
+	const handleTranscription = useCallback(
+		(text: string) => {
+			setPersonaState("listening");
+			sendToNewton(text);
+		},
+		[sendToNewton],
+	);
+
+	useEffect(() => {
+		return () => {
+			window.speechSynthesis.cancel();
+			abortRef.current?.abort();
+		};
+	}, []);
+
+	const busy = personaState === "thinking" || personaState === "speaking";
+
 	return (
-		<div className="flex size-full flex-col items-center justify-center gap-4 py-24 lg:py-32">
-			<Persona className="size-32" state={currentState} variant="obsidian" />
+		<div className="flex size-full flex-col items-center justify-center gap-6 py-24 lg:py-32">
+			<Persona className="size-32" state={personaState} variant="opal" />
 			<ButtonGroup orientation="horizontal">
-				{states.map((state) => (
+				{stateButtons.map((s) => (
 					<StateButton
-						key={state.state}
-						currentState={currentState}
-						onStateChange={handleStateChange}
-						state={state}
+						key={s.state}
+						state={s}
+						currentState={personaState}
+						onStateChange={setPersonaState}
 					/>
 				))}
 			</ButtonGroup>
+
+			{response && (
+				<p className="max-w-md text-center text-sm text-muted-foreground leading-relaxed">
+					{response}
+				</p>
+			)}
+
+			{!response && personaState === "idle" && messages.length === 0 && (
+				<p className="text-sm text-muted-foreground">
+					Tap the mic and ask Newton anything
+				</p>
+			)}
+
+			<SpeechInput
+				className="size-14 rounded-full shadow-md"
+				onTranscriptionChange={handleTranscription}
+				disabled={busy}
+			/>
 		</div>
 	);
 }
