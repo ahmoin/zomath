@@ -43,7 +43,7 @@ export async function POST(req: Request) {
 	const base64 = Buffer.from(arrayBuffer).toString("base64");
 
 	const result = streamText({
-		model: "google/gemini-2.5-flash",
+		model: "google/gemini-3-flash",
 		system: SYSTEM_PROMPT,
 		messages: [
 			{

@@ -11,11 +11,24 @@ import {
 } from "@hugeicons/core-free-icons";
 import type { HugeiconsIconProps } from "@hugeicons/react";
 import { HugeiconsIcon } from "@hugeicons/react";
+import type { Experimental_SpeechResult as SpeechResult } from "ai";
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { PersonaState } from "@/components/ai-elements/persona";
 import { Persona } from "@/components/ai-elements/persona";
 import { SpeechInput } from "@/components/ai-elements/speech-input";
+import {
+	AudioPlayer,
+	AudioPlayerControlBar,
+	AudioPlayerElement,
+	AudioPlayerPlayButton,
+	AudioPlayerTimeDisplay,
+	AudioPlayerTimeRange,
+} from "@/components/ai-elements/audio-player";
+import {
+	Transcription,
+	TranscriptionSegment,
+} from "@/components/ai-elements/transcription";
 import { Button } from "@/components/ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";
 import {
@@ -59,27 +72,35 @@ function StateButton({ state, currentState, onStateChange }: StateButtonProps) {
 
 type Message = { role: "user" | "assistant"; content: string };
 
+type SpeechData = {
+	audio: SpeechResult["audio"];
+	segments: { text: string; startSecond: number; endSecond: number }[];
+};
+
 function AuthedPersona() {
 	const [personaState, setPersonaState] = useState<PersonaState>("idle");
 	const [messages, setMessages] = useState<Message[]>([]);
-	const [response, setResponse] = useState("");
-
-	const synthRef = useRef<SpeechSynthesisUtterance | null>(null);
+	const [currentTime, setCurrentTime] = useState(0);
+	const [speechData, setSpeechData] = useState<SpeechData | null>(null);
 	const abortRef = useRef<AbortController | null>(null);
 
-	const speak = useCallback((text: string, onEnd: () => void) => {
-		window.speechSynthesis.cancel();
-		const utterance = new SpeechSynthesisUtterance(text);
-		utterance.rate = 1.05;
-		utterance.onend = onEnd;
-		synthRef.current = utterance;
-		window.speechSynthesis.speak(utterance);
+	const fetchSpeech = useCallback(async (text: string) => {
+		const res = await fetch("/api/newton/speech", {
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify({ text }),
+		});
+		if (!res.ok) return;
+		const data = await res.json() as SpeechData;
+		setSpeechData(data);
+		setPersonaState("speaking");
 	}, []);
 
 	const sendToNewton = useCallback(
 		async (userText: string) => {
 			setPersonaState("thinking");
-			setResponse("");
+			setSpeechData(null);
+			setCurrentTime(0);
 			abortRef.current?.abort();
 
 			const updated: Message[] = [
@@ -109,14 +130,12 @@ function AuthedPersona() {
 				const { done, value } = await reader.read();
 				if (done) break;
 				full += decoder.decode(value, { stream: true });
-				setResponse(full);
 			}
 
 			setMessages((prev) => [...prev, { role: "assistant", content: full }]);
-			setPersonaState("speaking");
-			speak(full, () => setPersonaState("idle"));
+			await fetchSpeech(full);
 		},
-		[messages, speak],
+		[messages, fetchSpeech],
 	);
 
 	const handleTranscription = useCallback(
@@ -129,7 +148,6 @@ function AuthedPersona() {
 
 	useEffect(() => {
 		return () => {
-			window.speechSynthesis.cancel();
 			abortRef.current?.abort();
 		};
 	}, []);
@@ -139,6 +157,7 @@ function AuthedPersona() {
 	return (
 		<div className="flex size-full flex-col items-center justify-center gap-6 py-24 lg:py-32">
 			<Persona className="size-32" state={personaState} variant="opal" />
+
 			<ButtonGroup orientation="horizontal">
 				{stateButtons.map((s) => (
 					<StateButton
@@ -150,16 +169,37 @@ function AuthedPersona() {
 				))}
 			</ButtonGroup>
 
-			{response && (
-				<p className="max-w-md text-center text-sm text-muted-foreground leading-relaxed">
-					{response}
-				</p>
-			)}
-
-			{!response && personaState === "idle" && messages.length === 0 && (
-				<p className="text-sm text-muted-foreground">
-					Tap the mic and ask Newton anything
-				</p>
+			{speechData ? (
+				<div className="flex w-full max-w-md flex-col gap-3">
+					<AudioPlayer>
+						<AudioPlayerElement data={speechData.audio} />
+						<AudioPlayerControlBar>
+							<AudioPlayerPlayButton />
+							<AudioPlayerTimeDisplay />
+							<AudioPlayerTimeRange />
+						</AudioPlayerControlBar>
+					</AudioPlayer>
+					<Transcription
+						currentTime={currentTime}
+						onSeek={setCurrentTime}
+						segments={speechData.segments}
+						className="max-w-md"
+					>
+						{(segment, index) => (
+							<TranscriptionSegment
+								key={index}
+								index={index}
+								segment={segment}
+							/>
+						)}
+					</Transcription>
+				</div>
+			) : (
+				!busy && messages.length === 0 && (
+					<p className="text-sm text-muted-foreground">
+						Tap the mic and ask Newton anything
+					</p>
+				)
 			)}
 
 			<SpeechInput

@@ -8,6 +8,12 @@ importers:
 
   .:
     dependencies:
+      '@ai-sdk/elevenlabs':
+        specifier: ^2.0.32
+        version: 2.0.32(zod@4.4.3)
+      '@ai-sdk/openai':
+        specifier: ^3.0.62
+        version: 3.0.62(zod@4.4.3)
       '@better-auth/infra':
         specifier: ^0.2.5
         version: 0.2.5(c56e9630c3be2abab656476e71c379cc)
@@ -201,8 +207,20 @@ importers:
 
 packages:
 
+  '@ai-sdk/elevenlabs@2.0.32':
+    resolution: {integrity: sha512-HvKYMniSjya+REjHF4Vp3cz5OA/hGw4RaUl1cAd/By3N/H3Ct6n9cYGHlX4rmo0TS5rh8t2iwQOEOYXJ9xA0GA==}
+    engines: {node: '>=18'}
+    peerDependencies:
+      zod: ^3.25.76 || ^4.1.8
+
   '@ai-sdk/gateway@3.0.110':
     resolution: {integrity: sha512-sbv8+1L9/BRKydn8dMNwoMQKupA4iLJ9N+yvxgW6wMQ/94UepDf3FeYWMj/dLdzolAHZ6izRUP4s5WqQkmJ2Zg==}
+    engines: {node: '>=18'}
+    peerDependencies:
+      zod: ^3.25.76 || ^4.1.8
+
+  '@ai-sdk/openai@3.0.62':
+    resolution: {integrity: sha512-Oy74Bztik2X25wZD9HRd83BAXOKcRvrfgz9gvVGqKj68yegf447NiElPbB6TSVb8zyiY9wv1GSGywMCxnnoF9g==}
     engines: {node: '>=18'}
     peerDependencies:
       zod: ^3.25.76 || ^4.1.8
@@ -5171,11 +5189,23 @@ packages:
 
 snapshots:
 
+  '@ai-sdk/elevenlabs@2.0.32(zod@4.4.3)':
+    dependencies:
+      '@ai-sdk/provider': 3.0.10
+      '@ai-sdk/provider-utils': 4.0.26(zod@4.4.3)
+      zod: 4.4.3
+
   '@ai-sdk/gateway@3.0.110(zod@4.4.3)':
     dependencies:
       '@ai-sdk/provider': 3.0.10
       '@ai-sdk/provider-utils': 4.0.26(zod@4.4.3)
       '@vercel/oidc': 3.2.0
+      zod: 4.4.3
+
+  '@ai-sdk/openai@3.0.62(zod@4.4.3)':
+    dependencies:
+      '@ai-sdk/provider': 3.0.10
+      '@ai-sdk/provider-utils': 4.0.26(zod@4.4.3)
       zod: 4.4.3
 
   '@ai-sdk/provider-utils@4.0.26(zod@4.4.3)':
