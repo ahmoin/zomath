@@ -22,7 +22,7 @@ export async function POST(req: Request) {
 	const { messages }: { messages: Message[] } = await req.json();
 
 	const result = streamText({
-		model: "anthropic/claude-haiku-4.5",
+		model: "google/gemini-2.5-flash",
 		system: SYSTEM_PROMPT,
 		messages,
 	});
