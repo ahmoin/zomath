@@ -222,7 +222,7 @@ export function PracticeHeroSection({ name }: PracticeHeroSectionProps) {
 						/>
 					</div>
 					<Shimmer className="text-base text-muted-foreground">
-						Newton is building your {topic} quiz...
+						{`Newton is building your ${topic} quiz...`}
 					</Shimmer>
 				</div>
 			</div>
