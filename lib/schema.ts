@@ -73,9 +73,55 @@ export const verification = pgTable(
 	(table) => [index("verification_identifier_idx").on(table.identifier)],
 );
 
+export const paper = pgTable(
+	"paper",
+	{
+		id: text("id").primaryKey(),
+		title: text("title").notNull().default("Untitled Paper"),
+		content: text("content").notNull().default(""),
+		userId: text("userId")
+			.notNull()
+			.references(() => user.id, { onDelete: "cascade" }),
+		createdAt: timestamp("createdAt").defaultNow().notNull(),
+		updatedAt: timestamp("updatedAt")
+			.defaultNow()
+			.$onUpdate(() => new Date())
+			.notNull(),
+	},
+	(table) => [index("paper_userId_idx").on(table.userId)],
+);
+
+export const journal = pgTable(
+	"journal",
+	{
+		id: text("id").primaryKey(),
+		title: text("title").notNull().default("Untitled Journal"),
+		content: text("content").notNull().default(""),
+		userId: text("userId")
+			.notNull()
+			.references(() => user.id, { onDelete: "cascade" }),
+		createdAt: timestamp("createdAt").defaultNow().notNull(),
+		updatedAt: timestamp("updatedAt")
+			.defaultNow()
+			.$onUpdate(() => new Date())
+			.notNull(),
+	},
+	(table) => [index("journal_userId_idx").on(table.userId)],
+);
+
 export const userRelations = relations(user, ({ many }) => ({
 	sessions: many(session),
 	accounts: many(account),
+	papers: many(paper),
+	journals: many(journal),
+}));
+
+export const paperRelations = relations(paper, ({ one }) => ({
+	user: one(user, { fields: [paper.userId], references: [user.id] }),
+}));
+
+export const journalRelations = relations(journal, ({ one }) => ({
+	user: one(user, { fields: [journal.userId], references: [user.id] }),
 }));
 
 export const sessionRelations = relations(session, ({ one }) => ({

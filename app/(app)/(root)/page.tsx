@@ -1,11 +1,9 @@
-import { count, eq } from "drizzle-orm";
+import { desc, eq } from "drizzle-orm";
 import { headers } from "next/headers";
 import { AppSidebar } from "@/components/app-sidebar";
-import { ChartAreaInteractive } from "@/components/chart-area-interactive";
 import { DashboardHeader } from "@/components/dashboard-header";
-import { DataTable } from "@/components/data-table";
-import { SectionCards } from "@/components/section-cards";
 import { AudienceSection } from "@/components/sections/audience";
+import { DashboardLibrary } from "@/components/sections/dashboard-library";
 import { FeaturesSection } from "@/components/sections/features";
 import { HeroSection } from "@/components/sections/hero";
 import { StackSection } from "@/components/sections/stack";
@@ -16,7 +14,7 @@ import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { auth } from "@/lib/auth";
 import { db } from "@/lib/db";
-import { session as sessionTable } from "@/lib/schema";
+import { journal, paper } from "@/lib/schema";
 
 export default async function Page() {
 	const authSession = await auth.api.getSession({
@@ -24,10 +22,18 @@ export default async function Page() {
 	});
 
 	if (authSession) {
-		const [{ value: sessionCount }] = await db
-			.select({ value: count() })
-			.from(sessionTable)
-			.where(eq(sessionTable.userId, authSession.user.id));
+		const [papers, journals] = await Promise.all([
+			db
+				.select()
+				.from(paper)
+				.where(eq(paper.userId, authSession.user.id))
+				.orderBy(desc(paper.updatedAt)),
+			db
+				.select()
+				.from(journal)
+				.where(eq(journal.userId, authSession.user.id))
+				.orderBy(desc(journal.updatedAt)),
+		]);
 
 		return (
 			<>
@@ -53,14 +59,7 @@ export default async function Page() {
 							<div className="flex flex-1 flex-col">
 								<div className="@container/main flex flex-1 flex-col gap-2">
 									<div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
-										<SectionCards
-											memberSince={authSession.user.createdAt}
-											sessionCount={sessionCount}
-										/>
-										<div className="px-4 lg:px-6">
-											<ChartAreaInteractive />
-										</div>
-										<DataTable data={[]} />
+										<DashboardLibrary papers={papers} journals={journals} />
 									</div>
 								</div>
 							</div>
