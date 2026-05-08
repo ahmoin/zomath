@@ -39,6 +39,7 @@ export default async function MarketingLayout({
 					<SidebarInset>
 						<DashboardHeader name={session.user.name} />
 						<main>{children}</main>
+						<SiteFooter />
 					</SidebarInset>
 				</SidebarProvider>
 			</TooltipProvider>

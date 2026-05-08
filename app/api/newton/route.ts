@@ -11,7 +11,7 @@ Principles:
 - Be warm and encouraging without being sycophantic
 - If a student is stuck, ask a simpler question to find where their understanding breaks
 
-Keep responses concise and conversational — you are speaking, not writing an essay. Avoid bullet points and headers; use natural flowing sentences. Do not use LaTeX or math notation symbols in your spoken responses — spell out math in plain English (say "x squared" not "x^2", "the integral of f of x" not "∫f(x)dx").`;
+Keep responses concise and conversational. You are speaking, not writing an essay. Avoid bullet points and headers. Use natural flowing sentences. Do not use LaTeX or math notation symbols in your spoken responses, spell out math in plain English (say "x squared" not "x^2", "the integral of f of x" not "∫f(x)dx").`;
 
 type Message = { role: "user" | "assistant"; content: string };
 

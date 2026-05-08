@@ -128,7 +128,7 @@ export function SolveMarketing() {
 						</p>
 						<div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
 							<Button size="lg" className="text-base px-8 h-12" asChild>
-								<Link href="/solve/try">
+								<Link href="/sign-up">
 									Try Solve free
 									<HugeiconsIcon
 										icon={ArrowRight02Icon}
@@ -777,7 +777,7 @@ export function SolveMarketing() {
 					</p>
 					<div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
 						<Button size="lg" className="text-base px-8 h-12" asChild>
-							<Link href="/solve/try">
+							<Link href="/sign-up">
 								Try Solve free
 								<HugeiconsIcon
 									icon={ArrowRight02Icon}

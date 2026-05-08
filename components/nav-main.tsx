@@ -1,8 +1,9 @@
 "use client";
 
-import { Mail01Icon, PlusSignCircleIcon } from "@hugeicons/core-free-icons";
+import { Camera01Icon, Mail01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import Link from "next/link";
+
 import { Button } from "@/components/ui/button";
 import {
 	SidebarGroup,
@@ -27,11 +28,14 @@ export function NavMain({
 				<SidebarMenu>
 					<SidebarMenuItem className="flex items-center gap-2">
 						<SidebarMenuButton
-							tooltip="Quick Create"
+							asChild
+							tooltip="Solve"
 							className="min-w-8 bg-primary text-primary-foreground duration-200 ease-linear hover:bg-primary/90 hover:text-primary-foreground active:bg-primary/90 active:text-primary-foreground"
 						>
-							<HugeiconsIcon icon={PlusSignCircleIcon} strokeWidth={2} />
-							<span>Quick Create</span>
+							<Link href="/solve">
+								<HugeiconsIcon icon={Camera01Icon} strokeWidth={2} />
+								<span>Solve</span>
+							</Link>
 						</SidebarMenuButton>
 						<Button
 							size="icon"

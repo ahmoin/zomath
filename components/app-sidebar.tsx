@@ -37,11 +37,6 @@ const data = {
 			icon: <HugeiconsIcon icon={DashboardSquare01Icon} strokeWidth={2} />,
 		},
 		{
-			title: "Solve",
-			url: "/solve",
-			icon: <HugeiconsIcon icon={Camera02Icon} strokeWidth={2} />,
-		},
-		{
 			title: "History",
 			url: "#",
 			icon: <HugeiconsIcon icon={Clock01Icon} strokeWidth={2} />,
