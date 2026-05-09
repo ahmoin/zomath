@@ -38,7 +38,7 @@ const data = {
 		},
 		{
 			title: "History",
-			url: "#",
+			url: "/history",
 			icon: <HugeiconsIcon icon={Clock01Icon} strokeWidth={2} />,
 		},
 		{
@@ -56,7 +56,7 @@ const data = {
 	navSecondary: [
 		{
 			title: "Settings",
-			url: "#",
+			url: "/settings",
 			icon: <HugeiconsIcon icon={Settings05Icon} strokeWidth={2} />,
 		},
 		{

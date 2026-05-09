@@ -10,7 +10,7 @@ import { type JSX, useEffect } from "react";
 import {
 	$createYouTubeNode,
 	YouTubeNode,
-} from "@/components/editor/nodes/youtube-node";
+} from "@/components/editor/nodes/embeds/youtube-node";
 
 export const INSERT_YOUTUBE_COMMAND: LexicalCommand<string> = createCommand(
 	"INSERT_YOUTUBE_COMMAND",

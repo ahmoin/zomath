@@ -56,6 +56,9 @@ importers:
       '@lexical/hashtag':
         specifier: ^0.44.0
         version: 0.44.0
+      '@lexical/history':
+        specifier: ^0.44.0
+        version: 0.44.0
       '@lexical/link':
         specifier: ^0.44.0
         version: 0.44.0
