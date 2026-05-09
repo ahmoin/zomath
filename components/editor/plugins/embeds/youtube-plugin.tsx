@@ -7,7 +7,10 @@ import {
 } from "lexical";
 import { type JSX, useEffect } from "react";
 
-import { $createYouTubeNode, YouTubeNode } from "@/components/editor/nodes/youtube-node";
+import {
+	$createYouTubeNode,
+	YouTubeNode,
+} from "@/components/editor/nodes/youtube-node";
 
 export const INSERT_YOUTUBE_COMMAND: LexicalCommand<string> = createCommand(
 	"INSERT_YOUTUBE_COMMAND",

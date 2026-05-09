@@ -2,7 +2,6 @@
 
 import {
 	BookOpen01Icon,
-	Camera02Icon,
 	ChartHistogramIcon,
 	Clock01Icon,
 	DashboardSquare01Icon,
@@ -12,7 +11,9 @@ import {
 	Trophy,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
+import Link from "next/link";
 import type * as React from "react";
+import { Icons } from "@/components/icons";
 import { NavDocuments } from "@/components/nav-documents";
 import { NavMain } from "@/components/nav-main";
 import { NavSecondary } from "@/components/nav-secondary";
@@ -27,7 +28,6 @@ import {
 	SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { siteConfig } from "@/lib/config";
-import { Icons } from "./icons";
 
 const data = {
 	navMain: [
@@ -98,12 +98,12 @@ export function AppSidebar({
 							asChild
 							className="data-[slot=sidebar-menu-button]:p-1.5!"
 						>
-							<a href="#">
+							<Link href="/">
 								<Icons.logo className="size-5!" />
 								<span className="text-base font-semibold">
 									{siteConfig.name}
 								</span>
-							</a>
+							</Link>
 						</SidebarMenuButton>
 					</SidebarMenuItem>
 				</SidebarMenu>

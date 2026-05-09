@@ -15,6 +15,7 @@ import {
 import { useCallback, useState } from "react";
 
 import { useToolbarContext } from "@/components/editor/context/toolbar-context";
+import { useUpdateToolbarHandler } from "@/components/editor/editor-hooks/use-update-toolbar";
 import {
 	Select,
 	SelectContent,
@@ -22,7 +23,6 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import { useUpdateToolbarHandler } from "@/components/editor/editor-hooks/use-update-toolbar";
 
 function getCodeLanguageOptions(): [string, string][] {
 	const options: [string, string][] = [];

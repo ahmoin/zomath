@@ -14,8 +14,8 @@ import {
 import { useCallback, useState } from "react";
 
 import { useToolbarContext } from "@/components/editor/context/toolbar-context";
-import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { useUpdateToolbarHandler } from "@/components/editor/editor-hooks/use-update-toolbar";
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 
 const FORMATS = [
 	{ format: "bold", icon: BoldIcon, label: "Bold" },

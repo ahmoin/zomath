@@ -1,6 +1,6 @@
 import { Columns3Icon } from "lucide-react";
-import { InsertLayoutDialog } from "@/components/editor/plugins/layout-plugin";
 import { useToolbarContext } from "@/components/editor/context/toolbar-context";
+import { InsertLayoutDialog } from "@/components/editor/plugins/layout-plugin";
 import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
 
 export function InsertColumnsLayout() {

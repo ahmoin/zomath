@@ -5,6 +5,8 @@ import {
 import { $getSelection, $isRangeSelection, type BaseSelection } from "lexical";
 import { BaselineIcon } from "lucide-react";
 import { useCallback, useState } from "react";
+import { useToolbarContext } from "@/components/editor/context/toolbar-context";
+import { useUpdateToolbarHandler } from "@/components/editor/editor-hooks/use-update-toolbar";
 import {
 	ColorPicker,
 	ColorPickerAlphaSlider,
@@ -16,9 +18,7 @@ import {
 	ColorPickerInput,
 	ColorPickerTrigger,
 } from "@/components/editor/editor-ui/color-picker";
-import { useToolbarContext } from "@/components/editor/context/toolbar-context";
 import { Button } from "@/components/ui/button";
-import { useUpdateToolbarHandler } from "@/components/editor/editor-hooks/use-update-toolbar";
 
 export function FontColorToolbarPlugin() {
 	const { activeEditor } = useToolbarContext();

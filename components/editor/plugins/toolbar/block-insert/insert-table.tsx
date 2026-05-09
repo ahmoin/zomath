@@ -1,6 +1,6 @@
 import { TableIcon } from "lucide-react";
-import { InsertTableDialog } from "@/components/editor/plugins/table-plugin";
 import { useToolbarContext } from "@/components/editor/context/toolbar-context";
+import { InsertTableDialog } from "@/components/editor/plugins/table-plugin";
 import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
 
 export function InsertTable() {

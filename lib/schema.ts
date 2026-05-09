@@ -73,12 +73,11 @@ export const verification = pgTable(
 	(table) => [index("verification_identifier_idx").on(table.identifier)],
 );
 
-export const paper = pgTable(
-	"paper",
+export const project = pgTable(
+	"project",
 	{
 		id: text("id").primaryKey(),
-		title: text("title").notNull().default("Untitled Paper"),
-		content: text("content").notNull().default(""),
+		title: text("title").notNull().default("Untitled Project"),
 		userId: text("userId")
 			.notNull()
 			.references(() => user.id, { onDelete: "cascade" }),
@@ -88,7 +87,7 @@ export const paper = pgTable(
 			.$onUpdate(() => new Date())
 			.notNull(),
 	},
-	(table) => [index("paper_userId_idx").on(table.userId)],
+	(table) => [index("project_userId_idx").on(table.userId)],
 );
 
 export const journal = pgTable(
@@ -100,28 +99,39 @@ export const journal = pgTable(
 		userId: text("userId")
 			.notNull()
 			.references(() => user.id, { onDelete: "cascade" }),
+		projectId: text("projectId").references(() => project.id, {
+			onDelete: "set null",
+		}),
 		createdAt: timestamp("createdAt").defaultNow().notNull(),
 		updatedAt: timestamp("updatedAt")
 			.defaultNow()
 			.$onUpdate(() => new Date())
 			.notNull(),
 	},
-	(table) => [index("journal_userId_idx").on(table.userId)],
+	(table) => [
+		index("journal_userId_idx").on(table.userId),
+		index("journal_projectId_idx").on(table.projectId),
+	],
 );
 
 export const userRelations = relations(user, ({ many }) => ({
 	sessions: many(session),
 	accounts: many(account),
-	papers: many(paper),
+	projects: many(project),
 	journals: many(journal),
 }));
 
-export const paperRelations = relations(paper, ({ one }) => ({
-	user: one(user, { fields: [paper.userId], references: [user.id] }),
+export const projectRelations = relations(project, ({ one, many }) => ({
+	user: one(user, { fields: [project.userId], references: [user.id] }),
+	journals: many(journal),
 }));
 
 export const journalRelations = relations(journal, ({ one }) => ({
 	user: one(user, { fields: [journal.userId], references: [user.id] }),
+	project: one(project, {
+		fields: [journal.projectId],
+		references: [project.id],
+	}),
 }));
 
 export const sessionRelations = relations(session, ({ one }) => ({

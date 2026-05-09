@@ -17,14 +17,16 @@ export async function GET() {
 	return Response.json(journals);
 }
 
-export async function POST() {
+export async function POST(req: Request) {
 	const session = await auth.api.getSession({ headers: await headers() });
 	if (!session) return new Response("Unauthorized", { status: 401 });
+
+	const body = (await req.json().catch(() => ({}))) as { projectId?: string };
 
 	const id = crypto.randomUUID();
 	const [created] = await db
 		.insert(journal)
-		.values({ id, userId: session.user.id })
+		.values({ id, userId: session.user.id, projectId: body.projectId ?? null })
 		.returning();
 
 	return Response.json(created, { status: 201 });

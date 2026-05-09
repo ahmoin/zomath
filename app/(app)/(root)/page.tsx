@@ -14,7 +14,7 @@ import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { auth } from "@/lib/auth";
 import { db } from "@/lib/db";
-import { journal, paper } from "@/lib/schema";
+import { journal, project } from "@/lib/schema";
 
 export default async function Page() {
 	const authSession = await auth.api.getSession({
@@ -22,12 +22,12 @@ export default async function Page() {
 	});
 
 	if (authSession) {
-		const [papers, journals] = await Promise.all([
+		const [projects, journals] = await Promise.all([
 			db
 				.select()
-				.from(paper)
-				.where(eq(paper.userId, authSession.user.id))
-				.orderBy(desc(paper.updatedAt)),
+				.from(project)
+				.where(eq(project.userId, authSession.user.id))
+				.orderBy(desc(project.updatedAt)),
 			db
 				.select()
 				.from(journal)
@@ -59,7 +59,7 @@ export default async function Page() {
 							<div className="flex flex-1 flex-col">
 								<div className="@container/main flex flex-1 flex-col gap-2">
 									<div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
-										<DashboardLibrary papers={papers} journals={journals} />
+										<DashboardLibrary projects={projects} journals={journals} />
 									</div>
 								</div>
 							</div>

@@ -19,6 +19,7 @@ import {
 	useState,
 } from "react";
 import * as ReactDOM from "react-dom";
+import { useEditorModal } from "@/components/editor/editor-hooks/use-modal";
 import { Button } from "@/components/ui/button";
 import {
 	Command,
@@ -28,7 +29,6 @@ import {
 	CommandItem,
 	CommandList,
 } from "@/components/ui/command";
-import { useEditorModal } from "@/components/editor/editor-hooks/use-modal";
 
 import type { ComponentPickerOption } from "./picker/component-picker-option";
 

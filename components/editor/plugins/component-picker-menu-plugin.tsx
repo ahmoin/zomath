@@ -13,13 +13,13 @@ import {
 	useState,
 } from "react";
 import { createPortal } from "react-dom";
+import { useEditorModal } from "@/components/editor/editor-hooks/use-modal";
 import {
 	Command,
 	CommandGroup,
 	CommandItem,
 	CommandList,
 } from "@/components/ui/command";
-import { useEditorModal } from "@/components/editor/editor-hooks/use-modal";
 
 import type { ComponentPickerOption } from "./picker/component-picker-option";
 

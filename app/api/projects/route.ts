@@ -2,19 +2,19 @@ import { desc, eq } from "drizzle-orm";
 import { headers } from "next/headers";
 import { auth } from "@/lib/auth";
 import { db } from "@/lib/db";
-import { paper } from "@/lib/schema";
+import { project } from "@/lib/schema";
 
 export async function GET() {
 	const session = await auth.api.getSession({ headers: await headers() });
 	if (!session) return new Response("Unauthorized", { status: 401 });
 
-	const papers = await db
+	const projects = await db
 		.select()
-		.from(paper)
-		.where(eq(paper.userId, session.user.id))
-		.orderBy(desc(paper.updatedAt));
+		.from(project)
+		.where(eq(project.userId, session.user.id))
+		.orderBy(desc(project.updatedAt));
 
-	return Response.json(papers);
+	return Response.json(projects);
 }
 
 export async function POST() {
@@ -23,7 +23,7 @@ export async function POST() {
 
 	const id = crypto.randomUUID();
 	const [created] = await db
-		.insert(paper)
+		.insert(project)
 		.values({ id, userId: session.user.id })
 		.returning();
 

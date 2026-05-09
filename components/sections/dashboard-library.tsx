@@ -3,7 +3,7 @@
 import {
 	ArrowDown01Icon,
 	Delete02Icon,
-	FileText,
+	FolderLibraryIcon,
 	GridIcon,
 	LayoutList,
 	MoreHorizontalIcon,
@@ -37,7 +37,7 @@ import {
 	TooltipTrigger,
 } from "@/components/ui/tooltip";
 
-interface Paper {
+interface Project {
 	id: string;
 	title: string;
 	createdAt: Date;
@@ -53,7 +53,7 @@ interface Journal {
 }
 
 interface DashboardLibraryProps {
-	papers?: Paper[];
+	projects?: Project[];
 	journals?: Journal[];
 }
 
@@ -83,14 +83,14 @@ function formatDate(date: Date | string) {
 }
 
 export function DashboardLibrary({
-	papers = [],
+	projects = [],
 	journals = [],
 }: DashboardLibraryProps) {
 	const router = useRouter();
 	const [view, setView] = useState<ViewMode>("grid");
-	const [creatingPaper, setCreatingPaper] = useState(false);
+	const [creatingProject, setCreatingProject] = useState(false);
 	const [creatingJournal, setCreatingJournal] = useState(false);
-	const [deletingPaperIds, setDeletingPaperIds] = useState<Set<string>>(
+	const [deletingProjectIds, setDeletingProjectIds] = useState<Set<string>>(
 		new Set(),
 	);
 	const [journalSort, setJournalSort] = useState<SortMode>("edited-newest");
@@ -107,21 +107,21 @@ export function DashboardLibrary({
 		return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
 	});
 
-	async function deletePaper(id: string) {
-		setDeletingPaperIds((prev) => new Set(prev).add(id));
-		await fetch(`/api/papers/${id}`, { method: "DELETE" });
+	async function deleteProject(id: string) {
+		setDeletingProjectIds((prev) => new Set(prev).add(id));
+		await fetch(`/api/projects/${id}`, { method: "DELETE" });
 		router.refresh();
 	}
 
-	async function createPaper() {
-		setCreatingPaper(true);
+	async function createProject() {
+		setCreatingProject(true);
 		try {
-			const res = await fetch("/api/papers", { method: "POST" });
+			const res = await fetch("/api/projects", { method: "POST" });
 			if (!res.ok) return;
 			const data = (await res.json()) as { id: string };
-			router.push(`/papers/${data.id}`);
+			router.push(`/projects/${data.id}`);
 		} finally {
-			setCreatingPaper(false);
+			setCreatingProject(false);
 		}
 	}
 
@@ -160,10 +160,10 @@ export function DashboardLibrary({
 
 			<section className="flex flex-col gap-4">
 				<div className="flex items-center gap-2">
-					<h2 className="text-base font-semibold tracking-tight">Papers</h2>
-					{papers.length > 0 && (
+					<h2 className="text-base font-semibold tracking-tight">Projects</h2>
+					{projects.length > 0 && (
 						<span className="flex size-5 items-center justify-center rounded-full bg-muted text-xs font-medium text-muted-foreground">
-							{papers.length}
+							{projects.length}
 						</span>
 					)}
 				</div>
@@ -173,7 +173,7 @@ export function DashboardLibrary({
 						<Item
 							variant="outline"
 							className="cursor-pointer [border-style:dashed] border-2 hover:border-primary/40 hover:bg-muted/40"
-							onClick={createPaper}
+							onClick={createProject}
 						>
 							<ItemMedia>
 								<HugeiconsIcon
@@ -184,13 +184,13 @@ export function DashboardLibrary({
 							</ItemMedia>
 							<ItemContent>
 								<ItemTitle className="text-muted-foreground font-normal">
-									{creatingPaper ? "Creating..." : "Create paper"}
+									{creatingProject ? "Creating..." : "Create project"}
 								</ItemTitle>
 							</ItemContent>
 						</Item>
-						{papers.map((p) => (
+						{projects.map((p) => (
 							<Item key={p.id} variant="outline" asChild>
-								<Link href={`/papers/${p.id}`}>
+								<Link href={`/projects/${p.id}`}>
 									<ItemContent>
 										<ItemTitle>{p.title}</ItemTitle>
 										<ItemDescription>
@@ -218,8 +218,8 @@ export function DashboardLibrary({
 				) : (
 					<div className="grid grid-cols-3 gap-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8">
 						<button
-							onClick={createPaper}
-							disabled={creatingPaper}
+							onClick={createProject}
+							disabled={creatingProject}
 							className="group flex h-32 flex-col items-center justify-center rounded-2xl border-2 border-dashed border-muted-foreground/40 bg-transparent transition-colors hover:border-primary/40 hover:bg-muted/40 disabled:opacity-50"
 						>
 							<HugeiconsIcon
@@ -228,16 +228,16 @@ export function DashboardLibrary({
 								strokeWidth={2}
 							/>
 						</button>
-						{papers
-							.filter((p) => !deletingPaperIds.has(p.id))
+						{projects
+							.filter((p) => !deletingProjectIds.has(p.id))
 							.map((p) => (
 								<div key={p.id} className="group relative">
 									<Link
-										href={`/papers/${p.id}`}
+										href={`/projects/${p.id}`}
 										className="flex h-32 flex-col gap-2 rounded-2xl border border-border bg-card p-3 text-left transition-colors hover:border-primary/30 hover:bg-accent/50"
 									>
 										<HugeiconsIcon
-											icon={FileText}
+											icon={FolderLibraryIcon}
 											className="size-5 text-muted-foreground"
 											strokeWidth={1.5}
 										/>
@@ -259,7 +259,7 @@ export function DashboardLibrary({
 													className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity"
 													onClick={(e) => {
 														e.preventDefault();
-														deletePaper(p.id);
+														deleteProject(p.id);
 													}}
 												>
 													<HugeiconsIcon
@@ -269,7 +269,7 @@ export function DashboardLibrary({
 													/>
 												</Button>
 											</TooltipTrigger>
-											<TooltipContent>Move to trash</TooltipContent>
+											<TooltipContent>Delete project</TooltipContent>
 										</Tooltip>
 									</TooltipProvider>
 								</div>
