@@ -8,7 +8,7 @@ import {
 import { CircleCheckIcon, CopyIcon } from "lucide-react";
 import { useState } from "react";
 
-import { useDebounce } from "@/components/use-debounce";
+import { useDebounce } from "@/components/editor/editor-hooks/use-debounce";
 
 interface Props {
 	editor: LexicalEditor;

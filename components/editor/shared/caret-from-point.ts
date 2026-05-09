@@ -14,8 +14,7 @@ export function caretFromPoint(
 			node: range.startContainer,
 			offset: range.startOffset,
 		};
-		// @ts-expect-error
-	} else if (document.caretPositionFromPoint !== "undefined") {
+	} else if (typeof document.caretPositionFromPoint !== "undefined") {
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		const range = (document as any).caretPositionFromPoint(x, y);
 		if (range === null) {

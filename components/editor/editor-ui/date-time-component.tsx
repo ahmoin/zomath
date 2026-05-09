@@ -14,7 +14,10 @@ import { CalendarIcon } from "lucide-react";
 import type * as React from "react";
 import type { JSX } from "react";
 import { useState } from "react";
-
+import {
+	$isDateTimeNode,
+	type DateTimeNode,
+} from "@/components/editor/nodes/date-time-node";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -26,8 +29,6 @@ import {
 	PopoverTrigger,
 } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
-
-import { $isDateTimeNode, type DateTimeNode } from "@/components/editor/nodes/date-time-node";
 
 const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 

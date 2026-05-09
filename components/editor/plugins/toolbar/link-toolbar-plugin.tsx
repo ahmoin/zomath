@@ -8,10 +8,10 @@ import {
 import { LinkIcon } from "lucide-react";
 import { useCallback, useState } from "react";
 import { getSelectedNode } from "@/components/editor/utils/get-selected-node";
-import { useToolbarContext } from "@/components/toolbar-context";
-import { Toggle } from "@/components/ui/toggle";
 import { sanitizeUrl } from "@/components/editor/utils/url";
-import { useUpdateToolbarHandler } from "@/components/use-update-toolbar";
+import { useToolbarContext } from "@/components/editor/context/toolbar-context";
+import { Toggle } from "@/components/ui/toggle";
+import { useUpdateToolbarHandler } from "@/components/editor/editor-hooks/use-update-toolbar";
 
 export function LinkToolbarPlugin({
 	setIsLinkEditMode,

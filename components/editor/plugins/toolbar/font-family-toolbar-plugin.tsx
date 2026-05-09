@@ -6,7 +6,7 @@ import { $getSelection, $isRangeSelection, type BaseSelection } from "lexical";
 import { ChevronDownIcon, TypeIcon } from "lucide-react";
 import { useCallback, useState } from "react";
 
-import { useToolbarContext } from "@/components/toolbar-context";
+import { useToolbarContext } from "@/components/editor/context/toolbar-context";
 import { Button } from "@/components/ui/button";
 import {
 	DropdownMenu,
@@ -14,7 +14,7 @@ import {
 	DropdownMenuItem,
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useUpdateToolbarHandler } from "@/components/use-update-toolbar";
+import { useUpdateToolbarHandler } from "@/components/editor/editor-hooks/use-update-toolbar";
 
 const FONT_FAMILY_OPTIONS = [
 	"Arial",

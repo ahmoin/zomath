@@ -14,7 +14,7 @@ import {
 } from "lexical";
 import { useCallback, useState } from "react";
 
-import { useToolbarContext } from "@/components/toolbar-context";
+import { useToolbarContext } from "@/components/editor/context/toolbar-context";
 import {
 	Select,
 	SelectContent,
@@ -22,7 +22,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import { useUpdateToolbarHandler } from "@/components/use-update-toolbar";
+import { useUpdateToolbarHandler } from "@/components/editor/editor-hooks/use-update-toolbar";
 
 function getCodeLanguageOptions(): [string, string][] {
 	const options: [string, string][] = [];

@@ -13,9 +13,9 @@ import {
 } from "lucide-react";
 import { useCallback, useState } from "react";
 
-import { useToolbarContext } from "@/components/toolbar-context";
+import { useToolbarContext } from "@/components/editor/context/toolbar-context";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
-import { useUpdateToolbarHandler } from "@/components/use-update-toolbar";
+import { useUpdateToolbarHandler } from "@/components/editor/editor-hooks/use-update-toolbar";
 
 const FORMATS = [
 	{ format: "bold", icon: BoldIcon, label: "Bold" },

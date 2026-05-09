@@ -9,7 +9,10 @@ import { SendIcon } from "lucide-react";
 import { useEffect } from "react";
 import { toast } from "sonner";
 
-import { docFromHash, docToHash } from "@/components/editor/utils/doc-serialization";
+import {
+	docFromHash,
+	docToHash,
+} from "@/components/editor/utils/doc-serialization";
 import { Button } from "@/components/ui/button";
 import {
 	Tooltip,

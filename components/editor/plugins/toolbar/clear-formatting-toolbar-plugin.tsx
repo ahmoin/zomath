@@ -11,7 +11,7 @@ import {
 import { EraserIcon } from "lucide-react";
 import { useCallback } from "react";
 
-import { useToolbarContext } from "@/components/toolbar-context";
+import { useToolbarContext } from "@/components/editor/context/toolbar-context";
 import { Button } from "@/components/ui/button";
 
 export function ClearFormattingToolbarPlugin() {

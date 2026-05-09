@@ -19,10 +19,10 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import { getSelectedNode } from "@/components/editor/utils/get-selected-node";
-import { useToolbarContext } from "@/components/toolbar-context";
+import { useToolbarContext } from "@/components/editor/context/toolbar-context";
 import { Separator } from "@/components/ui/separator";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
-import { useUpdateToolbarHandler } from "@/components/use-update-toolbar";
+import { useUpdateToolbarHandler } from "@/components/editor/editor-hooks/use-update-toolbar";
 
 const ELEMENT_FORMAT_OPTIONS: {
 	[key in Exclude<ElementFormatType, "start" | "end" | "">]: {

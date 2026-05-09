@@ -10,7 +10,10 @@ import {
 	type LexicalCommand,
 } from "lexical";
 
-import { $createDateTimeNode, DateTimeNode } from "@/components/editor/nodes/date-time-node";
+import {
+	$createDateTimeNode,
+	DateTimeNode,
+} from "@/components/editor/nodes/date-time-node";
 
 type CommandPayload = {
 	dateTime: Date;

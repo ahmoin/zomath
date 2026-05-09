@@ -5,7 +5,7 @@ import {
 	DropdownMenuContent,
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useEditorModal } from "@/components/use-modal";
+import { useEditorModal } from "@/components/editor/editor-hooks/use-modal";
 
 export function BlockInsertPlugin({ children }: { children: React.ReactNode }) {
 	const [modal] = useEditorModal();

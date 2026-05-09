@@ -4,7 +4,7 @@ import {
 	$createTweetNode,
 	$isTweetNode,
 	TweetNode,
-} from "@/components/tweet-node";
+} from "@/components/editor/nodes/tweet-node";
 
 export const TWEET: ElementTransformer = {
 	dependencies: [TweetNode],

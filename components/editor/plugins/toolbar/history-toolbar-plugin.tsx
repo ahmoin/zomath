@@ -10,7 +10,7 @@ import {
 import { RedoIcon, UndoIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 
-import { useToolbarContext } from "@/components/toolbar-context";
+import { useToolbarContext } from "@/components/editor/context/toolbar-context";
 import { Button } from "@/components/ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";
 

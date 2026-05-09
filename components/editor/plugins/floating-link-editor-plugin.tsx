@@ -33,9 +33,9 @@ import { createPortal } from "react-dom";
 
 import { getSelectedNode } from "@/components/editor/utils/get-selected-node";
 import { setFloatingElemPositionForLinkEditor } from "@/components/editor/utils/set-floating-elem-position-for-link-editor";
+import { sanitizeUrl } from "@/components/editor/utils/url";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { sanitizeUrl } from "@/components/editor/utils/url";
 
 function FloatingLinkEditor({
 	editor,

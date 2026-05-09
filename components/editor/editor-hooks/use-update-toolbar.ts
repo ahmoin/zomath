@@ -6,7 +6,7 @@ import {
 } from "lexical";
 import { useEffect, useRef } from "react";
 
-import { useToolbarContext } from "@/components/toolbar-context";
+import { useToolbarContext } from "@/components/editor/context/toolbar-context";
 
 export function useUpdateToolbarHandler(
 	callback: (selection: BaseSelection) => void,

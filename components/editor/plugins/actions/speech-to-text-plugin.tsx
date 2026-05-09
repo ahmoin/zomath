@@ -17,7 +17,34 @@ import {
 	TooltipContent,
 	TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { useReport } from "@/components/use-report";
+import { useReport } from "@/components/editor/editor-hooks/use-report";
+
+interface SR extends EventTarget {
+	continuous: boolean;
+	interimResults: boolean;
+	onresult: ((ev: SREvent) => void) | null;
+	start(): void;
+	stop(): void;
+}
+
+interface SREvent extends Event {
+	results: {
+		length: number;
+		item(i: number): {
+			length: number;
+			item(i: number): { transcript: string; confidence: number };
+			isFinal: boolean;
+		};
+	};
+	resultIndex: number;
+}
+
+type SRConstructor = new () => SR;
+
+declare const window: Window & {
+	SpeechRecognition?: SRConstructor;
+	webkitSpeechRecognition?: SRConstructor;
+};
 
 export const SPEECH_TO_TEXT_COMMAND: LexicalCommand<boolean> = createCommand(
 	"SPEECH_TO_TEXT_COMMAND",
@@ -48,64 +75,60 @@ function SpeechToTextPluginImpl() {
 	const [editor] = useLexicalComposerContext();
 	const [isEnabled, setIsEnabled] = useState<boolean>(false);
 	const [isSpeechToText, setIsSpeechToText] = useState(false);
-	const SpeechRecognition =
-		// @ts-expect-error missing type
-		window.SpeechRecognition || window.webkitSpeechRecognition;
-	const recognition = useRef<typeof SpeechRecognition | null>(null);
+	const recognition = useRef<SR | null>(null);
 	const report = useReport();
 
 	useEffect(() => {
 		if (isEnabled && recognition.current === null) {
-			recognition.current = new SpeechRecognition();
-			recognition.current.continuous = true;
-			recognition.current.interimResults = true;
-			recognition.current.addEventListener(
-				"result",
-				(event: typeof SpeechRecognition) => {
-					const resultItem = event.results.item(event.resultIndex);
-					const { transcript } = resultItem.item(0);
-					report(transcript);
+			const SpeechRecognitionCtor =
+				window.SpeechRecognition || window.webkitSpeechRecognition;
+			const rec = new SpeechRecognitionCtor();
+			rec.continuous = true;
+			rec.interimResults = true;
+			rec.onresult = (event: SREvent) => {
+				const resultItem = event.results.item(event.resultIndex);
+				const { transcript } = resultItem.item(0);
+				report(transcript);
 
-					if (!resultItem.isFinal) {
-						return;
-					}
+				if (!resultItem.isFinal) {
+					return;
+				}
 
-					editor.update(() => {
-						const selection = $getSelection();
+				editor.update(() => {
+					const selection = $getSelection();
 
-						if ($isRangeSelection(selection)) {
-							const command = VOICE_COMMANDS[transcript.toLowerCase().trim()];
+					if ($isRangeSelection(selection)) {
+						const command = VOICE_COMMANDS[transcript.toLowerCase().trim()];
 
-							if (command) {
-								command({
-									editor,
-									selection,
-								});
-							} else if (transcript.match(/\s*\n\s*/)) {
-								selection.insertParagraph();
-							} else {
-								selection.insertText(transcript);
-							}
+						if (command) {
+							command({
+								editor,
+								selection,
+							});
+						} else if (transcript.match(/\s*\n\s*/)) {
+							selection.insertParagraph();
+						} else {
+							selection.insertText(transcript);
 						}
-					});
-				},
-			);
+					}
+				});
+			};
+			recognition.current = rec;
 		}
 
-		if (recognition.current) {
+		const current = recognition.current;
+		if (current) {
 			if (isEnabled) {
-				recognition.current.start();
+				current.start();
 			} else {
-				recognition.current.stop();
+				current.stop();
 			}
 		}
 
 		return () => {
-			if (recognition.current !== null) {
-				recognition.current.stop();
-			}
+			recognition.current?.stop();
 		};
-	}, [SpeechRecognition, editor, isEnabled, report]);
+	}, [editor, isEnabled, report]);
 	useEffect(() => {
 		return editor.registerCommand(
 			SPEECH_TO_TEXT_COMMAND,

@@ -7,7 +7,7 @@ import {
 } from "lexical";
 import { type JSX, useEffect } from "react";
 
-import { $createTweetNode, TweetNode } from "@/components/tweet-node";
+import { $createTweetNode, TweetNode } from "@/components/editor/nodes/tweet-node";
 
 export const INSERT_TWEET_COMMAND: LexicalCommand<string> = createCommand(
 	"INSERT_TWEET_COMMAND",

@@ -6,7 +6,7 @@ import {
 	$isRangeSelection,
 } from "lexical";
 import { blockTypeToBlockName } from "@/components/editor/plugins/toolbar/block-format/block-format-data";
-import { useToolbarContext } from "@/components/toolbar-context";
+import { useToolbarContext } from "@/components/editor/context/toolbar-context";
 import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
 
 const BLOCK_FORMAT_VALUE = "bullet";

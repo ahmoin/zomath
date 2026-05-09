@@ -13,6 +13,7 @@ import { type JSX, useMemo, useState } from "react";
 // import { TwitterIcon, YoutubeIcon } from "lucide-react"
 
 import { INSERT_TWEET_COMMAND } from "@/components/editor/plugins/embeds/twitter-plugin";
+import { INSERT_YOUTUBE_COMMAND } from "@/components/editor/plugins/embeds/youtube-plugin";
 import { Button } from "@/components/ui/button";
 import {
 	Command,
@@ -27,8 +28,7 @@ import {
 	PopoverContent,
 	PopoverTrigger,
 } from "@/components/ui/popover";
-import { useEditorModal } from "@/components/use-modal";
-import { INSERT_YOUTUBE_COMMAND } from "@/components/editor/plugins/embeds/youtube-plugin";
+import { useEditorModal } from "@/components/editor/editor-hooks/use-modal";
 
 const YoutubeIcon = (
 	<svg
