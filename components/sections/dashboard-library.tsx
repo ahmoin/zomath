@@ -1,18 +1,26 @@
 "use client";
 
 import {
+	ArrowDown01Icon,
 	Delete02Icon,
 	FileText,
 	GridIcon,
 	LayoutList,
 	MoreHorizontalIcon,
 	PlusSignIcon,
+	Tick02Icon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import {
+	DropdownMenu,
+	DropdownMenuContent,
+	DropdownMenuItem,
+	DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import {
 	Item,
 	ItemActions,
@@ -50,6 +58,22 @@ interface DashboardLibraryProps {
 }
 
 type ViewMode = "grid" | "list";
+type SortMode =
+	| "edited-newest"
+	| "edited-oldest"
+	| "created-newest"
+	| "created-oldest"
+	| "alpha-az"
+	| "alpha-za";
+
+const SORT_LABELS: Record<SortMode, string> = {
+	"edited-newest": "Last edited (newest)",
+	"edited-oldest": "Last edited (oldest)",
+	"created-newest": "Created (newest)",
+	"created-oldest": "Created (oldest)",
+	"alpha-az": "Alphabetical (A-Z)",
+	"alpha-za": "Alphabetical (Z-A)",
+};
 
 function formatDate(date: Date | string) {
 	return new Date(date).toLocaleDateString("en-US", {
@@ -69,6 +93,19 @@ export function DashboardLibrary({
 	const [deletingPaperIds, setDeletingPaperIds] = useState<Set<string>>(
 		new Set(),
 	);
+	const [journalSort, setJournalSort] = useState<SortMode>("edited-newest");
+
+	const sortedJournals = [...journals].sort((a, b) => {
+		if (journalSort === "alpha-az") return a.title.localeCompare(b.title);
+		if (journalSort === "alpha-za") return b.title.localeCompare(a.title);
+		if (journalSort === "edited-newest")
+			return new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime();
+		if (journalSort === "edited-oldest")
+			return new Date(a.updatedAt).getTime() - new Date(b.updatedAt).getTime();
+		if (journalSort === "created-newest")
+			return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+		return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
+	});
 
 	async function deletePaper(id: string) {
 		setDeletingPaperIds((prev) => new Set(prev).add(id));
@@ -251,9 +288,35 @@ export function DashboardLibrary({
 							</span>
 						)}
 					</div>
-					<span className="text-xs text-muted-foreground">
-						Sort by: Last edited (newest)
-					</span>
+					<DropdownMenu>
+						<DropdownMenuTrigger asChild>
+							<button className="flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors outline-none">
+								Sort by: {SORT_LABELS[journalSort]}
+								<HugeiconsIcon
+									icon={ArrowDown01Icon}
+									className="size-3"
+									strokeWidth={2}
+								/>
+							</button>
+						</DropdownMenuTrigger>
+						<DropdownMenuContent align="end">
+							{(Object.keys(SORT_LABELS) as SortMode[]).map((mode) => (
+								<DropdownMenuItem
+									key={mode}
+									onClick={() => setJournalSort(mode)}
+								>
+									{SORT_LABELS[mode]}
+									{journalSort === mode && (
+										<HugeiconsIcon
+											icon={Tick02Icon}
+											className="ml-auto size-3.5 text-primary"
+											strokeWidth={2}
+										/>
+									)}
+								</DropdownMenuItem>
+							))}
+						</DropdownMenuContent>
+					</DropdownMenu>
 				</div>
 
 				{view === "list" ? (
@@ -276,7 +339,7 @@ export function DashboardLibrary({
 								</ItemTitle>
 							</ItemContent>
 						</Item>
-						{journals.map((j) => (
+						{sortedJournals.map((j) => (
 							<Item key={j.id} variant="outline" asChild>
 								<Link href={`/journals/${j.id}`}>
 									<ItemContent>
@@ -316,7 +379,7 @@ export function DashboardLibrary({
 								strokeWidth={2}
 							/>
 						</button>
-						{journals.map((j) => (
+						{sortedJournals.map((j) => (
 							<Link
 								key={j.id}
 								href={`/journals/${j.id}`}
