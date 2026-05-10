@@ -83,7 +83,7 @@ export interface CustomEmbedConfig extends EmbedConfig {
 }
 
 export const YoutubeEmbedConfig: CustomEmbedConfig = {
-	contentName: "Youtube Video",
+	contentName: "YouTube Video",
 
 	exampleUrl: "https://www.youtube.com/watch?v=jNQXAC9IVRw",
 

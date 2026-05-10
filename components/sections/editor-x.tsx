@@ -231,7 +231,14 @@ export function Editor({
 				],
 				$initialEditorState(editor) {
 					if (editorSerializedState) {
-						editor.parseEditorState(editorSerializedState);
+						try {
+							const parsedState = editor.parseEditorState(
+								editorSerializedState,
+							);
+							editor.setEditorState(parsedState);
+						} catch (error) {
+							console.error("Lexical error: Could not parse state", error);
+						}
 					} else if (editorState) {
 						editor.setEditorState(editorState);
 					}
