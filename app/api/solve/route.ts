@@ -1,40 +1,20 @@
 import { get } from "@vercel/blob";
 import { streamText } from "ai";
 import { headers } from "next/headers";
+import { DEFAULT_CHAT_MODEL } from "@/lib/ai/models";
+import { solvePrompt } from "@/lib/ai/prompts";
+import { getLanguageModel } from "@/lib/ai/providers";
 import { auth } from "@/lib/auth";
+import { HistoryMessage } from "@/lib/types";
 
-const SYSTEM_PROMPT = `You are Newton, an expert math tutor built into Zomath. Your job is to help students genuinely understand math, not just get answers.
-
-When given a math problem (via image or text):
-1. Identify the problem type and relevant concepts
-2. Walk through the solution step by step, explaining the reasoning at each step
-3. Never skip steps or say "it follows that" without explanation
-4. After the solution, briefly suggest what concepts to review or practice next
-
-Format your response in clear sections:
-- Problem: restate what was asked
-- Approach: which method you'll use and why
-- Solution: numbered steps with explanations
-- concepts: 2-3 concepts this problem touches
-
-IMPORTANT Math formatting rules:
-- Use $$...$$ for ALL mathematical expressions, both inline and display. Never use single $...$.
-- Example: The integral $$\\int_0^1 f(x)\\,dx$$ evaluates to $$\\frac{1}{2}$$.
-- Every equation, variable, fraction, and symbol must be wrapped in $$...$$
-- Never write raw LaTeX outside of $$...$$
-
-Be encouraging but focus on understanding, not flattery.`;
-
-type HistoryMessage = { role: "user" | "assistant"; text: string };
-
-export async function POST(req: Request) {
+export async function POST(request: Request) {
 	const session = await auth.api.getSession({ headers: await headers() });
 	if (!session) return new Response("Unauthorized", { status: 401 });
 
 	const {
 		imageUrl,
 		history = [],
-	}: { imageUrl: string; history: HistoryMessage[] } = await req.json();
+	}: { imageUrl: string; history: HistoryMessage[] } = await request.json();
 
 	const blob = await get(imageUrl, { access: "private" });
 	if (!blob) return new Response("Image not found", { status: 404 });
@@ -43,8 +23,8 @@ export async function POST(req: Request) {
 	const base64 = Buffer.from(arrayBuffer).toString("base64");
 
 	const result = streamText({
-		model: "google/gemini-2.5-flash",
-		system: SYSTEM_PROMPT,
+		model: getLanguageModel(DEFAULT_CHAT_MODEL),
+		system: solvePrompt,
 		messages: [
 			{
 				role: "user",

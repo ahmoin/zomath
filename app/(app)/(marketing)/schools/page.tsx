@@ -23,6 +23,7 @@ import {
 	UserMultipleIcon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
+import Link from "next/link";
 import {
 	Accordion,
 	AccordionContent,
@@ -305,21 +306,15 @@ export default function SchoolsPage() {
 							the cracks.
 						</p>
 						<div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
-							<Button size="lg" className="gap-2">
-								Request a Demo
-								<HugeiconsIcon
-									icon={ArrowRight02Icon}
-									className="size-4"
-									strokeWidth={1.5}
-								/>
-							</Button>
-							<Button size="lg" variant="outline" className="gap-2">
-								<HugeiconsIcon
-									icon={PlayCircleIcon}
-									className="size-4"
-									strokeWidth={1.5}
-								/>
-								Watch 2-Minute Overview
+							<Button asChild size="lg">
+								<Link href="/sign-up">
+									Try for free
+									<HugeiconsIcon
+										icon={ArrowRight02Icon}
+										size={16}
+										strokeWidth={2}
+									/>
+								</Link>
 							</Button>
 						</div>
 					</div>

@@ -133,7 +133,7 @@ import { validateUrl } from "@/components/editor/utils/url";
 import { Separator } from "@/components/ui/separator";
 import { TooltipProvider } from "@/components/ui/tooltip";
 
-const placeholder = "Start writing...";
+const placeholder = 'Start writing or type "/" to see commands...';
 const maxLength = 2147483647;
 
 export function Editor({
