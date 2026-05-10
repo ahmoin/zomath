@@ -10,6 +10,7 @@ import { StackSection } from "@/components/sections/stack";
 import { TestimonialSection } from "@/components/sections/testimonial";
 import { WhySection } from "@/components/sections/why";
 import { SiteFooter } from "@/components/site-footer";
+import { SiteHeader } from "@/components/site-header";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { auth } from "@/lib/auth";
@@ -72,6 +73,7 @@ export default async function Page() {
 
 	return (
 		<div className="flex min-h-svh flex-col">
+			<SiteHeader />
 			<HeroSection />
 			<FeaturesSection />
 			<WhySection />

@@ -195,6 +195,7 @@ export function SolveInterface() {
 
 	return (
 		<main className="flex min-h-svh flex-col items-center px-4 py-16">
+			<div className="h-8" />
 			<div className="w-full max-w-2xl">
 				<div className="text-center mb-10">
 					<div className="inline-flex items-center gap-2 rounded-full border border-border bg-muted px-4 py-1.5 text-sm text-muted-foreground mb-6">
