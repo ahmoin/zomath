@@ -1,12 +1,14 @@
 import { desc, eq } from "drizzle-orm";
 import { headers } from "next/headers";
+import { createJournalSchema } from "@/app/api/journals/schema";
 import { auth } from "@/lib/auth";
 import { db } from "@/lib/db";
+import { ChatbotError } from "@/lib/errors";
 import { journal } from "@/lib/schema";
 
 export async function GET() {
 	const session = await auth.api.getSession({ headers: await headers() });
-	if (!session) return new Response("Unauthorized", { status: 401 });
+	if (!session) return new ChatbotError("unauthorized:auth").toResponse();
 
 	const journals = await db
 		.select()
@@ -17,11 +19,16 @@ export async function GET() {
 	return Response.json(journals);
 }
 
-export async function POST(req: Request) {
+export async function POST(request: Request) {
 	const session = await auth.api.getSession({ headers: await headers() });
-	if (!session) return new Response("Unauthorized", { status: 401 });
+	if (!session) return new ChatbotError("unauthorized:auth").toResponse();
 
-	const body = (await req.json().catch(() => ({}))) as { projectId?: string };
+	let body: { projectId?: string };
+	try {
+		body = createJournalSchema.parse(await request.json().catch(() => ({})));
+	} catch (_) {
+		return new ChatbotError("bad_request:api").toResponse();
+	}
 
 	const id = crypto.randomUUID();
 	const [created] = await db

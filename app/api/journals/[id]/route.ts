@@ -1,15 +1,17 @@
 import { and, eq } from "drizzle-orm";
 import { headers } from "next/headers";
+import { updateJournalSchema } from "@/app/api/journals/schema";
 import { auth } from "@/lib/auth";
 import { db } from "@/lib/db";
+import { ChatbotError } from "@/lib/errors";
 import { journal } from "@/lib/schema";
 
 export async function DELETE(
-	_req: Request,
+	_request: Request,
 	{ params }: { params: Promise<{ id: string }> },
 ) {
 	const session = await auth.api.getSession({ headers: await headers() });
-	if (!session) return new Response("Unauthorized", { status: 401 });
+	if (!session) return new ChatbotError("unauthorized:auth").toResponse();
 
 	const { id } = await params;
 
@@ -26,14 +28,21 @@ export async function DELETE(
 }
 
 export async function PATCH(
-	req: Request,
+	request: Request,
 	{ params }: { params: Promise<{ id: string }> },
 ) {
 	const session = await auth.api.getSession({ headers: await headers() });
-	if (!session) return new Response("Unauthorized", { status: 401 });
+	if (!session) return new ChatbotError("unauthorized:auth").toResponse();
 
 	const { id } = await params;
-	const body = (await req.json()) as { title?: string; content?: string };
+
+	let body: { title?: string; content?: string };
+	try {
+		body = updateJournalSchema.parse(await request.json());
+	} catch (_) {
+		return new ChatbotError("bad_request:api").toResponse();
+	}
+
 	const [updated] = await db
 		.update(journal)
 		.set({
@@ -45,7 +54,7 @@ export async function PATCH(
 		.returning();
 
 	if (!updated) {
-		return new Response("Journal not", { status: 404 });
+		return new Response("Journal not found", { status: 404 });
 	}
 
 	return Response.json(updated);

@@ -1,30 +1,32 @@
 import { streamText } from "ai";
 import { headers } from "next/headers";
+import type { z } from "zod";
+import { postRequestBodySchema } from "@/app/api/newton/schema";
+import { newtonPrompt } from "@/lib/ai/prompts";
 import { auth } from "@/lib/auth";
+import { ChatbotError } from "@/lib/errors";
 
-const SYSTEM_PROMPT = `You are Newton, an AI math tutor built into Zomath. Your goal is to build genuine understanding, not hand out answers.
-
-Principles:
-- Guide with questions and hints before revealing solutions
-- Connect new concepts to things the student already knows
-- Break complex ideas into small, digestible steps
-- Be warm and encouraging without being sycophantic
-- If a student is stuck, ask a simpler question to find where their understanding breaks
-
-Keep responses concise and conversational. You are speaking, not writing an essay. Avoid bullet points and headers. Use natural flowing sentences. Do not use LaTeX or math notation symbols in your spoken responses, spell out math in plain English (say "x squared" not "x^2", "the integral of f of x" not "∫f(x)dx").`;
-
-type Message = { role: "user" | "assistant"; content: string };
-
-export async function POST(req: Request) {
+export async function POST(request: Request) {
 	const session = await auth.api.getSession({ headers: await headers() });
-	if (!session) return new Response("Unauthorized", { status: 401 });
+	if (!session) return new ChatbotError("unauthorized:auth").toResponse();
 
-	const { messages }: { messages: Message[] } = await req.json();
+	let body: z.infer<typeof postRequestBodySchema>;
+	try {
+		body = postRequestBodySchema.parse(await request.json());
+	} catch (_) {
+		return new ChatbotError("bad_request:api").toResponse();
+	}
 
 	const result = streamText({
-		model: "google/gemini-2.5-flash",
-		system: SYSTEM_PROMPT,
-		messages,
+		model: body.selectedChatModel,
+		system: newtonPrompt,
+		messages: (body.messages ?? []).map((m) => ({
+			role: m.role as "user" | "assistant",
+			content: m.parts
+				.map((p) => (p.type === "text" ? (p.text as string) : ""))
+				.filter(Boolean)
+				.join(""),
+		})),
 	});
 
 	return result.toTextStreamResponse();

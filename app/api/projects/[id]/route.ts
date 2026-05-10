@@ -5,14 +5,14 @@ import { db } from "@/lib/db";
 import { project } from "@/lib/schema";
 
 export async function PATCH(
-	req: Request,
+	request: Request,
 	{ params }: { params: Promise<{ id: string }> },
 ) {
 	const session = await auth.api.getSession({ headers: await headers() });
 	if (!session) return new Response("Unauthorized", { status: 401 });
 
 	const { id } = await params;
-	const body = (await req.json()) as { title?: string };
+	const body = (await request.json()) as { title?: string };
 
 	const [updated] = await db
 		.update(project)
@@ -24,7 +24,7 @@ export async function PATCH(
 }
 
 export async function DELETE(
-	_req: Request,
+	_request: Request,
 	{ params }: { params: Promise<{ id: string }> },
 ) {
 	const session = await auth.api.getSession({ headers: await headers() });

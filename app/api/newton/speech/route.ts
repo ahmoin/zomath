@@ -31,11 +31,11 @@ function estimateSegments(text: string): TranscriptionSegment[] {
 	});
 }
 
-export async function POST(req: Request) {
+export async function POST(request: Request) {
 	const session = await auth.api.getSession({ headers: await headers() });
 	if (!session) return new Response("Unauthorized", { status: 401 });
 
-	const { text }: { text: string } = await req.json();
+	const { text }: { text: string } = await request.json();
 
 	const result = await generateSpeech({
 		model: elevenlabs.speech("eleven_multilingual_v2"),
