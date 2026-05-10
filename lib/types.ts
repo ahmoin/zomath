@@ -28,8 +28,6 @@ export type ChatMessage = UIMessage<
 	ChatTools
 >;
 
-export type HistoryMessage = { role: "user" | "assistant"; text: string };
-
 export type Attachment = {
 	name: string;
 	url: string;

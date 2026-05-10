@@ -17,6 +17,7 @@ import { useCallback, useRef, useState } from "react";
 import { Streamdown } from "streamdown";
 import { Shimmer } from "@/components/ai-elements/shimmer";
 import { Button } from "@/components/ui/button";
+import { DEFAULT_CHAT_MODEL } from "@/lib/ai/models";
 
 export function SolveInterface() {
 	const [preview, setPreview] = useState<string | null>(null);
@@ -26,11 +27,15 @@ export function SolveInterface() {
 	const fileInputRef = useRef<HTMLInputElement>(null);
 	const cameraInputRef = useRef<HTMLInputElement>(null);
 
+	type HistoryMessage = {
+		id: string;
+		role: "user" | "assistant";
+		parts: { type: "text"; text: string }[];
+	};
+
 	const [completion, setCompletion] = useState("");
 	const [isLoading, setIsLoading] = useState(false);
-	const [history, setHistory] = useState<
-		{ role: "user" | "assistant"; text: string }[]
-	>([]);
+	const [history, setHistory] = useState<HistoryMessage[]>([]);
 	const [followUp, setFollowUp] = useState("");
 	const bottomRef = useRef<HTMLDivElement>(null);
 
@@ -77,12 +82,22 @@ export function SolveInterface() {
 
 	const streamResponse = async (
 		url: string,
-		hist: { role: "user" | "assistant"; text: string }[],
+		hist: {
+			id: string;
+			role: "user" | "assistant";
+			parts: { type: "text"; text: string }[];
+		}[],
 	) => {
 		const res = await fetch("/api/solve", {
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
-			body: JSON.stringify({ imageUrl: url, history: hist }),
+			body: JSON.stringify({
+				id: crypto.randomUUID(),
+				imageUrl: url,
+				messages: hist,
+				selectedChatModel: DEFAULT_CHAT_MODEL,
+				selectedVisibilityType: "private",
+			}),
 		});
 		if (!res.ok || !res.body) throw new Error("Request failed");
 		const reader = res.body.getReader();
@@ -129,7 +144,13 @@ export function SolveInterface() {
 				).url;
 			setBlobUrl(url);
 			const response = await streamResponse(url, []);
-			setHistory([{ role: "assistant", text: response }]);
+			setHistory([
+				{
+					id: crypto.randomUUID(),
+					role: "assistant",
+					parts: [{ type: "text", text: response }],
+				},
+			]);
 			setCompletion("");
 		} finally {
 			setIsLoading(false);
@@ -142,7 +163,11 @@ export function SolveInterface() {
 
 	const handleFollowUp = async () => {
 		if (!followUp.trim() || !blobUrl || isLoading) return;
-		const userMsg = { role: "user" as const, text: followUp.trim() };
+		const userMsg = {
+			id: crypto.randomUUID(),
+			role: "user" as const,
+			parts: [{ type: "text" as const, text: followUp.trim() }],
+		};
 		const nextHistory = [...history, userMsg];
 		setHistory(nextHistory);
 		setFollowUp("");
@@ -150,7 +175,14 @@ export function SolveInterface() {
 		setCompletion("");
 		try {
 			const response = await streamResponse(blobUrl, nextHistory);
-			setHistory((prev) => [...prev, { role: "assistant", text: response }]);
+			setHistory((prev) => [
+				...prev,
+				{
+					id: crypto.randomUUID(),
+					role: "assistant",
+					parts: [{ type: "text", text: response }],
+				},
+			]);
 			setCompletion("");
 		} finally {
 			setIsLoading(false);
@@ -322,7 +354,7 @@ export function SolveInterface() {
 							msg.role === "user" ? (
 								<div key={i} className="flex justify-end">
 									<div className="max-w-[85%] rounded-2xl bg-primary px-4 py-3 text-sm text-primary-foreground">
-										{msg.text}
+										{msg.parts.find((p) => p.type === "text")?.text}
 									</div>
 								</div>
 							) : (
@@ -340,7 +372,7 @@ export function SolveInterface() {
 										plugins={{ math }}
 										className="text-sm text-foreground leading-relaxed"
 									>
-										{msg.text}
+										{msg.parts.find((p) => p.type === "text")?.text ?? ""}
 									</Streamdown>
 								</div>
 							),

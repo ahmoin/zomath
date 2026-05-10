@@ -1,20 +1,29 @@
 import { get } from "@vercel/blob";
 import { streamText } from "ai";
 import { headers } from "next/headers";
-import { DEFAULT_CHAT_MODEL } from "@/lib/ai/models";
+import { z } from "zod";
+import { postRequestBodySchema } from "@/app/api/solve/schema";
 import { solvePrompt } from "@/lib/ai/prompts";
 import { getLanguageModel } from "@/lib/ai/providers";
 import { auth } from "@/lib/auth";
-import { HistoryMessage } from "@/lib/types";
+import { ChatbotError } from "@/lib/errors";
+
+const requestSchema = postRequestBodySchema.extend({
+	imageUrl: z.string().min(1),
+});
 
 export async function POST(request: Request) {
 	const session = await auth.api.getSession({ headers: await headers() });
-	if (!session) return new Response("Unauthorized", { status: 401 });
+	if (!session) return new ChatbotError("unauthorized:auth").toResponse();
 
-	const {
-		imageUrl,
-		history = [],
-	}: { imageUrl: string; history: HistoryMessage[] } = await request.json();
+	let body: z.infer<typeof requestSchema>;
+	try {
+		body = requestSchema.parse(await request.json());
+	} catch (_) {
+		return new ChatbotError("bad_request:api").toResponse();
+	}
+
+	const { imageUrl, messages = [], selectedChatModel } = body;
 
 	const blob = await get(imageUrl, { access: "private" });
 	if (!blob) return new Response("Image not found", { status: 404 });
@@ -23,7 +32,7 @@ export async function POST(request: Request) {
 	const base64 = Buffer.from(arrayBuffer).toString("base64");
 
 	const result = streamText({
-		model: getLanguageModel(DEFAULT_CHAT_MODEL),
+		model: getLanguageModel(selectedChatModel),
 		system: solvePrompt,
 		messages: [
 			{
@@ -39,9 +48,12 @@ export async function POST(request: Request) {
 					},
 				],
 			},
-			...history.map((m) => ({
-				role: m.role,
-				content: m.text,
+			...messages.map((m) => ({
+				role: m.role as "user" | "assistant",
+				content: m.parts
+					.map((p) => (p.type === "text" ? (p.text as string) : ""))
+					.filter(Boolean)
+					.join(""),
 			})),
 		],
 	});
