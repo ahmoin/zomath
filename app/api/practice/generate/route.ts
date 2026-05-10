@@ -1,5 +1,6 @@
 import { generateText, Output } from "ai";
 import { headers } from "next/headers";
+import type { z } from "zod";
 import {
 	postRequestBodySchema,
 	quizSchema,
