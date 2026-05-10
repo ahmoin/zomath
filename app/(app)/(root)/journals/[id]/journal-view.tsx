@@ -1,6 +1,7 @@
 "use client";
 
 import {
+	Alert01Icon,
 	ArrowLeft01Icon,
 	CloudSavingDone01Icon,
 	Loading01Icon,
@@ -8,10 +9,11 @@ import {
 import { HugeiconsIcon } from "@hugeicons/react";
 import type { SerializedEditorState } from "lexical";
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { BlockViewerProvider } from "@/components/block-viewer-provider";
 import { useDebounce } from "@/components/editor/editor-hooks/use-debounce";
 import { Editor } from "@/components/sections/editor-x";
+import { localDb } from "@/lib/local-db";
 
 interface Journal {
 	id: string;
@@ -27,63 +29,78 @@ interface JournalViewProps {
 
 export function JournalView({ journal, parentProject }: JournalViewProps) {
 	const [title, setTitle] = useState(journal.title);
-	const [isSaving, setIsSaving] = useState(false);
-	const [isDirty, setIsDirty] = useState(false);
+	const [syncStatus, setSyncStatus] = useState<"saved" | "syncing" | "error">(
+		"saved",
+	);
+	const [initialState, setInitialState] = useState<
+		SerializedEditorState | undefined
+	>(undefined);
+	const [isReady, setIsReady] = useState(false);
 
-	useEffect(() => {
-		const handleBeforeUnload = (e: BeforeUnloadEvent) => {
-			if (isDirty || isSaving) {
-				e.preventDefault();
-				e.returnValue = "";
-				return "";
-			}
-		};
-
-		window.addEventListener("beforeunload", handleBeforeUnload);
-		return () => window.removeEventListener("beforeunload", handleBeforeUnload);
-	}, [isDirty, isSaving]);
-
-	const initialEditorState = useMemo(() => {
-		if (!journal.content || journal.content.trim() === "") {
-			return undefined;
-		}
-		try {
-			return typeof journal.content === "string"
-				? JSON.parse(journal.content)
-				: journal.content;
-		} catch (error) {
-			console.error("Critical: Failed to parse initial editor state", error);
-			return undefined;
-		}
-	}, [journal.id]);
-	const saveChanges = async (
+	const syncToCloud = async (
 		updatedTitle: string,
-		serializedState: SerializedEditorState,
+		state: SerializedEditorState,
 	) => {
-		setIsSaving(true);
 		try {
 			const response = await fetch(`/api/journals/${journal.id}`, {
 				method: "PATCH",
 				headers: { "Content-Type": "application/json" },
 				body: JSON.stringify({
 					title: updatedTitle,
-					content: JSON.stringify(serializedState),
+					content: JSON.stringify(state),
 				}),
 			});
 
-			if (response.ok) {
-				setIsDirty(false);
-			} else {
-				throw new Error("Failed to save");
-			}
+			if (!response.ok) throw new Error("Sync failed");
+			setSyncStatus("saved");
 		} catch (error) {
-			console.error("Save error:", error);
-		} finally {
-			setTimeout(() => setIsSaving(false), 500);
+			console.error("Cloud sync error:", error);
+			setSyncStatus("error");
 		}
 	};
 
-	const debouncedSave = useDebounce(saveChanges, 1000);
+	const debouncedCloudSync = useDebounce(syncToCloud, 400);
+
+	useEffect(() => {
+		async function loadData() {
+			const cached = await localDb.journals.get(journal.id);
+
+			if (cached) {
+				setInitialState(cached.content);
+			} else if (journal.content && journal.content.trim() !== "") {
+				try {
+					setInitialState(JSON.parse(journal.content));
+				} catch (error) {
+					console.error("Failed to parse server content", error);
+				}
+			}
+			setIsReady(true);
+		}
+		loadData();
+	}, [journal.id]);
+
+	const handleContentChange = (state: SerializedEditorState) => {
+		localDb.journals.put({
+			id: journal.id,
+			title: title,
+			content: state,
+			updatedAt: Date.now(),
+		});
+
+		setSyncStatus("syncing");
+		debouncedCloudSync(title, state);
+	};
+
+	if (!isReady) {
+		return (
+			<div className="flex flex-1 items-center justify-center">
+				<HugeiconsIcon
+					icon={Loading01Icon}
+					className="size-6 animate-spin text-muted-foreground"
+				/>
+			</div>
+		);
+	}
 
 	return (
 		<div className="flex flex-1 flex-col">
@@ -115,23 +132,6 @@ export function JournalView({ journal, parentProject }: JournalViewProps) {
 						</Link>
 					)}
 				</div>
-
-				<div className="flex items-center gap-2 text-xs font-medium">
-					{isDirty || isSaving ? (
-						<span className="flex items-center gap-1.5 text-orange-600">
-							<HugeiconsIcon
-								icon={Loading01Icon}
-								className="size-4 animate-spin"
-							/>
-							Unsaved changes...
-						</span>
-					) : (
-						<span className="flex items-center gap-1.5 text-emerald-600">
-							<HugeiconsIcon icon={CloudSavingDone01Icon} className="size-4" />
-							Syncing complete
-						</span>
-					)}
-				</div>
 			</header>
 
 			<div className="flex flex-1 flex-col gap-2 px-4 lg:px-6 py-6 max-w-3xl w-full mx-auto">
@@ -140,7 +140,7 @@ export function JournalView({ journal, parentProject }: JournalViewProps) {
 					value={title}
 					onChange={(e) => {
 						setTitle(e.target.value);
-						setIsDirty(true);
+						setSyncStatus("syncing");
 					}}
 					className="text-4xl font-bold bg-transparent border-none outline-none focus:ring-0 p-0 mb-4 placeholder:opacity-20"
 					placeholder="Untitled Journal"
@@ -149,11 +149,8 @@ export function JournalView({ journal, parentProject }: JournalViewProps) {
 				<BlockViewerProvider>
 					<Editor
 						key={journal.id}
-						editorSerializedState={initialEditorState}
-						onSerializedChange={(state) => {
-							setIsDirty(true);
-							debouncedSave(title, state);
-						}}
+						editorSerializedState={initialState}
+						onSerializedChange={handleContentChange}
 					/>
 				</BlockViewerProvider>
 			</div>
