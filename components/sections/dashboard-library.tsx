@@ -6,6 +6,7 @@ import {
 	FolderLibraryIcon,
 	GridIcon,
 	LayoutList,
+	Loading03Icon,
 	MoreHorizontalIcon,
 	PlusSignIcon,
 	Tick02Icon,
@@ -37,6 +38,7 @@ import {
 	TooltipProvider,
 	TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { cn } from "@/lib/utils";
 
 interface Project {
 	id: string;
@@ -115,31 +117,40 @@ export function DashboardLibrary({
 	}
 
 	async function createProject() {
+		if (creatingProject) return;
 		setCreatingProject(true);
 		try {
 			const res = await fetch("/api/projects", { method: "POST" });
-			if (!res.ok) return;
+			if (!res.ok) {
+				setCreatingProject(false);
+				return;
+			}
 			const data = (await res.json()) as { id: string };
 			router.push(`/projects/${data.id}`);
-		} finally {
+		} catch (error) {
 			setCreatingProject(false);
 		}
 	}
 
 	async function createJournal() {
+		if (creatingJournal) return;
 		setCreatingJournal(true);
 		try {
 			const res = await fetch("/api/journals", { method: "POST" });
-			if (!res.ok) return;
+			if (!res.ok) {
+				setCreatingJournal(false);
+				return;
+			}
 			const data = (await res.json()) as { id: string };
 			router.push(`/journals/${data.id}`);
-		} finally {
+		} catch (error) {
 			setCreatingJournal(false);
 		}
 	}
 
 	return (
 		<div className="flex flex-col gap-10 px-4 lg:px-6 pb-8">
+			{}
 			<div className="flex items-center justify-end gap-1">
 				<Button
 					variant={view === "grid" ? "outline" : "ghost"}
@@ -159,6 +170,7 @@ export function DashboardLibrary({
 				</Button>
 			</div>
 
+			{}
 			<section className="flex flex-col gap-4">
 				<div className="flex items-center gap-2">
 					<h2 className="text-base font-semibold tracking-tight">Projects</h2>
@@ -173,19 +185,25 @@ export function DashboardLibrary({
 					<ItemGroup>
 						<Item
 							variant="outline"
-							className="cursor-pointer [border-style:dashed] border-2 hover:border-primary/40 hover:bg-muted/40"
+							className={cn(
+								"cursor-pointer [border-style:dashed] border-2 hover:border-primary/40 hover:bg-muted/40",
+								creatingProject && "opacity-50 pointer-events-none",
+							)}
 							onClick={createProject}
 						>
 							<ItemMedia>
 								<HugeiconsIcon
-									icon={PlusSignIcon}
-									className="size-4 text-muted-foreground"
+									icon={creatingProject ? Loading03Icon : PlusSignIcon}
+									className={cn(
+										"size-4 text-muted-foreground",
+										creatingProject && "animate-spin",
+									)}
 									strokeWidth={2}
 								/>
 							</ItemMedia>
 							<ItemContent>
 								<ItemTitle className="text-muted-foreground font-normal">
-									{creatingProject ? "Creating..." : "Create project"}
+									{creatingProject ? "Creating project..." : "Create project"}
 								</ItemTitle>
 							</ItemContent>
 						</Item>
@@ -218,17 +236,29 @@ export function DashboardLibrary({
 					</ItemGroup>
 				) : (
 					<div className="grid grid-cols-3 gap-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8">
-						<button
+						<Item
+							variant="outline"
 							onClick={createProject}
-							disabled={creatingProject}
-							className="group flex h-32 flex-col items-center justify-center rounded-2xl border-2 border-dashed border-muted-foreground/40 bg-transparent transition-colors hover:border-primary/40 hover:bg-muted/40 disabled:opacity-50"
+							className={cn(
+								"cursor-pointer [border-style:dashed] border-2 hover:border-primary/40 hover:bg-muted/40 flex-col items-center justify-center h-32 p-2 text-center",
+								creatingProject && "opacity-50 pointer-events-none",
+							)}
 						>
-							<HugeiconsIcon
-								icon={PlusSignIcon}
-								className="size-5 text-muted-foreground group-hover:text-primary transition-colors"
-								strokeWidth={2}
-							/>
-						</button>
+							<ItemMedia className="group-hover:text-primary transition-colors">
+								<HugeiconsIcon
+									icon={creatingProject ? Loading03Icon : PlusSignIcon}
+									className={cn(
+										"size-5 text-muted-foreground",
+										creatingProject && "animate-spin",
+									)}
+									strokeWidth={2}
+								/>
+							</ItemMedia>
+							<ItemTitle className="text-[11px] text-muted-foreground font-normal mt-1">
+								{creatingProject ? "Creating..." : "New Project"}
+							</ItemTitle>
+						</Item>
+
 						{projects
 							.filter((p) => !deletingProjectIds.has(p.id))
 							.map((p) => (
@@ -279,6 +309,7 @@ export function DashboardLibrary({
 				)}
 			</section>
 
+			{}
 			<section className="flex flex-col gap-4">
 				<div className="flex items-center justify-between">
 					<div className="flex items-center gap-2">
@@ -324,19 +355,25 @@ export function DashboardLibrary({
 					<ItemGroup>
 						<Item
 							variant="outline"
-							className="cursor-pointer [border-style:dashed] border-2 hover:border-primary/40 hover:bg-muted/40"
+							className={cn(
+								"cursor-pointer [border-style:dashed] border-2 hover:border-primary/40 hover:bg-muted/40",
+								creatingJournal && "opacity-50 pointer-events-none",
+							)}
 							onClick={createJournal}
 						>
 							<ItemMedia>
 								<HugeiconsIcon
-									icon={PlusSignIcon}
-									className="size-4 text-muted-foreground"
+									icon={creatingJournal ? Loading03Icon : PlusSignIcon}
+									className={cn(
+										"size-4 text-muted-foreground",
+										creatingJournal && "animate-spin",
+									)}
 									strokeWidth={2}
 								/>
 							</ItemMedia>
 							<ItemContent>
 								<ItemTitle className="text-muted-foreground font-normal">
-									{creatingJournal ? "Creating..." : "Create journal"}
+									{creatingJournal ? "Creating journal..." : "Create journal"}
 								</ItemTitle>
 							</ItemContent>
 						</Item>
@@ -369,17 +406,33 @@ export function DashboardLibrary({
 					</ItemGroup>
 				) : (
 					<div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-						<button
+						<Item
+							variant="outline"
 							onClick={createJournal}
-							disabled={creatingJournal}
-							className="group flex min-h-[200px] flex-col items-center justify-center rounded-2xl border-2 border-dashed border-muted-foreground/40 bg-transparent transition-colors hover:border-primary/40 hover:bg-muted/40 disabled:opacity-50"
+							className={cn(
+								"cursor-pointer [border-style:dashed] border-2 hover:border-primary/40 hover:bg-muted/40 flex-col items-center justify-center h-64 p-6 text-center transition-all",
+								creatingJournal && "opacity-50 pointer-events-none",
+							)}
 						>
-							<HugeiconsIcon
-								icon={PlusSignIcon}
-								className="size-6 text-muted-foreground group-hover:text-primary transition-colors"
-								strokeWidth={2}
-							/>
-						</button>
+							<ItemMedia className="mb-2">
+								<HugeiconsIcon
+									icon={creatingJournal ? Loading03Icon : PlusSignIcon}
+									className={cn(
+										"size-8 text-muted-foreground group-hover:text-primary transition-colors",
+										creatingJournal && "animate-spin",
+									)}
+									strokeWidth={2}
+								/>
+							</ItemMedia>
+							<ItemContent className="flex-none">
+								<ItemTitle className="text-muted-foreground font-normal text-base">
+									{creatingJournal
+										? "Creating Journal..."
+										: "New Journal Entry"}
+								</ItemTitle>
+							</ItemContent>
+						</Item>
+
 						{sortedJournals.map((j) => (
 							<Link
 								key={j.id}
@@ -390,7 +443,6 @@ export function DashboardLibrary({
 									<div className="pointer-events-none select-none opacity-70 group-hover:opacity-100 transition-opacity">
 										{j.content ? <EditorPreview content={j.content} /> : null}
 									</div>
-
 									<div className="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-card to-transparent" />
 								</div>
 								<div className="border-t border-border px-4 py-3 flex items-center justify-between">
