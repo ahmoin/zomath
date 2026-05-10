@@ -14,6 +14,7 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { EditorPreview } from "@/components/sections/editor-preview";
 import { Button } from "@/components/ui/button";
 import {
 	DropdownMenu,
@@ -383,12 +384,14 @@ export function DashboardLibrary({
 							<Link
 								key={j.id}
 								href={`/journals/${j.id}`}
-								className="group flex flex-col rounded-2xl border border-border bg-card text-left transition-colors hover:border-primary/30 hover:bg-accent/50 overflow-hidden"
+								className="group flex flex-col rounded-2xl border border-border bg-card text-left transition-colors hover:border-primary/30 hover:bg-accent/50 overflow-hidden h-64"
 							>
-								<div className="flex-1 p-4">
-									<p className="line-clamp-6 text-xs text-muted-foreground leading-relaxed whitespace-pre-line">
-										{j.content || "Empty journal"}
-									</p>
+								<div className="flex-1 p-4 overflow-hidden relative">
+									<div className="pointer-events-none select-none opacity-70 group-hover:opacity-100 transition-opacity">
+										{j.content ? <EditorPreview content={j.content} /> : null}
+									</div>
+
+									<div className="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-card to-transparent" />
 								</div>
 								<div className="border-t border-border px-4 py-3 flex items-center justify-between">
 									<div className="flex flex-col gap-0.5">
