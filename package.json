@@ -22,7 +22,6 @@
 	},
 	"dependencies": {
 		"@ai-sdk/elevenlabs": "^2.0.32",
-		"@ai-sdk/openai": "^3.0.62",
 		"@ai-sdk/provider": "^3.0.10",
 		"@ai-sdk/react": "^3.0.179",
 		"@better-auth/infra": "^0.2.5",
