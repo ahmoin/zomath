@@ -1,6 +1,6 @@
 "use client";
 
-import { Camera01Icon, Mail01Icon } from "@hugeicons/core-free-icons";
+import { Camera01Icon, InboxIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import Link from "next/link";
 
@@ -42,7 +42,7 @@ export function NavMain({
 							className="size-8 group-data-[collapsible=icon]:opacity-0"
 							variant="outline"
 						>
-							<HugeiconsIcon icon={Mail01Icon} strokeWidth={2} />
+							<HugeiconsIcon icon={InboxIcon} strokeWidth={2} />
 							<span className="sr-only">Inbox</span>
 						</Button>
 					</SidebarMenuItem>

@@ -195,10 +195,10 @@ export function DashboardLibrary({
 								<HugeiconsIcon
 									icon={creatingProject ? Loading03Icon : PlusSignIcon}
 									className={cn(
-										"size-4 text-muted-foreground",
+										"size-6 text-muted-foreground",
 										creatingProject && "animate-spin",
 									)}
-									strokeWidth={2}
+									strokeWidth={3}
 								/>
 							</ItemMedia>
 							<ItemContent>
@@ -248,10 +248,10 @@ export function DashboardLibrary({
 								<HugeiconsIcon
 									icon={creatingProject ? Loading03Icon : PlusSignIcon}
 									className={cn(
-										"size-5 text-muted-foreground",
+										"size-8 text-muted-foreground",
 										creatingProject && "animate-spin",
 									)}
-									strokeWidth={2}
+									strokeWidth={3}
 								/>
 							</ItemMedia>
 							<ItemTitle className="text-[11px] text-muted-foreground font-normal mt-1">
@@ -365,10 +365,10 @@ export function DashboardLibrary({
 								<HugeiconsIcon
 									icon={creatingJournal ? Loading03Icon : PlusSignIcon}
 									className={cn(
-										"size-4 text-muted-foreground",
+										"size-6 text-muted-foreground",
 										creatingJournal && "animate-spin",
 									)}
-									strokeWidth={2}
+									strokeWidth={3}
 								/>
 							</ItemMedia>
 							<ItemContent>
@@ -418,17 +418,15 @@ export function DashboardLibrary({
 								<HugeiconsIcon
 									icon={creatingJournal ? Loading03Icon : PlusSignIcon}
 									className={cn(
-										"size-8 text-muted-foreground group-hover:text-primary transition-colors",
+										"size-12 text-muted-foreground group-hover:text-primary transition-colors",
 										creatingJournal && "animate-spin",
 									)}
-									strokeWidth={2}
+									strokeWidth={3}
 								/>
 							</ItemMedia>
 							<ItemContent className="flex-none">
 								<ItemTitle className="text-muted-foreground font-normal text-base">
-									{creatingJournal
-										? "Creating Journal..."
-										: "New Journal Entry"}
+									{creatingJournal ? "Creating Journal..." : "New Journal"}
 								</ItemTitle>
 							</ItemContent>
 						</Item>
