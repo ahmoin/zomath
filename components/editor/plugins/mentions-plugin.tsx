@@ -589,18 +589,14 @@ export function MentionsPlugin(): JSX.Element | null {
 		minLength: 0,
 	});
 
+	const picture = useMemo(() => <CircleUserRoundIcon className="size-4" />, []);
+
 	const options = useMemo(
 		() =>
 			results
-				.map(
-					(result) =>
-						new MentionTypeaheadOption(
-							result,
-							<CircleUserRoundIcon className="size-4" />,
-						),
-				)
+				.map((result) => new MentionTypeaheadOption(result, picture))
 				.slice(0, SUGGESTION_LIST_LENGTH_LIMIT),
-		[results],
+		[results, picture],
 	);
 
 	const onSelectOption = useCallback(
