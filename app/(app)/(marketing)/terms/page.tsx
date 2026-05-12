@@ -480,9 +480,9 @@ export default function TermsPage() {
 											"Maintain the security and confidentiality of your login credentials.",
 											"Accept responsibility for all activities that occur under your account.",
 											"Notify us immediately if you suspect unauthorized use of your account.",
-										].map((item, i) => (
+										].map((item) => (
 											<li
-												key={i}
+												key={item}
 												className="flex gap-3 text-muted-foreground leading-relaxed"
 											>
 												<span className="mt-2 size-1.5 shrink-0 rounded-full bg-primary" />
@@ -519,9 +519,9 @@ export default function TermsPage() {
 											"Upload content that infringes on the intellectual property rights of others, including copyrighted textbook problems shared without permission.",
 											"Attempt to bypass, disable, or interfere with security features, rate limits, or access controls.",
 											"Use the Service for any unlawful purpose or in violation of any applicable regulations.",
-										].map((item, i) => (
+										].map((item) => (
 											<li
-												key={i}
+												key={item}
 												className="flex gap-3 text-muted-foreground leading-relaxed"
 											>
 												<span className="mt-2 size-1.5 shrink-0 rounded-full bg-primary" />
@@ -574,9 +574,9 @@ export default function TermsPage() {
 											"The Service is not a replacement for qualified math instruction, tutoring, or professional academic advice. It is a supplementary learning tool.",
 											"Newton's guidance is based on general pedagogical principles and may not always align with the specific approach your teacher or curriculum expects.",
 											"We continuously improve Newton's accuracy and teaching quality, but no AI system is infallible. Critical mathematical thinking remains your most important skill.",
-										].map((item, i) => (
+										].map((item) => (
 											<li
-												key={i}
+												key={item}
 												className="flex gap-3 text-muted-foreground leading-relaxed"
 											>
 												<span className="mt-2 size-1.5 shrink-0 rounded-full bg-primary" />
@@ -612,9 +612,9 @@ export default function TermsPage() {
 											"The Concept Map visualizations, data structures, and pedagogical frameworks.",
 											"Our curated problem sets, solution explanations, and learning content.",
 											"The software, algorithms, and infrastructure that power the Service.",
-										].map((item, i) => (
+										].map((item) => (
 											<li
-												key={i}
+												key={item}
 												className="flex gap-3 text-muted-foreground leading-relaxed"
 											>
 												<span className="mt-2 size-1.5 shrink-0 rounded-full bg-primary" />
@@ -655,9 +655,9 @@ export default function TermsPage() {
 											"Storing your conversations with Newton to maintain chat history and provide continuity.",
 											"Tracking your practice responses to measure progress and adapt future exercises.",
 											"Using anonymized and aggregated data to improve our AI models and learning algorithms.",
-										].map((item, i) => (
+										].map((item) => (
 											<li
-												key={i}
+												key={item}
 												className="flex gap-3 text-muted-foreground leading-relaxed"
 											>
 												<span className="mt-2 size-1.5 shrink-0 rounded-full bg-primary" />
@@ -711,9 +711,9 @@ export default function TermsPage() {
 											"You may upgrade or downgrade your plan at any time. Upgrades take effect immediately, and prorated charges may apply. Downgrades take effect at the end of your current billing period.",
 											"You may cancel your subscription at any time. Upon cancellation, you will retain access to premium features until the end of your current billing period.",
 											"We reserve the right to modify subscription pricing with 30 days advance notice. Continued use after a price change constitutes acceptance of the new pricing.",
-										].map((item, i) => (
+										].map((item) => (
 											<li
-												key={i}
+												key={item}
 												className="flex gap-3 text-muted-foreground leading-relaxed"
 											>
 												<span className="mt-2 size-1.5 shrink-0 rounded-full bg-primary" />
@@ -754,9 +754,9 @@ export default function TermsPage() {
 											"Interruption or cessation of the Service for any reason, including server maintenance or technical failures.",
 											"Any unauthorized access to or alteration of your user data or content.",
 											"Any conduct or content of third parties on the Service, if applicable in the future.",
-										].map((item, i) => (
+										].map((item) => (
 											<li
-												key={i}
+												key={item}
 												className="flex gap-3 text-muted-foreground leading-relaxed"
 											>
 												<span className="mt-2 size-1.5 shrink-0 rounded-full bg-primary" />
@@ -796,9 +796,9 @@ export default function TermsPage() {
 											"We will retain your data for a reasonable period as described in our Privacy Policy, after which it will be deleted or anonymized.",
 											"Provisions of these Terms that by their nature should survive termination will remain in effect, including intellectual property provisions, disclaimers, and limitation of liability.",
 											"No refunds will be provided for any remaining portion of a prepaid subscription, except as required by applicable law or as described in Section 8.",
-										].map((item, i) => (
+										].map((item) => (
 											<li
-												key={i}
+												key={item}
 												className="flex gap-3 text-muted-foreground leading-relaxed"
 											>
 												<span className="mt-2 size-1.5 shrink-0 rounded-full bg-primary" />
@@ -874,9 +874,9 @@ export default function TermsPage() {
 											"Post the updated Terms on this page with a revised effective date.",
 											"Notify you via email or through a prominent notice within the Service at least 30 days before the changes take effect.",
 											"For significant changes that affect your rights, provide an opportunity to review and accept the new Terms before they apply to you.",
-										].map((item, i) => (
+										].map((item) => (
 											<li
-												key={i}
+												key={item}
 												className="flex gap-3 text-muted-foreground leading-relaxed"
 											>
 												<span className="mt-2 size-1.5 shrink-0 rounded-full bg-primary" />
