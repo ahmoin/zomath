@@ -11,7 +11,7 @@ import {
 	ScanIcon,
 	TestTube01Icon,
 } from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
+import { HugeiconsIcon, HugeiconsProps } from "@hugeicons/react";
 import katex from "katex";
 import "katex/dist/katex.min.css";
 import { cn } from "@/lib/utils";
@@ -291,7 +291,7 @@ function ToolItem({
 	gradient,
 	dim,
 }: {
-	icon: HugeIcon | null;
+	icon: HugeiconsProps["icon"] | null;
 	label: string;
 	gradient: string;
 	dim?: boolean;
