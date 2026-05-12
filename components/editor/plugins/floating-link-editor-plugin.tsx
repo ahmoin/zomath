@@ -238,14 +238,14 @@ function FloatingLinkEditor({
 						}}
 						className="shrink-0"
 					>
-						<X className="h-4 w-4" />
+						<X className="size-4" />
 					</Button>
 					<Button
 						size="icon"
 						onClick={handleLinkSubmission}
 						className="shrink-0"
 					>
-						<Check className="h-4 w-4" />
+						<Check className="size-4" />
 					</Button>
 				</div>
 			) : (
@@ -267,7 +267,7 @@ function FloatingLinkEditor({
 								setIsLinkEditMode(true);
 							}}
 						>
-							<Pencil className="h-4 w-4" />
+							<Pencil className="size-4" />
 						</Button>
 						<Button
 							size="icon"
@@ -276,7 +276,7 @@ function FloatingLinkEditor({
 								editor.dispatchCommand(TOGGLE_LINK_COMMAND, null);
 							}}
 						>
-							<Trash className="h-4 w-4" />
+							<Trash className="size-4" />
 						</Button>
 					</div>
 				</div>

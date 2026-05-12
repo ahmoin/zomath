@@ -237,49 +237,49 @@ export function ImageResizer({
 	return (
 		<div ref={controlWrapperRef} className="absolute inset-0">
 			<div
-				className="absolute -top-1.5 left-1/2 h-3 w-3 -translate-x-1/2 cursor-ns-resize rounded-sm border-2 border-background bg-primary shadow-sm"
+				className="absolute -top-1.5 left-1/2 size-3 -translate-x-1/2 cursor-ns-resize rounded-sm border-2 border-background bg-primary shadow-sm"
 				onPointerDown={(event) => {
 					handlePointerDown(event, Direction.north);
 				}}
 			/>
 			<div
-				className="absolute -right-1.5 -top-1.5 h-3 w-3 cursor-nesw-resize rounded-sm border-2 border-background bg-primary shadow-sm"
+				className="absolute -right-1.5 -top-1.5 size-3 cursor-nesw-resize rounded-sm border-2 border-background bg-primary shadow-sm"
 				onPointerDown={(event) => {
 					handlePointerDown(event, Direction.north | Direction.east);
 				}}
 			/>
 			<div
-				className="absolute -right-1.5 top-1/2 h-3 w-3 -translate-y-1/2 cursor-ew-resize rounded-sm border-2 border-background bg-primary shadow-sm"
+				className="absolute -right-1.5 top-1/2 size-3 -translate-y-1/2 cursor-ew-resize rounded-sm border-2 border-background bg-primary shadow-sm"
 				onPointerDown={(event) => {
 					handlePointerDown(event, Direction.east);
 				}}
 			/>
 			<div
-				className="absolute -bottom-1.5 -right-1.5 h-3 w-3 cursor-nwse-resize rounded-sm border-2 border-background bg-primary shadow-sm"
+				className="absolute -bottom-1.5 -right-1.5 size-3 cursor-nwse-resize rounded-sm border-2 border-background bg-primary shadow-sm"
 				onPointerDown={(event) => {
 					handlePointerDown(event, Direction.south | Direction.east);
 				}}
 			/>
 			<div
-				className="absolute -bottom-1.5 left-1/2 h-3 w-3 -translate-x-1/2 cursor-ns-resize rounded-sm border-2 border-background bg-primary shadow-sm"
+				className="absolute -bottom-1.5 left-1/2 size-3 -translate-x-1/2 cursor-ns-resize rounded-sm border-2 border-background bg-primary shadow-sm"
 				onPointerDown={(event) => {
 					handlePointerDown(event, Direction.south);
 				}}
 			/>
 			<div
-				className="absolute -bottom-1.5 -left-1.5 h-3 w-3 cursor-nesw-resize rounded-sm border-2 border-background bg-primary shadow-sm"
+				className="absolute -bottom-1.5 -left-1.5 size-3 cursor-nesw-resize rounded-sm border-2 border-background bg-primary shadow-sm"
 				onPointerDown={(event) => {
 					handlePointerDown(event, Direction.south | Direction.west);
 				}}
 			/>
 			<div
-				className="absolute -left-1.5 top-1/2 h-3 w-3 -translate-y-1/2 cursor-ew-resize rounded-sm border-2 border-background bg-primary shadow-sm"
+				className="absolute -left-1.5 top-1/2 size-3 -translate-y-1/2 cursor-ew-resize rounded-sm border-2 border-background bg-primary shadow-sm"
 				onPointerDown={(event) => {
 					handlePointerDown(event, Direction.west);
 				}}
 			/>
 			<div
-				className="absolute -left-1.5 -top-1.5 h-3 w-3 cursor-nwse-resize rounded-sm border-2 border-background bg-primary shadow-sm"
+				className="absolute -left-1.5 -top-1.5 size-3 cursor-nwse-resize rounded-sm border-2 border-background bg-primary shadow-sm"
 				onPointerDown={(event) => {
 					handlePointerDown(event, Direction.north | Direction.west);
 				}}

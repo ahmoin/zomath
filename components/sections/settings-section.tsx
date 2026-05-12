@@ -239,7 +239,7 @@ export function SettingsSection({
 					<div className="flex items-center justify-between px-6 py-4">
 						<div className="flex items-center gap-3">
 							{/* TODO: replace with email icon */}
-							<CircleUser className="h-5 w-5" />
+							<CircleUser className="size-5" />
 							<div>
 								<p className="font-medium">{email}</p>
 								<p className="text-sm text-muted-foreground">

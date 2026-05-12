@@ -398,7 +398,7 @@ export default function SchoolsPage() {
 					<div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
 						{studentFeatures.map((feature) => (
 							<div key={feature.title} className="text-center">
-								<div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/10">
+								<div className="mx-auto mb-4 flex size-14 items-center justify-center rounded-2xl bg-primary/10">
 									<HugeiconsIcon
 										icon={feature.icon}
 										className="size-7 text-primary"
@@ -443,7 +443,7 @@ export default function SchoolsPage() {
 								{educatorTools.map((tool) => (
 									<div key={tool.title} className="flex gap-4">
 										<div className="mt-1 flex-shrink-0">
-											<div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary/10">
+											<div className="flex size-9 items-center justify-center rounded-lg bg-primary/10">
 												<HugeiconsIcon
 													icon={tool.icon}
 													className="size-5 text-primary"
@@ -570,7 +570,7 @@ export default function SchoolsPage() {
 									key={badge.label}
 									className="flex flex-col items-center gap-2 text-center"
 								>
-									<div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
+									<div className="flex size-12 items-center justify-center rounded-full bg-primary/10">
 										<HugeiconsIcon
 											icon={badge.icon}
 											className="size-6 text-primary"
@@ -786,7 +786,7 @@ export default function SchoolsPage() {
 							</p>
 							<div className="space-y-5">
 								<div className="flex items-center gap-4">
-									<div className="flex h-11 w-11 items-center justify-center rounded-full bg-primary/10">
+									<div className="flex size-11 items-center justify-center rounded-full bg-primary/10">
 										<HugeiconsIcon
 											icon={Mail02Icon}
 											className="size-5 text-primary"
@@ -803,7 +803,7 @@ export default function SchoolsPage() {
 									</div>
 								</div>
 								<div className="flex items-center gap-4">
-									<div className="flex h-11 w-11 items-center justify-center rounded-full bg-primary/10">
+									<div className="flex size-11 items-center justify-center rounded-full bg-primary/10">
 										<HugeiconsIcon
 											icon={Call02Icon}
 											className="size-5 text-primary"
@@ -820,7 +820,7 @@ export default function SchoolsPage() {
 									</div>
 								</div>
 								<div className="flex items-center gap-4">
-									<div className="flex h-11 w-11 items-center justify-center rounded-full bg-primary/10">
+									<div className="flex size-11 items-center justify-center rounded-full bg-primary/10">
 										<HugeiconsIcon
 											icon={Location01Icon}
 											className="size-5 text-primary"
