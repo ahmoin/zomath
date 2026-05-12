@@ -69,7 +69,11 @@ export function MobileNav({
 								Home
 							</MobileLink>
 							{items.map((item, index) => (
-								<MobileLink key={index} href={item.href} onOpenChange={setOpen}>
+								<MobileLink
+									key={item.href}
+									href={item.href}
+									onOpenChange={setOpen}
+								>
 									{item.label}
 								</MobileLink>
 							))}

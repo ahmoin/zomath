@@ -18,56 +18,54 @@ import { db } from "@/lib/db";
 import { journal, project } from "@/lib/schema";
 
 export default async function Page() {
-	const authSession = await auth.api.getSession({
+	const session = await auth.api.getSession({
 		headers: await headers(),
 	});
 
-	if (authSession) {
+	if (session) {
 		const [projects, journals] = await Promise.all([
 			db
 				.select()
 				.from(project)
-				.where(eq(project.userId, authSession.user.id))
+				.where(eq(project.userId, session.user.id))
 				.orderBy(desc(project.updatedAt)),
 			db
 				.select()
 				.from(journal)
-				.where(eq(journal.userId, authSession.user.id))
+				.where(eq(journal.userId, session.user.id))
 				.orderBy(desc(journal.updatedAt)),
 		]);
 
 		return (
-			<>
-				<TooltipProvider>
-					<SidebarProvider
-						style={
-							{
-								"--sidebar-width": "calc(var(--spacing) * 72)",
-								"--header-height": "calc(var(--spacing) * 12)",
-							} as React.CSSProperties
-						}
-					>
-						<AppSidebar
-							variant="inset"
-							user={{
-								name: authSession.user.name,
-								email: authSession.user.email,
-								avatar: authSession.user.image,
-							}}
-						/>
-						<SidebarInset>
-							<DashboardHeader name={authSession.user.name} />
-							<div className="flex flex-1 flex-col">
-								<div className="@container/main flex flex-1 flex-col gap-2">
-									<div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
-										<DashboardLibrary projects={projects} journals={journals} />
-									</div>
+			<TooltipProvider>
+				<SidebarProvider
+					style={
+						{
+							"--sidebar-width": "calc(var(--spacing) * 72)",
+							"--header-height": "calc(var(--spacing) * 12)",
+						} as React.CSSProperties
+					}
+				>
+					<AppSidebar
+						variant="inset"
+						user={{
+							name: session.user.name,
+							email: session.user.email,
+							avatar: session.user.image,
+						}}
+					/>
+					<SidebarInset>
+						<DashboardHeader name={session.user.name} />
+						<div className="flex flex-1 flex-col">
+							<div className="@container/main flex flex-1 flex-col gap-2">
+								<div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
+									<DashboardLibrary projects={projects} journals={journals} />
 								</div>
 							</div>
-						</SidebarInset>
-					</SidebarProvider>
-				</TooltipProvider>
-			</>
+						</div>
+					</SidebarInset>
+				</SidebarProvider>
+			</TooltipProvider>
 		);
 	}
 

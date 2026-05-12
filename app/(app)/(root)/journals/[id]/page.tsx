@@ -15,11 +15,11 @@ interface Props {
 
 export default async function JournalPage({ params }: Props) {
 	const { id } = await params;
-	const authSession = await auth.api.getSession({ headers: await headers() });
-	if (!authSession) redirect("/log-in");
+	const session = await auth.api.getSession({ headers: await headers() });
+	if (!session) redirect("/log-in");
 
 	const [doc] = await db.select().from(journal).where(eq(journal.id, id));
-	if (!doc || doc.userId !== authSession.user.id) notFound();
+	if (!doc || doc.userId !== session.user.id) notFound();
 
 	const parentProject = doc.projectId
 		? await db
@@ -42,9 +42,9 @@ export default async function JournalPage({ params }: Props) {
 				<AppSidebar
 					variant="inset"
 					user={{
-						name: authSession.user.name,
-						email: authSession.user.email,
-						avatar: authSession.user.image,
+						name: session.user.name,
+						email: session.user.email,
+						avatar: session.user.image,
 					}}
 				/>
 				<SidebarInset>

@@ -11,9 +11,6 @@ importers:
       '@ai-sdk/elevenlabs':
         specifier: ^2.0.32
         version: 2.0.32(zod@4.4.3)
-      '@ai-sdk/openai':
-        specifier: ^3.0.62
-        version: 3.0.62(zod@4.4.3)
       '@ai-sdk/provider':
         specifier: ^3.0.10
         version: 3.0.10
@@ -299,12 +296,6 @@ packages:
 
   '@ai-sdk/gateway@3.0.112':
     resolution: {integrity: sha512-jiBao9pR4owWyjo0BnuNc7WSQBGOD0thysE4AFgZXaG+zMFbISQXUkJr7ePw/phBvePy7jE5FSA2Lf7lwqUiiQ==}
-    engines: {node: '>=18'}
-    peerDependencies:
-      zod: ^3.25.76 || ^4.1.8
-
-  '@ai-sdk/openai@3.0.62':
-    resolution: {integrity: sha512-Oy74Bztik2X25wZD9HRd83BAXOKcRvrfgz9gvVGqKj68yegf447NiElPbB6TSVb8zyiY9wv1GSGywMCxnnoF9g==}
     engines: {node: '>=18'}
     peerDependencies:
       zod: ^3.25.76 || ^4.1.8
@@ -5472,12 +5463,6 @@ snapshots:
       '@ai-sdk/provider': 3.0.10
       '@ai-sdk/provider-utils': 4.0.27(zod@4.4.3)
       '@vercel/oidc': 3.2.0
-      zod: 4.4.3
-
-  '@ai-sdk/openai@3.0.62(zod@4.4.3)':
-    dependencies:
-      '@ai-sdk/provider': 3.0.10
-      '@ai-sdk/provider-utils': 4.0.26(zod@4.4.3)
       zod: 4.4.3
 
   '@ai-sdk/provider-utils@4.0.26(zod@4.4.3)':
