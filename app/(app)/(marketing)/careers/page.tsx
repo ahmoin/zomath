@@ -20,6 +20,7 @@ import { Separator } from "@/components/ui/separator";
 const openPositions = [
 	{
 		title: "Senior Frontend Engineer",
+		id: "senior-frontend-engineer-1",
 		department: "Engineering",
 		location: "Remote",
 		type: "Full-time",
@@ -28,6 +29,7 @@ const openPositions = [
 	},
 	{
 		title: "AI/ML Engineer",
+		id: "ai-ml-engineer-1",
 		department: "Engineering",
 		location: "Remote",
 		type: "Full-time",
@@ -36,6 +38,7 @@ const openPositions = [
 	},
 	{
 		title: "Product Designer",
+		id: "product-designer-1",
 		department: "Design",
 		location: "Remote",
 		type: "Full-time",
@@ -44,6 +47,7 @@ const openPositions = [
 	},
 	{
 		title: "Curriculum Developer",
+		id: "curriculum-developer-1",
 		department: "Content",
 		location: "Remote",
 		type: "Full-time",
@@ -52,6 +56,7 @@ const openPositions = [
 	},
 	{
 		title: "Growth Marketing Manager",
+		id: "growth-marketing-manager-1",
 		department: "Marketing",
 		location: "Remote",
 		type: "Full-time",
@@ -184,8 +189,8 @@ export default function CareersPage() {
 					</div>
 
 					<div className="grid md:grid-cols-3 gap-8 lg:gap-12">
-						{values.map((value, index) => (
-							<div key={index} className="space-y-4">
+						{values.map((value) => (
+							<div key={value.title} className="space-y-4">
 								<div className="size-12 rounded-lg bg-primary/10 flex items-center justify-center">
 									<HugeiconsIcon
 										icon={value.icon}
@@ -217,9 +222,9 @@ export default function CareersPage() {
 					</div>
 
 					<div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-						{benefits.map((benefit, index) => (
+						{benefits.map((benefit) => (
 							<div
-								key={index}
+								key={benefit.title}
 								className="p-6 rounded-xl border bg-card hover:bg-muted/50 transition-colors"
 							>
 								<HugeiconsIcon
@@ -249,9 +254,9 @@ export default function CareersPage() {
 					</div>
 
 					<div className="space-y-4">
-						{openPositions.map((position, index) => (
+						{openPositions.map((position) => (
 							<div
-								key={index}
+								key={position.id}
 								className="p-6 rounded-xl border bg-background hover:border-primary/50 transition-colors group"
 							>
 								<div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
@@ -337,8 +342,8 @@ export default function CareersPage() {
 								description:
 									"Meet a few team members and ask any questions you have about working here.",
 							},
-						].map((item, index) => (
-							<div key={index} className="relative">
+						].map((item) => (
+							<div key={item.step} className="relative">
 								<div className="text-4xl font-medium text-primary/20 mb-4">
 									{item.step}
 								</div>
@@ -346,9 +351,6 @@ export default function CareersPage() {
 								<p className="text-sm text-muted-foreground">
 									{item.description}
 								</p>
-								{index < 3 && (
-									<div className="hidden md:block absolute top-2 left-[60%] w-[80%] border-t border-dashed border-border" />
-								)}
 							</div>
 						))}
 					</div>
