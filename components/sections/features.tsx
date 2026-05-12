@@ -1,57 +1,52 @@
 "use client";
 
 import {
+	Calculator01Icon,
 	Camera01Icon,
 	ChartLineData02Icon,
 	File01Icon,
 	FlashIcon,
 	Layers01Icon,
 	Link01Icon,
-	Calculator01Icon,
 	ScanIcon,
 	TestTube01Icon,
 } from "@hugeicons/core-free-icons";
-import { HugeiconsIcon, HugeiconsProps } from "@hugeicons/react";
-import katex from "katex";
+import { HugeiconsIcon, type HugeiconsProps } from "@hugeicons/react";
 import "katex/dist/katex.min.css";
+import { Icons } from "@/components/icons";
 import { cn } from "@/lib/utils";
-
-function KatexSpan({ tex }: { tex: string }) {
-	return (
-		<span
-			dangerouslySetInnerHTML={{
-				__html: katex.renderToString(tex, { throwOnError: false }),
-			}}
-		/>
-	);
-}
 
 const MATH_SUBJECTS = [
 	{
 		name: "Algebra",
-		tex: "\\displaystyle x^2",
+		icon: Icons.xSquared,
 		scale: "group-hover:scale-80 group-hover:opacity-80",
+		iconSize: "size-8",
 	},
 	{
 		name: "Trig",
-		tex: "\\displaystyle\\sin\\theta",
+		icon: Icons.sinTheta,
 		scale: "group-hover:scale-90 group-hover:opacity-90",
+		iconSize: "size-11",
 	},
 	{
 		name: "Calculus",
-		tex: "\\displaystyle\\int",
+		icon: Icons.integral,
 		scale: "group-hover:scale-110",
 		featured: true,
+		iconSize: "size-12",
 	},
 	{
 		name: "Stats",
-		tex: "\\displaystyle\\mu",
+		icon: Icons.mu,
 		scale: "group-hover:scale-90 group-hover:opacity-90",
+		iconSize: "size-6",
 	},
 	{
 		name: "Geometry",
-		tex: "\\displaystyle\\triangle",
+		icon: Icons.congruent,
 		scale: "group-hover:scale-80 group-hover:opacity-80",
+		iconSize: "size-8",
 	},
 ];
 
@@ -170,7 +165,7 @@ function MathSubjectsCard() {
 										)}
 									>
 										<span className="pointer-events-none select-none text-xl">
-											<KatexSpan tex={subject.tex} />
+											<subject.icon className={subject.iconSize} />
 										</span>
 									</div>
 									<div className="mt-1 text-center font-medium text-muted-foreground text-sm group-hover:-mt-5 transition-all duration-600 ease-in-out">
@@ -189,7 +184,7 @@ function MathSubjectsCard() {
 									)}
 								>
 									<span className="pointer-events-none select-none text-xl">
-										<KatexSpan tex={subject.tex} />
+										<subject.icon className={subject.iconSize} />
 									</span>
 								</div>
 							),
@@ -322,7 +317,7 @@ function ToolItem({
 function ToolsCard() {
 	return (
 		<div className={cn(cardBase, "bg-card dark:bg-card/50 md:col-span-4")}>
-			<div className="p-6">
+			<div className="p-10">
 				<h3 className="font-medium text-base leading-tight md:text-lg">
 					<span>Every study mode.</span>{" "}
 					<span className="text-muted-foreground">
