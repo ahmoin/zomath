@@ -22,7 +22,6 @@
 		"hooks": "@/hooks"
 	},
 	"registries": {
-		"@uitripled": "https://ui.tripled.work/r/{name}.json",
 		"@shadcn-editor": "https://raw.githubusercontent.com/htmujahid/shadcn-editor/refs/heads/main/public/r/{name}.json"
 	}
 }
