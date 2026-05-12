@@ -30,6 +30,7 @@ import {
 	AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
+import { FiveStars } from "../five-stars";
 
 const faqs = [
 	{
@@ -658,15 +659,7 @@ export function SolveMarketing() {
 					<div className="grid grid-cols-1 md:grid-cols-3 gap-6">
 						<div className="rounded-2xl border border-border bg-background p-8 flex flex-col">
 							<div className="flex gap-1 mb-4">
-								{[...Array(5)].map((_, i) => (
-									<HugeiconsIcon
-										key={i}
-										icon={StarIcon}
-										className="size-4 text-primary"
-										strokeWidth={1.5}
-										fill="currentColor"
-									/>
-								))}
+								<FiveStars className="size-4 text-primary fill-current" />
 							</div>
 							<p className="text-foreground leading-relaxed mb-6 flex-1">
 								"I used to take a photo and copy the answer. With Zomath, I
@@ -683,15 +676,7 @@ export function SolveMarketing() {
 						</div>
 						<div className="rounded-2xl border border-border bg-background p-8 flex flex-col">
 							<div className="flex gap-1 mb-4">
-								{[...Array(5)].map((_, i) => (
-									<HugeiconsIcon
-										key={i}
-										icon={StarIcon}
-										className="size-4 text-primary"
-										strokeWidth={1.5}
-										fill="currentColor"
-									/>
-								))}
+								<FiveStars className="size-4 text-primary fill-current" />
 							</div>
 							<p className="text-foreground leading-relaxed mb-6 flex-1">
 								"The follow-up questions are what sold me. I asked Newton why we
@@ -708,15 +693,7 @@ export function SolveMarketing() {
 						</div>
 						<div className="rounded-2xl border border-border bg-background p-8 flex flex-col">
 							<div className="flex gap-1 mb-4">
-								{[...Array(5)].map((_, i) => (
-									<HugeiconsIcon
-										key={i}
-										icon={StarIcon}
-										className="size-4 text-primary"
-										strokeWidth={1.5}
-										fill="currentColor"
-									/>
-								))}
+								<FiveStars className="size-4 text-primary fill-current" />
 							</div>
 							<p className="text-foreground leading-relaxed mb-6 flex-1">
 								"I'm prepping for AIME and the competition coverage is

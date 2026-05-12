@@ -24,6 +24,7 @@ import {
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import Link from "next/link";
+import { FiveStars } from "@/components/five-stars";
 import {
 	Accordion,
 	AccordionContent,
@@ -646,15 +647,7 @@ export default function SchoolsPage() {
 								className="flex flex-col rounded-xl border bg-background p-6"
 							>
 								<div className="mb-4 flex gap-1">
-									{[...Array(5)].map((_, i) => (
-										<HugeiconsIcon
-											key={i}
-											icon={StarIcon}
-											className="size-4 text-primary"
-											strokeWidth={1.5}
-											fill="currentColor"
-										/>
-									))}
+									<FiveStars className="size-4 text-primary fill-current" />
 								</div>
 								<blockquote className="mb-6 flex-1 text-muted-foreground italic leading-relaxed">
 									&ldquo;{testimonial.quote}&rdquo;

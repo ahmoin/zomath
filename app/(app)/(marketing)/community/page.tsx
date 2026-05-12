@@ -12,6 +12,7 @@ import {
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import Link from "next/link";
+import { FiveStars } from "@/components/five-stars";
 import {
 	Accordion,
 	AccordionContent,
@@ -415,14 +416,10 @@ export default function CommunityPage() {
 								className="rounded-xl border bg-card p-8"
 							>
 								<div className="flex items-center gap-1 mb-5">
-									{[...Array(5)].map((_, i) => (
-										<HugeiconsIcon
-											key={i}
-											icon={StarIcon}
-											className="size-4 text-primary"
-											strokeWidth={1.5}
-										/>
-									))}
+									<FiveStars
+										className="size-4 text-primary"
+										strokeWidth={1.5}
+									/>
 								</div>
 								<p className="text-foreground leading-relaxed mb-6">
 									&ldquo;{testimonial.quote}&rdquo;
