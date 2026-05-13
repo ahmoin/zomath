@@ -42,9 +42,8 @@ export function UserAuthForm({
 			}),
 
 		email: z
-			.string()
-			.min(1, "Email is required")
-			.email("Please enter a valid email address"),
+			.email("Please enter a valid email address")
+			.min(1, "Email is required"),
 
 		password: z
 			.string()
@@ -58,9 +57,8 @@ export function UserAuthForm({
 
 	const logInSchema = z.object({
 		email: z
-			.string()
-			.min(1, "Email is required")
-			.email("Please enter a valid email address"),
+			.email("Please enter a valid email address")
+			.min(1, "Email is required"),
 
 		password: z.string().min(1, "Password is required"),
 	});
@@ -156,12 +154,13 @@ export function UserAuthForm({
 						variant="outline"
 						type="button"
 						disabled={isLoading}
-						onClick={async () =>
+						onClick={async () => {
+							setIsLoading(true);
 							await authClient.signIn.social({
 								provider: "google",
 								callbackURL: "/",
-							})
-						}
+							});
+						}}
 					>
 						{isLoading ? <Spinner /> : <Icons.google className="mr-2 size-4" />}{" "}
 						Google
@@ -171,12 +170,13 @@ export function UserAuthForm({
 						variant="outline"
 						type="button"
 						disabled={isLoading}
-						onClick={async () =>
+						onClick={async () => {
+							setIsLoading(true);
 							await authClient.signIn.social({
 								provider: "github",
 								callbackURL: "/",
-							})
-						}
+							});
+						}}
 					>
 						{isLoading ? <Spinner /> : <Icons.gitHub className="mr-2 size-4" />}{" "}
 						GitHub

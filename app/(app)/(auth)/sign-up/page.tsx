@@ -38,8 +38,8 @@ export default async function AuthenticationPage() {
 					priority
 				/> */}
 			</div>
-			<div className="flex items-center justify-center h-screen lg:p-8">
-				<div className="mx-auto flex w-full flex-col justify-center gap-6 sm:w-[350px]">
+			<div className="flex items-center justify-center h-screen px-8">
+				<div className="mx-auto flex w-full flex-col justify-center gap-6 sm:w-smm">
 					<UserAuthForm initialState="sign-up" />
 				</div>
 			</div>
