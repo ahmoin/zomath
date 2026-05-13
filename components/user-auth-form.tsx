@@ -148,10 +148,9 @@ export function UserAuthForm({
 				</h1>
 			</div>
 			<div className={cn("grid gap-6", className)} {...props}>
-				<div className="flex items-center justify-center gap-2">
+				<div className="flex flex-col gap-2">
 					<Button
-						className="flex-1"
-						variant="outline"
+						className="w-full"
 						type="button"
 						disabled={isLoading}
 						onClick={async () => {
@@ -162,12 +161,11 @@ export function UserAuthForm({
 							});
 						}}
 					>
-						{isLoading ? <Spinner /> : <Icons.google className="mr-2 size-4" />}{" "}
-						Google
+						{isLoading ? <Spinner /> : <Icons.googleSolid className="mr-2 size-4" />}{" "}
+						{state === "log-in" ? "Log in" : "Sign up"} with Google
 					</Button>
 					<Button
-						className="flex-1"
-						variant="outline"
+						className="w-full"
 						type="button"
 						disabled={isLoading}
 						onClick={async () => {
@@ -178,8 +176,8 @@ export function UserAuthForm({
 							});
 						}}
 					>
-						{isLoading ? <Spinner /> : <Icons.gitHub className="mr-2 size-4" />}{" "}
-						GitHub
+						{isLoading ? <Spinner /> : <Icons.gitHubSolid className="mr-2 size-4" />}{" "}
+						{state === "log-in" ? "Log in" : "Sign up"} with GitHub
 					</Button>
 				</div>
 				<FieldSeparator>Or continue with</FieldSeparator>

@@ -19,30 +19,10 @@ export default async function AuthenticationPage() {
 	}
 
 	return (
-		<>
-			<div className="md:hidden">
-				{/* <Image
-					src="/examples/authentication-light.png"
-					width={1280}
-					height={843}
-					alt="Authentication"
-					className="block dark:hidden"
-					priority
-				/>
-				<Image
-					src="/examples/authentication-dark.png"
-					width={1280}
-					height={843}
-					alt="Authentication"
-					className="hidden dark:block"
-					priority
-				/> */}
+		<div className="flex items-center justify-center h-screen px-8">
+			<div className="mx-auto flex w-full flex-col justify-center gap-6 sm:w-sm">
+				<UserAuthForm initialState="log-in" />
 			</div>
-			<div className="flex items-center justify-center h-screen px-8">
-				<div className="mx-auto flex w-full flex-col justify-center gap-6 sm:w-smm">
-					<UserAuthForm initialState="log-in" />
-				</div>
-			</div>
-		</>
+		</div>
 	);
 }
