@@ -161,7 +161,11 @@ export function UserAuthForm({
 							});
 						}}
 					>
-						{isLoading ? <Spinner /> : <Icons.googleSolid className="mr-2 size-4" />}{" "}
+						{isLoading ? (
+							<Spinner />
+						) : (
+							<Icons.googleSolid className="mr-2 size-4" />
+						)}{" "}
 						{state === "log-in" ? "Log in" : "Sign up"} with Google
 					</Button>
 					<Button
@@ -176,7 +180,11 @@ export function UserAuthForm({
 							});
 						}}
 					>
-						{isLoading ? <Spinner /> : <Icons.gitHubSolid className="mr-2 size-4" />}{" "}
+						{isLoading ? (
+							<Spinner />
+						) : (
+							<Icons.gitHubSolid className="mr-2 size-4" />
+						)}{" "}
 						{state === "log-in" ? "Log in" : "Sign up"} with GitHub
 					</Button>
 				</div>
