@@ -748,8 +748,8 @@ export default function SchoolsPage() {
 					</div>
 					<div className="mx-auto max-w-3xl">
 						<Accordion type="single" collapsible className="w-full">
-							{faqs.map((faq, index) => (
-								<AccordionItem key={index} value={`item-${index}`}>
+							{faqs.map((faq) => (
+								<AccordionItem key={faq.question} value={faq.question}>
 									<AccordionTrigger className="text-left text-foreground">
 										{faq.question}
 									</AccordionTrigger>

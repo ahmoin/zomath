@@ -518,9 +518,9 @@ export default function HelpPage() {
 										Tips
 									</div>
 									<ul className="space-y-2">
-										{feature.tips.map((tip, i) => (
+										{feature.tips.map((tip) => (
 											<li
-												key={i}
+												key={tip}
 												className="text-sm text-muted-foreground pl-5 relative before:content-[''] before:absolute before:left-1.5 before:top-2 before:size-1.5 before:rounded-full before:bg-primary/40"
 											>
 												{tip}
@@ -564,13 +564,13 @@ export default function HelpPage() {
 									</h3>
 								</div>
 								<ol className="space-y-2.5 ml-1">
-									{item.steps.map((step, i) => (
+									{item.steps.map((step, stepIndex) => (
 										<li
-											key={i}
+											key={step}
 											className="text-sm text-muted-foreground pl-7 relative leading-relaxed"
 										>
 											<span className="absolute left-0 top-0 text-xs font-semibold text-primary/60 tabular-nums">
-												{String(i + 1).padStart(2, "0")}
+												{String(stepIndex + 1).padStart(2, "0")}
 											</span>
 											{step}
 										</li>
@@ -650,10 +650,10 @@ export default function HelpPage() {
 					</div>
 					<div className="max-w-3xl mx-auto">
 						<Accordion type="single" collapsible className="space-y-3">
-							{(searchQuery ? filteredFaq : faqItems).map((item, index) => (
+							{(searchQuery ? filteredFaq : faqItems).map((item) => (
 								<AccordionItem
-									key={index}
-									value={`faq-${index}`}
+									key={item.question}
+									value={item.question}
 									className="border rounded-xl px-6 data-[state=open]:border-primary/30 data-[state=open]:bg-card transition-colors"
 								>
 									<AccordionTrigger className="text-left text-foreground font-medium hover:no-underline py-4">

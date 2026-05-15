@@ -170,18 +170,18 @@ function getStatusConfig(status: string) {
 
 function UptimeBar({ value }: { value: number }) {
 	const days = 30;
-	const bars = Array.from({ length: days }, (_, i) => {
-		const hasIncident = Math.random() < (100 - value) / 100;
-		return hasIncident && i > 20;
-	});
+	const bars = Array.from({ length: days }, (_, i) => ({
+		day: i,
+		hasIncident: Math.random() < (100 - value) / 100 && i > 20,
+	}));
 
 	return (
 		<div className="flex gap-px items-end h-8">
-			{bars.map((incident, i) => (
+			{bars.map((bar) => (
 				<div
-					key={i}
+					key={bar.day}
 					className={`flex-1 rounded-sm min-w-1 ${
-						incident ? "bg-amber-400" : "bg-emerald-500"
+						bar.hasIncident ? "bg-amber-400" : "bg-emerald-500"
 					}`}
 					style={{ height: "100%" }}
 				/>
@@ -466,16 +466,14 @@ export default function StatusPage() {
 											<AccordionContent className="px-6 pb-6">
 												<Separator className="mb-6" />
 												<div className="space-y-0 ml-11">
-													{incident.timeline.map((event, idx) => (
+													{incident.timeline.map((event) => (
 														<div
-															key={idx}
+															key={event.time}
 															className="flex gap-4 pb-6 last:pb-0 relative"
 														>
 															<div className="flex flex-col items-center">
 																<div className="size-2.5 rounded-full bg-primary mt-1.5 shrink-0" />
-																{idx < incident.timeline.length - 1 && (
-																	<div className="w-px flex-1 bg-border mt-1" />
-																)}
+																<div className="w-px flex-1 bg-border mt-1 [div:last-child_&]:hidden" />
 															</div>
 															<div className="flex-1 -mt-0.5">
 																<div className="flex items-center gap-3 flex-wrap">
