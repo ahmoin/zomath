@@ -724,10 +724,10 @@ export function SolveMarketing() {
 							</h2>
 						</div>
 						<Accordion type="single" collapsible className="space-y-3">
-							{faqs.map((faq, index) => (
+							{faqs.map((faq) => (
 								<AccordionItem
-									key={index}
-									value={`faq-${index}`}
+									key={faq.question}
+									value={faq.question}
 									className="border border-border rounded-2xl px-6 data-[state=open]:bg-muted transition-colors"
 								>
 									<AccordionTrigger className="text-left text-foreground font-medium hover:no-underline py-5">

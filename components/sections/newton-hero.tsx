@@ -223,7 +223,7 @@ function AuthedPersona() {
 					>
 						{(segment, index) => (
 							<TranscriptionSegment
-								key={index}
+								key={segment.startSecond}
 								index={index}
 								segment={segment}
 							/>

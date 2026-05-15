@@ -615,10 +615,10 @@ export function PracticeMarketingSection() {
 					</div>
 					<div className="max-w-3xl">
 						<Accordion type="single" collapsible className="space-y-4">
-							{faqs.map((faq, index) => (
+							{faqs.map((faq) => (
 								<AccordionItem
-									key={index}
-									value={`faq-${index}`}
+									key={faq.question}
+									value={faq.question}
 									className="rounded-xl border bg-card px-6"
 								>
 									<AccordionTrigger className="text-left text-foreground font-medium hover:no-underline py-5">

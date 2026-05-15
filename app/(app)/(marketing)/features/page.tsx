@@ -521,10 +521,10 @@ export default function FeaturesPage() {
 					</div>
 					<div className="max-w-3xl mx-auto">
 						<Accordion type="single" collapsible className="space-y-3">
-							{faqItems.map((item, index) => (
+							{faqItems.map((item) => (
 								<AccordionItem
-									key={index}
-									value={`faq-${index}`}
+									key={item.question}
+									value={item.question}
 									className="bg-background border border-border rounded-xl px-6"
 								>
 									<AccordionTrigger className="text-left text-foreground hover:no-underline py-5">

@@ -409,9 +409,9 @@ export function PracticeHeroSection({ name }: PracticeHeroSectionProps) {
 				</div>
 
 				<div className="flex gap-1 px-8 py-3 shrink-0">
-					{quiz.questions.map((_, i) => (
+					{quiz.questions.map((q, i) => (
 						<div
-							key={i}
+							key={q.question}
 							className={cn(
 								"h-1 flex-1 rounded-full transition-colors",
 								questionStates[i] === "correct"

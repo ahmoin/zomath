@@ -570,8 +570,8 @@ export default function PrivacyPage() {
 							Common questions about how Zomath handles your data and privacy.
 						</p>
 						<Accordion type="single" collapsible className="w-full">
-							{faqItems.map((item, idx) => (
-								<AccordionItem key={idx} value={`faq-${idx}`}>
+							{faqItems.map((item) => (
+								<AccordionItem key={item.question} value={item.question}>
 									<AccordionTrigger className="text-left text-foreground font-medium">
 										{item.question}
 									</AccordionTrigger>

@@ -351,16 +351,16 @@ export function SolveInterface() {
 
 				{(history.length > 0 || completion || isLoading) && (
 					<div className="mt-6 flex flex-col gap-4">
-						{history.map((msg, i) =>
+						{history.map((msg) =>
 							msg.role === "user" ? (
-								<div key={i} className="flex justify-end">
+								<div key={msg.id} className="flex justify-end">
 									<div className="max-w-[85%] rounded-2xl bg-primary px-4 py-3 text-sm text-primary-foreground">
 										{msg.parts.find((p) => p.type === "text")?.text}
 									</div>
 								</div>
 							) : (
 								<div
-									key={i}
+									key={msg.id}
 									className="rounded-2xl border border-border bg-muted p-6"
 								>
 									<div className="flex items-center gap-2 mb-4">

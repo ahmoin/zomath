@@ -589,10 +589,10 @@ export default function CalculusPage() {
 							collapsible
 							className="flex flex-col gap-3"
 						>
-							{faqs.map((faq, index) => (
+							{faqs.map((faq) => (
 								<AccordionItem
-									key={index}
-									value={`item-${index}`}
+									key={faq.question}
+									value={faq.question}
 									className="rounded-xl border bg-background px-6"
 								>
 									<AccordionTrigger className="text-left text-base font-medium text-foreground hover:no-underline py-5">

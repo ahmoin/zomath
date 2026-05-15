@@ -576,8 +576,8 @@ export default function AlgebraPage() {
 						</div>
 
 						<Accordion type="single" collapsible className="w-full">
-							{faqs.map((faq, index) => (
-								<AccordionItem key={index} value={`faq-${index}`}>
+							{faqs.map((faq) => (
+								<AccordionItem key={faq.question} value={faq.question}>
 									<AccordionTrigger className="text-left text-foreground">
 										{faq.question}
 									</AccordionTrigger>

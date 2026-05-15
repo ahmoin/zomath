@@ -606,8 +606,8 @@ export default function GeometryPage() {
 					</div>
 
 					<div className="space-y-6">
-						{struggles.map((item, idx) => (
-							<div key={idx} className="rounded-xl border bg-card p-6 lg:p-8">
+						{struggles.map((item) => (
+							<div key={item.challenge} className="rounded-xl border bg-card p-6 lg:p-8">
 								<div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
 									<div>
 										<div className="flex items-center gap-2 mb-2">

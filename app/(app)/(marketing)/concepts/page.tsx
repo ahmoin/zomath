@@ -863,8 +863,8 @@ export default function ConceptsPage() {
 							Everything you want to know about the Concept Map.
 						</p>
 						<Accordion type="single" collapsible className="w-full">
-							{faqItems.map((item, index) => (
-								<AccordionItem key={index} value={`item-${index}`}>
+							{faqItems.map((item) => (
+								<AccordionItem key={item.question} value={item.question}>
 									<AccordionTrigger className="text-left text-foreground font-medium">
 										{item.question}
 									</AccordionTrigger>
