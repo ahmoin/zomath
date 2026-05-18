@@ -1,22 +1,27 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useCallback, useState } from "react";
-import type { templates } from "@/components/sections/practice-hero/data";
-import type {
-	QuizData,
-	QuestionState,
-	PracticePhase,
-} from "@/lib/types";
+import { templates } from "@/components/sections/practice-hero/data";
+import type { PracticePhase, QuestionState, QuizData } from "@/lib/types";
 
-export type { QuizOption, QuizQuestion, QuizData, QuestionState, PracticePhase } from "@/lib/types";
+export type {
+	PracticePhase,
+	QuestionState,
+	QuizData,
+	QuizOption,
+	QuizQuestion,
+} from "@/lib/types";
 export type Template = (typeof templates)[number];
 
-export function usePracticeQuiz() {
-	const [phase, setPhase] = useState<PracticePhase>("idle");
+export type PlanMessage = { role: "user" | "newton"; text: string };
+
+export function usePracticeQuiz(formatId: string) {
+	const router = useRouter();
+	const selectedFormat = templates.find((t) => t.id === formatId) ?? null;
+
+	const [phase, setPhase] = useState<PracticePhase>("topic-select");
 	const [topic, setTopic] = useState("");
-	const [topicInput, setTopicInput] = useState("");
-	const [selectedFormat, setSelectedFormat] = useState<Template | null>(null);
-	const [suggestLoading, setSuggestLoading] = useState(false);
 	const [quiz, setQuiz] = useState<QuizData | null>(null);
 	const [currentQ, setCurrentQ] = useState(0);
 	const [answers, setAnswers] = useState<(string | null)[]>([]);
@@ -27,37 +32,62 @@ export function usePracticeQuiz() {
 		Array<{ role: "user" | "newton"; text: string }>
 	>([]);
 	const [chatLoading, setChatLoading] = useState(false);
+	const [planMessages, setPlanMessages] = useState<PlanMessage[]>([]);
+	const [planLoading, setPlanLoading] = useState(false);
+	const [planReady, setPlanReady] = useState(false);
+	const [planTopic, setPlanTopic] = useState("");
 
-	const selectFormat = useCallback((fmt: Template) => {
-		setSelectedFormat(fmt);
-		setTopicInput("");
-		setPhase("topic-select");
-	}, []);
+	const goIdle = useCallback(() => {
+		router.push("/practice");
+	}, [router]);
 
-	const suggestTopic = useCallback(async () => {
-		setSuggestLoading(true);
-		try {
-			const res = await fetch("/api/practice/suggest-topic", {
-				method: "POST",
-				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify({ format: selectedFormat?.title }),
-			});
-			if (!res.ok) throw new Error("Failed");
-			const data = (await res.json()) as { topic: string };
-			setTopicInput(data.topic);
-		} catch {
-			const fallbacks = [
-				"Quadratic equations",
-				"Derivatives",
-				"Trigonometry",
-				"Linear systems",
-				"Probability",
-			];
-			setTopicInput(fallbacks[Math.floor(Math.random() * fallbacks.length)]);
-		} finally {
-			setSuggestLoading(false);
-		}
-	}, [selectedFormat]);
+	const handlePlanSubmit = useCallback(
+		async ({
+			text,
+			attachmentNames,
+		}: {
+			text: string;
+			attachmentNames?: string[];
+		}) => {
+			if (!text.trim() || !selectedFormat) return;
+			const userMsg: PlanMessage = { role: "user", text };
+			setPlanMessages((prev) => [...prev, userMsg]);
+			setPlanLoading(true);
+			try {
+				const res = await fetch("/api/practice/plan", {
+					method: "POST",
+					headers: { "Content-Type": "application/json" },
+					body: JSON.stringify({
+						format: selectedFormat.title,
+						messages: [...planMessages, userMsg],
+						attachmentDescriptions: attachmentNames,
+					}),
+				});
+				if (!res.ok) throw new Error("Failed");
+				const data = (await res.json()) as {
+					text: string;
+					ready: boolean;
+					topic?: string;
+				};
+				setPlanMessages((prev) => [
+					...prev,
+					{ role: "newton", text: data.text },
+				]);
+				if (data.ready && data.topic) {
+					setPlanReady(true);
+					setPlanTopic(data.topic);
+				}
+			} catch {
+				setPlanMessages((prev) => [
+					...prev,
+					{ role: "newton", text: "Sorry, I ran into an issue. Try again." },
+				]);
+			} finally {
+				setPlanLoading(false);
+			}
+		},
+		[selectedFormat, planMessages],
+	);
 
 	const startQuiz = useCallback(async (t: string) => {
 		setTopic(t);
@@ -79,7 +109,7 @@ export function usePracticeQuiz() {
 			setQuestionStates(new Array(data.questions.length).fill("unanswered"));
 			setPhase("quiz");
 		} catch {
-			setPhase("idle");
+			setPhase("topic-select");
 		}
 	}, []);
 
@@ -161,10 +191,7 @@ export function usePracticeQuiz() {
 		phase,
 		setPhase,
 		topic,
-		topicInput,
-		setTopicInput,
 		selectedFormat,
-		suggestLoading,
 		quiz,
 		currentQ,
 		setCurrentQ,
@@ -176,8 +203,12 @@ export function usePracticeQuiz() {
 		setShowResults,
 		chatMessages,
 		chatLoading,
-		selectFormat,
-		suggestTopic,
+		planMessages,
+		planLoading,
+		planReady,
+		planTopic,
+		goIdle,
+		handlePlanSubmit,
 		startQuiz,
 		handleAnswer,
 		goNext,

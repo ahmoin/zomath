@@ -4,11 +4,7 @@ import { CheckmarkCircle02Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { templates } from "@/components/sections/practice-hero/data";
 import { Button } from "@/components/ui/button";
-import type {
-	PracticePhase,
-	QuestionState,
-	QuizData,
-} from "@/lib/types";
+import type { PracticePhase, QuestionState, QuizData } from "@/lib/types";
 
 export function QuizResultsView({
 	quiz,
@@ -36,7 +32,7 @@ export function QuizResultsView({
 		.slice(0, 4);
 
 	return (
-		<div className="flex h-[calc(100vh-var(--header-height))] overflow-hidden">
+		<div className="flex flex-1 overflow-hidden">
 			<div className="w-[40%] border-r flex flex-col p-8 gap-6">
 				<div className="flex flex-col gap-1">
 					<p className="text-xs text-muted-foreground uppercase tracking-wider font-medium">

@@ -1,3 +1,6 @@
+"use client";
+
+import { useHeaderSlot } from "@/components/dashboard-header-context";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 
 function getGreeting() {
@@ -8,6 +11,7 @@ function getGreeting() {
 }
 
 export function DashboardHeader({ name }: { name: string }) {
+	const { right } = useHeaderSlot();
 	return (
 		<header className="flex h-(--header-height) shrink-0 items-center gap-2 border-b transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-(--header-height)">
 			<div className="flex w-full items-center gap-1 px-4 lg:gap-2 lg:px-6">
@@ -15,6 +19,9 @@ export function DashboardHeader({ name }: { name: string }) {
 				<span className="ml-2 text-sm text-muted-foreground">
 					{getGreeting()}, {name.split(" ")[0]}
 				</span>
+				{right && (
+					<div className="ml-auto flex items-center gap-3">{right}</div>
+				)}
 			</div>
 		</header>
 	);

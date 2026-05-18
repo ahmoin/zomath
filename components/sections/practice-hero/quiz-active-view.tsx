@@ -19,11 +19,7 @@ import {
 } from "@/components/ai-elements/prompt-input";
 import { Shimmer } from "@/components/ai-elements/shimmer";
 import { Button } from "@/components/ui/button";
-import type {
-	PracticePhase,
-	QuestionState,
-	QuizData,
-} from "@/lib/types";
+import type { PracticePhase, QuestionState, QuizData } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
 export function QuizActiveView({
@@ -61,7 +57,7 @@ export function QuizActiveView({
 	const answered = answers[currentQ];
 
 	return (
-		<div className="flex h-[calc(100vh-var(--header-height))] overflow-hidden">
+		<div className="flex flex-1 overflow-hidden">
 			<div className="w-[38%] border-r flex flex-col overflow-hidden">
 				<div className="flex-1 overflow-y-auto px-8 pt-8 pb-4 flex flex-col gap-6">
 					<div className="flex flex-col gap-1">

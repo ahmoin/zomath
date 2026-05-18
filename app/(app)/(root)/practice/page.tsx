@@ -1,7 +1,8 @@
 import { headers } from "next/headers";
 import { AppSidebar } from "@/components/app-sidebar";
 import { DashboardHeader } from "@/components/dashboard-header";
-import { PracticeHeroSection } from "@/components/sections/practice-hero";
+import { HeaderSlotProvider } from "@/components/dashboard-header-context";
+import { PracticeFormatSelect } from "@/components/sections/practice-hero/format-select";
 import { PracticeMarketingSection } from "@/components/sections/practice-marketing";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -32,14 +33,12 @@ export default async function PracticePage() {
 						}}
 					/>
 					<SidebarInset>
-						<DashboardHeader name={session.user.name} />
-						<div className="flex flex-1 flex-col">
-							<div className="@container/main flex flex-1 flex-col gap-2">
-								<div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
-									<PracticeHeroSection name={session.user.name} />
-								</div>
+						<HeaderSlotProvider>
+							<DashboardHeader name={session.user.name} />
+							<div className="flex flex-1 flex-col overflow-hidden">
+								<PracticeFormatSelect name={session.user.name} />
 							</div>
-						</div>
+						</HeaderSlotProvider>
 					</SidebarInset>
 				</SidebarProvider>
 			</TooltipProvider>
