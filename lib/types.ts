@@ -28,6 +28,29 @@ export type ChatMessage = UIMessage<
 	ChatTools
 >;
 
+export interface QuizOption {
+	label: string;
+	text: string;
+	correct: boolean;
+	explanation: string;
+}
+
+export interface QuizQuestion {
+	question: string;
+	latex?: string;
+	options: QuizOption[];
+	hint: string;
+}
+
+export interface QuizData {
+	title: string;
+	intro: string;
+	questions: QuizQuestion[];
+}
+
+export type QuestionState = "unanswered" | "correct" | "incorrect";
+export type PracticePhase = "idle" | "topic-select" | "loading" | "quiz";
+
 export type Attachment = {
 	name: string;
 	url: string;
