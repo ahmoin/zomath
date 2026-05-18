@@ -16,6 +16,13 @@ import { math } from "@streamdown/math";
 import { useCallback, useState } from "react";
 import { Streamdown } from "streamdown";
 import { Shimmer } from "@/components/ai-elements/shimmer";
+import {
+	PromptInput,
+	PromptInputFooter,
+	PromptInputSubmit,
+	PromptInputTextarea,
+	type PromptInputMessage,
+} from "@/components/ai-elements/prompt-input";
 import { Button } from "@/components/ui/button";
 import {
 	Item,
@@ -466,14 +473,44 @@ interface PracticeHeroSectionProps {
 
 export function PracticeHeroSection({ name }: PracticeHeroSectionProps) {
 	const firstName = name.split(" ")[0];
-	const [phase, setPhase] = useState<"idle" | "loading" | "quiz">("idle");
+	const [phase, setPhase] = useState<"idle" | "topic-select" | "loading" | "quiz">("idle");
 	const [topic, setTopic] = useState("");
+	const [topicInput, setTopicInput] = useState("");
+	const [selectedFormat, setSelectedFormat] = useState<(typeof templates)[number] | null>(null);
+	const [suggestLoading, setSuggestLoading] = useState(false);
 	const [quiz, setQuiz] = useState<QuizData | null>(null);
 	const [currentQ, setCurrentQ] = useState(0);
 	const [answers, setAnswers] = useState<(string | null)[]>([]);
 	const [questionStates, setQuestionStates] = useState<QuestionState[]>([]);
 	const [showHint, setShowHint] = useState(false);
 	const [showResults, setShowResults] = useState(false);
+	const [chatMessages, setChatMessages] = useState<Array<{ role: "user" | "newton"; text: string }>>([]);
+	const [chatLoading, setChatLoading] = useState(false);
+
+	const selectFormat = useCallback((fmt: (typeof templates)[number]) => {
+		setSelectedFormat(fmt);
+		setTopicInput("");
+		setPhase("topic-select");
+	}, []);
+
+	const suggestTopic = useCallback(async () => {
+		setSuggestLoading(true);
+		try {
+			const res = await fetch("/api/practice/suggest-topic", {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({ format: selectedFormat?.title }),
+			});
+			if (!res.ok) throw new Error("Failed");
+			const data = (await res.json()) as { topic: string };
+			setTopicInput(data.topic);
+		} catch {
+			const fallbacks = ["Quadratic equations", "Derivatives", "Trigonometry", "Linear systems", "Probability"];
+			setTopicInput(fallbacks[Math.floor(Math.random() * fallbacks.length)]);
+		} finally {
+			setSuggestLoading(false);
+		}
+	}, [selectedFormat]);
 
 	const startQuiz = useCallback(async (t: string) => {
 		setTopic(t);
@@ -541,6 +578,35 @@ export function PracticeHeroSection({ name }: PracticeHeroSectionProps) {
 		[startQuiz, topic],
 	);
 
+	const handleChatSubmit = useCallback(
+		async ({ text }: PromptInputMessage) => {
+			if (!text.trim() || !quiz) return;
+			setChatMessages((prev) => [...prev, { role: "user", text }]);
+			setChatLoading(true);
+			try {
+				const res = await fetch("/api/chat", {
+					method: "POST",
+					headers: { "Content-Type": "application/json" },
+					body: JSON.stringify({
+						message: text,
+						context: `Practice format: ${topic}. Current question: ${quiz.questions[currentQ]?.question ?? ""}`,
+					}),
+				});
+				if (!res.ok) throw new Error("Failed");
+				const data = (await res.json()) as { response: string };
+				setChatMessages((prev) => [...prev, { role: "newton", text: data.response }]);
+			} catch {
+				setChatMessages((prev) => [
+					...prev,
+					{ role: "newton", text: "Sorry, I ran into an issue. Try again." },
+				]);
+			} finally {
+				setChatLoading(false);
+			}
+		},
+		[quiz, topic, currentQ],
+	);
+
 	if (phase === "idle") {
 		return (
 			<div className="flex flex-col gap-8 px-4 py-12 max-w-7xl mx-auto lg:px-12 lg:py-16">
@@ -563,7 +629,7 @@ export function PracticeHeroSection({ name }: PracticeHeroSectionProps) {
 							size="default"
 							className="group cursor-pointer overflow-hidden p-0 gap-0 hover:border-primary/40 hover:bg-accent/50 transition-colors"
 						>
-							<button type="button" onClick={() => startQuiz(title)}>
+							<button type="button" onClick={() => selectFormat({ title, description, Illustration })}>
 								<div className="w-28 self-stretch shrink-0 bg-primary/10 flex items-center justify-center">
 									<Illustration />
 								</div>
@@ -583,6 +649,78 @@ export function PracticeHeroSection({ name }: PracticeHeroSectionProps) {
 		);
 	}
 
+	if (phase === "topic-select" && selectedFormat) {
+		const { Illustration } = selectedFormat;
+		return (
+			<div className="flex flex-col items-center justify-center min-h-[60vh] px-4">
+				<div className="w-full max-w-md flex flex-col gap-6">
+					<div className="flex items-center gap-4">
+						<div className="size-16 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center shrink-0">
+							<div className="scale-75">
+								<Illustration />
+							</div>
+						</div>
+						<div>
+							<p className="text-xs text-muted-foreground uppercase tracking-wider font-medium mb-0.5">
+								Selected format
+							</p>
+							<h2 className="text-lg font-semibold text-foreground">
+								{selectedFormat.title}
+							</h2>
+						</div>
+					</div>
+
+					<div className="flex flex-col gap-2">
+						<label className="text-sm font-medium text-foreground">
+							What topic do you want to practice?
+						</label>
+						<div className="flex gap-2">
+							<input
+								type="text"
+								value={topicInput}
+								onChange={(e) => setTopicInput(e.target.value)}
+								onKeyDown={(e) => {
+									if (e.key === "Enter" && topicInput.trim())
+										startQuiz(topicInput.trim());
+								}}
+								placeholder="e.g. Quadratic equations, Derivatives..."
+								className="flex-1 rounded-xl border border-border bg-muted px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground outline-none focus:border-primary transition-colors"
+								autoFocus
+							/>
+						</div>
+						<Button
+							variant="ghost"
+							size="sm"
+							onClick={suggestTopic}
+							disabled={suggestLoading}
+							className="self-start h-auto px-0 text-xs text-muted-foreground hover:text-foreground hover:bg-transparent gap-1.5"
+						>
+							<HugeiconsIcon
+								icon={SparklesIcon}
+								className={cn("size-3.5", suggestLoading && "animate-pulse")}
+								strokeWidth={1.5}
+							/>
+							{suggestLoading ? "Thinking..." : "Suggest a topic for me"}
+						</Button>
+					</div>
+
+					<div className="flex gap-2">
+						<Button variant="outline" onClick={() => setPhase("idle")}>
+							Back
+						</Button>
+						<Button
+							onClick={() => topicInput.trim() && startQuiz(topicInput.trim())}
+							disabled={!topicInput.trim()}
+							className="flex-1"
+						>
+							Start session
+						</Button>
+					</div>
+				</div>
+			</div>
+		);
+	}
+
 	if (phase === "loading") {
 		return (
 			<div className="flex items-center justify-center min-h-[60vh]">
@@ -595,7 +733,7 @@ export function PracticeHeroSection({ name }: PracticeHeroSectionProps) {
 						/>
 					</div>
 					<Shimmer className="text-base text-muted-foreground">
-						{`Newton is building your ${topic} quiz...`}
+						{`Newton is building your ${selectedFormat?.title ?? topic} on ${topic}...`}
 					</Shimmer>
 				</div>
 			</div>
@@ -721,33 +859,74 @@ export function PracticeHeroSection({ name }: PracticeHeroSectionProps) {
 
 	return (
 		<div className="flex h-[calc(100vh-var(--header-height))] overflow-hidden">
-			<div className="w-[38%] border-r flex flex-col p-8 gap-6 overflow-y-auto">
-				<div className="flex flex-col gap-1">
-					<p className="text-xs text-muted-foreground uppercase tracking-wider font-medium">
-						You
-					</p>
-					<div className="self-end ml-auto rounded-2xl bg-secondary px-4 py-3 text-sm text-foreground max-w-[90%]">
-						Quiz me on {topic}
+			<div className="w-[38%] border-r flex flex-col overflow-hidden">
+				<div className="flex-1 overflow-y-auto px-8 pt-8 pb-4 flex flex-col gap-6">
+					<div className="flex flex-col gap-1">
+						<p className="text-xs text-muted-foreground uppercase tracking-wider font-medium">
+							You
+						</p>
+						<div className="self-end ml-auto rounded-2xl bg-secondary px-4 py-3 text-sm text-foreground max-w-[90%]">
+							Quiz me on {topic}
+						</div>
 					</div>
+					<div className="flex flex-col gap-1">
+						<p className="text-xs text-muted-foreground uppercase tracking-wider font-medium">
+							Newton
+						</p>
+						<Streamdown
+							plugins={{ math }}
+							className="text-sm text-foreground leading-relaxed [&>*:first-child]:mt-0 [&>*:last-child]:mb-0"
+						>
+							{quiz.intro}
+						</Streamdown>
+					</div>
+					{chatMessages.map((msg, i) => (
+						<div key={i} className="flex flex-col gap-1">
+							<p className="text-xs text-muted-foreground uppercase tracking-wider font-medium">
+								{msg.role === "user" ? "You" : "Newton"}
+							</p>
+							{msg.role === "user" ? (
+								<div className="self-end ml-auto rounded-2xl bg-secondary px-4 py-3 text-sm text-foreground max-w-[90%]">
+									{msg.text}
+								</div>
+							) : (
+								<Streamdown
+									plugins={{ math }}
+									className="text-sm text-foreground leading-relaxed [&>*:first-child]:mt-0 [&>*:last-child]:mb-0"
+								>
+									{msg.text}
+								</Streamdown>
+							)}
+						</div>
+					))}
+					{chatLoading && (
+						<div className="flex flex-col gap-1">
+							<p className="text-xs text-muted-foreground uppercase tracking-wider font-medium">
+								Newton
+							</p>
+							<Shimmer className="text-sm text-muted-foreground">Thinking...</Shimmer>
+						</div>
+					)}
 				</div>
-				<div className="flex flex-col gap-1">
-					<p className="text-xs text-muted-foreground uppercase tracking-wider font-medium">
-						Newton
-					</p>
-					<Streamdown
-						plugins={{ math }}
-						className="text-sm text-foreground leading-relaxed [&>*:first-child]:mt-0 [&>*:last-child]:mb-0"
-					>
-						{quiz.intro}
-					</Streamdown>
+				<div className="px-4 pb-4 pt-2 border-t flex flex-col gap-2 shrink-0">
+					<PromptInput onSubmit={handleChatSubmit}>
+						<PromptInputTextarea
+							placeholder="Ask Newton anything..."
+							className="min-h-10 max-h-32"
+						/>
+						<PromptInputFooter>
+							<Button
+								variant="ghost"
+								size="sm"
+								onClick={() => setPhase("idle")}
+								className="h-auto p-0 text-xs text-muted-foreground hover:text-foreground hover:bg-transparent"
+							>
+								&larr; Back
+							</Button>
+							<PromptInputSubmit disabled={chatLoading} />
+						</PromptInputFooter>
+					</PromptInput>
 				</div>
-				<Button
-					variant="ghost"
-					onClick={() => setPhase("idle")}
-					className="mt-auto h-auto p-0 text-sm text-muted-foreground hover:text-foreground hover:bg-transparent text-left"
-				>
-					&larr; Back to topics
-				</Button>
 			</div>
 
 			<div className="w-[62%] flex flex-col overflow-hidden">
