@@ -1,0 +1,174 @@
+import {
+	AiChipIcon,
+	AuctionIcon,
+	BandageIcon,
+	Bookmark02Icon,
+	Cancel01Icon,
+	CreditCardIcon,
+	EyeIcon,
+	LockPasswordIcon,
+	MailAtSign01Icon,
+	Notification01Icon,
+	PenTool01Icon,
+	PlateIcon,
+	SecurityCheckIcon,
+	Share01Icon,
+	Shield01Icon,
+	UserSquareIcon,
+} from "@hugeicons/core-free-icons";
+
+export const tocSections = [
+	{ id: "summary", label: "Key Points", icon: Bookmark02Icon },
+	{ id: "acceptance", label: "Acceptance of Terms", icon: Shield01Icon },
+	{ id: "service", label: "Description of Service", icon: AiChipIcon },
+	{ id: "accounts", label: "Accounts & Registration", icon: UserSquareIcon },
+	{ id: "conduct", label: "User Conduct", icon: Share01Icon },
+	{ id: "ai-disclaimer", label: "AI Tutor Disclaimers", icon: AiChipIcon },
+	{ id: "intellectual", label: "Intellectual Property", icon: PenTool01Icon },
+	{ id: "user-content", label: "User Content & Privacy", icon: EyeIcon },
+	{ id: "payments", label: "Payments & Subscriptions", icon: CreditCardIcon },
+	{ id: "liability", label: "Limitation of Liability", icon: Shield01Icon },
+	{ id: "termination", label: "Termination", icon: Cancel01Icon },
+	{ id: "disputes", label: "Dispute Resolution", icon: BandageIcon },
+	{ id: "changes", label: "Changes to Terms", icon: PlateIcon },
+	{ id: "contact", label: "Contact Us", icon: MailAtSign01Icon },
+];
+
+export const summaryCards = [
+	{
+		icon: AiChipIcon,
+		title: "Newton is AI, not a person",
+		description:
+			"Newton can make mistakes. Always verify important results and use your own critical thinking.",
+	},
+	{
+		icon: SecurityCheckIcon,
+		title: "Your data stays yours",
+		description:
+			"We never sell your content. We only process it to provide and improve the service you signed up for.",
+	},
+	{
+		icon: Share01Icon,
+		title: "Learn, don't cheat",
+		description:
+			"Zomath is a learning tool. Using it to violate your school's academic integrity policies is not okay.",
+	},
+	{
+		icon: CreditCardIcon,
+		title: "Cancel anytime",
+		description:
+			"Paid subscriptions can be cancelled at any time. You keep access through the end of your billing period.",
+	},
+	{
+		icon: Notification01Icon,
+		title: "30 days notice on changes",
+		description:
+			"We give you at least 30 days notice before any material changes to these terms take effect.",
+	},
+	{
+		icon: UserSquareIcon,
+		title: "Under 18? Parental consent required",
+		description:
+			"If you are under 18, a parent or guardian must review and agree to these terms on your behalf.",
+	},
+];
+
+export const serviceFeatures = [
+	{
+		title: "Solve",
+		description:
+			"Upload a photo of a math problem and receive a detailed, step-by-step solution that explains the reasoning behind each step, not just the final answer.",
+	},
+	{
+		title: "Ask Newton",
+		description:
+			"Chat with Newton, our AI tutor, who can answer questions, clarify concepts, provide hints, and guide you through problems without simply giving away solutions.",
+	},
+	{
+		title: "Concept Map",
+		description:
+			"Visualize how mathematical concepts connect to each other, identify gaps in your understanding, and discover what you need to learn next.",
+	},
+	{
+		title: "Practice",
+		description:
+			"Targeted drills and exercises that adapt to your skill level, helping you build fluency and confidence in specific areas of mathematics.",
+	},
+	{
+		title: "Progress Tracking",
+		description:
+			"Monitor your learning journey over time, see your strengths and areas for improvement, and celebrate your growth as a mathematician.",
+	},
+];
+
+export const accountObligations = [
+	"Provide accurate, current, and complete information during registration.",
+	"Keep your account information updated and accurate at all times.",
+	"Maintain the security and confidentiality of your login credentials.",
+	"Accept responsibility for all activities that occur under your account.",
+	"Notify us immediately if you suspect unauthorized use of your account.",
+];
+
+export const conductProhibitions = [
+	"Use the Service to cheat on homework, exams, or assessments in ways that violate your school's academic integrity policies.",
+	"Attempt to reverse-engineer, decompile, or extract the underlying technology or data behind Newton or any other feature.",
+	"Upload content that is abusive, harassing, hateful, or otherwise harmful to other users or our community.",
+	"Use automated tools, bots, or scripts to access the Service in ways that exceed normal usage patterns.",
+	"Share your account credentials with others or resell access to the Service.",
+	"Upload content that infringes on the intellectual property rights of others, including copyrighted textbook problems shared without permission.",
+	"Attempt to bypass, disable, or interfere with security features, rate limits, or access controls.",
+	"Use the Service for any unlawful purpose or in violation of any applicable regulations.",
+];
+
+export const aiDisclaimerItems = [
+	"Newton's responses are generated by artificial intelligence and may contain errors, inaccuracies, or misleading information, particularly in edge cases or advanced topics.",
+	"Solutions provided through the Solve feature are meant as learning tools, not guaranteed-correct answers. Always verify important results using your own reasoning and other trusted sources.",
+	"The Service is not a replacement for qualified math instruction, tutoring, or professional academic advice. It is a supplementary learning tool.",
+	"Newton's guidance is based on general pedagogical principles and may not always align with the specific approach your teacher or curriculum expects.",
+	"We continuously improve Newton's accuracy and teaching quality, but no AI system is infallible. Critical mathematical thinking remains your most important skill.",
+];
+
+export const intellectualPropertyItems = [
+	"The Zomath name, logo, and all associated branding and visual design.",
+	"The design and implementation of Newton and our AI tutoring technology.",
+	"The Concept Map visualizations, data structures, and pedagogical frameworks.",
+	"Our curated problem sets, solution explanations, and learning content.",
+	"The software, algorithms, and infrastructure that power the Service.",
+];
+
+export const userContentLicenseItems = [
+	"Processing photos you upload through Solve to generate step-by-step solutions.",
+	"Storing your conversations with Newton to maintain chat history and provide continuity.",
+	"Tracking your practice responses to measure progress and adapt future exercises.",
+	"Using anonymized and aggregated data to improve our AI models and learning algorithms.",
+];
+
+export const paymentTerms = [
+	"Subscription fees are billed in advance on a monthly or annual basis, depending on the plan you select.",
+	"You authorize us to charge your selected payment method for the subscription amount at the beginning of each billing period.",
+	"Annual subscriptions are discounted compared to monthly billing and are charged as a single upfront payment for the full year.",
+	"You may upgrade or downgrade your plan at any time. Upgrades take effect immediately, and prorated charges may apply. Downgrades take effect at the end of your current billing period.",
+	"You may cancel your subscription at any time. Upon cancellation, you will retain access to premium features until the end of your current billing period.",
+	"We reserve the right to modify subscription pricing with 30 days advance notice. Continued use after a price change constitutes acceptance of the new pricing.",
+];
+
+export const liabilityExclusions = [
+	"Loss of grades, academic standing, or educational opportunities resulting from reliance on Newton's answers or explanations.",
+	"Any errors or inaccuracies in AI-generated solutions, explanations, or practice problems.",
+	"Interruption or cessation of the Service for any reason, including server maintenance or technical failures.",
+	"Any unauthorized access to or alteration of your user data or content.",
+	"Any conduct or content of third parties on the Service, if applicable in the future.",
+];
+
+export const terminationConsequences = [
+	"Your right to use the Service will cease immediately.",
+	"We will retain your data for a reasonable period as described in our Privacy Policy, after which it will be deleted or anonymized.",
+	"Provisions of these Terms that by their nature should survive termination will remain in effect, including intellectual property provisions, disclaimers, and limitation of liability.",
+	"No refunds will be provided for any remaining portion of a prepaid subscription, except as required by applicable law or as described in Section 8.",
+];
+
+export const changesNoticeItems = [
+	"Post the updated Terms on this page with a revised effective date.",
+	"Notify you via email or through a prominent notice within the Service at least 30 days before the changes take effect.",
+	"For significant changes that affect your rights, provide an opportunity to review and accept the new Terms before they apply to you.",
+];

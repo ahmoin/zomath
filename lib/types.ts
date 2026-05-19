@@ -51,6 +51,31 @@ export interface QuizData {
 export type QuestionState = "unanswered" | "correct" | "incorrect";
 export type PracticePhase = "idle" | "topic-select" | "loading" | "quiz";
 
+export interface Project {
+	id: string;
+	title: string;
+	createdAt: Date;
+	updatedAt: Date;
+}
+
+export interface Journal {
+	id: string;
+	title: string;
+	content: string;
+	createdAt: Date;
+	updatedAt: Date;
+}
+
+export type ViewMode = "grid" | "list";
+
+export type SortMode =
+	| "edited-newest"
+	| "edited-oldest"
+	| "created-newest"
+	| "created-oldest"
+	| "alpha-az"
+	| "alpha-za";
+
 export type Attachment = {
 	name: string;
 	url: string;
