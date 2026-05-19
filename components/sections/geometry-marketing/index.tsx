@@ -22,6 +22,7 @@ import {
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import Link from "next/link";
+import { GeometryDiagram } from "@/components/illustrations/geometry-diagram";
 import {
 	classicTheorems,
 	conceptMapFeatures,
@@ -37,7 +38,7 @@ import { Separator } from "@/components/ui/separator";
 export function GeometryMarketingSection() {
 	return (
 		<main className="flex flex-col">
-			{/* Hero */}
+
 			<section className="py-24 lg:py-32">
 				<div className="max-w-7xl mx-auto px-4 lg:px-12">
 					<div className="max-w-3xl">
@@ -88,7 +89,7 @@ export function GeometryMarketingSection() {
 
 			<Separator />
 
-			{/* Topics */}
+
 			<section className="py-24 lg:py-32">
 				<div className="max-w-7xl mx-auto px-4 lg:px-12">
 					<div className="max-w-2xl mb-16">
@@ -137,7 +138,7 @@ export function GeometryMarketingSection() {
 
 			<Separator />
 
-			{/* Visual learning */}
+
 			<section className="py-24 lg:py-32 bg-muted/50">
 				<div className="max-w-7xl mx-auto px-4 lg:px-12">
 					<div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
@@ -184,81 +185,7 @@ export function GeometryMarketingSection() {
 						</div>
 						<div className="rounded-2xl border bg-card p-8 aspect-[4/3] flex items-center justify-center relative overflow-hidden">
 							<div className="absolute inset-0 opacity-[0.04]">
-								<svg
-									viewBox="0 0 400 300"
-									className="w-full h-full"
-									xmlns="http://www.w3.org/2000/svg"
-								>
-									<circle
-										cx="200"
-										cy="150"
-										r="100"
-										fill="none"
-										stroke="currentColor"
-										strokeWidth="2"
-									/>
-									<polygon
-										points="200,50 300,230 100,230"
-										fill="none"
-										stroke="currentColor"
-										strokeWidth="2"
-									/>
-									<line
-										x1="100"
-										y1="230"
-										x2="200"
-										y2="50"
-										stroke="currentColor"
-										strokeWidth="1.5"
-									/>
-									<line
-										x1="300"
-										y1="230"
-										x2="200"
-										y2="50"
-										stroke="currentColor"
-										strokeWidth="1.5"
-									/>
-									<line
-										x1="100"
-										y1="230"
-										x2="300"
-										y2="230"
-										stroke="currentColor"
-										strokeWidth="1.5"
-									/>
-									<line
-										x1="200"
-										y1="50"
-										x2="200"
-										y2="150"
-										stroke="currentColor"
-										strokeWidth="1"
-										strokeDasharray="6,4"
-									/>
-									<line
-										x1="150"
-										y1="140"
-										x2="250"
-										y2="140"
-										stroke="currentColor"
-										strokeWidth="1"
-										strokeDasharray="6,4"
-									/>
-									<circle cx="200" cy="150" r="3" fill="currentColor" />
-									<circle cx="200" cy="50" r="3" fill="currentColor" />
-									<circle cx="300" cy="230" r="3" fill="currentColor" />
-									<circle cx="100" cy="230" r="3" fill="currentColor" />
-									<line
-										x1="300"
-										y1="230"
-										x2="100"
-										y2="230"
-										stroke="currentColor"
-										strokeWidth="1"
-										strokeDasharray="3,3"
-									/>
-								</svg>
+								<GeometryDiagram className="w-full h-full" />
 							</div>
 							<div className="text-center relative z-10 space-y-4">
 								<div className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-3 py-1.5">
@@ -313,7 +240,7 @@ export function GeometryMarketingSection() {
 
 			<Separator />
 
-			{/* Proofs */}
+
 			<section className="py-24 lg:py-32">
 				<div className="max-w-7xl mx-auto px-4 lg:px-12">
 					<div className="max-w-2xl mb-16">
@@ -389,7 +316,7 @@ export function GeometryMarketingSection() {
 
 			<Separator />
 
-			{/* Struggles */}
+
 			<section className="py-24 lg:py-32 bg-muted/50">
 				<div className="max-w-7xl mx-auto px-4 lg:px-12">
 					<div className="max-w-2xl mb-16">
@@ -440,7 +367,7 @@ export function GeometryMarketingSection() {
 
 			<Separator />
 
-			{/* Three tools */}
+
 			<section className="py-24 lg:py-32">
 				<div className="max-w-7xl mx-auto px-4 lg:px-12">
 					<div className="max-w-2xl mb-16">
@@ -509,7 +436,7 @@ export function GeometryMarketingSection() {
 
 			<Separator />
 
-			{/* Concept map */}
+
 			<section className="py-24 lg:py-32 bg-muted/50">
 				<div className="max-w-7xl mx-auto px-4 lg:px-12">
 					<div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
@@ -629,7 +556,7 @@ export function GeometryMarketingSection() {
 
 			<Separator />
 
-			{/* Learning paths */}
+
 			<section className="py-24 lg:py-32">
 				<div className="max-w-7xl mx-auto px-4 lg:px-12">
 					<div className="max-w-2xl mb-16">
@@ -695,7 +622,7 @@ export function GeometryMarketingSection() {
 
 			<Separator />
 
-			{/* Competition */}
+
 			<section className="py-24 lg:py-32 bg-muted/50">
 				<div className="max-w-7xl mx-auto px-4 lg:px-12">
 					<div className="max-w-3xl mx-auto text-center mb-16">
@@ -790,7 +717,7 @@ export function GeometryMarketingSection() {
 
 			<Separator />
 
-			{/* Built for geometry */}
+
 			<section className="py-24 lg:py-32">
 				<div className="max-w-7xl mx-auto px-4 lg:px-12">
 					<div className="max-w-2xl mb-16">
@@ -850,7 +777,7 @@ export function GeometryMarketingSection() {
 
 			<Separator />
 
-			{/* Sample questions */}
+
 			<section className="py-24 lg:py-32 bg-muted/50">
 				<div className="max-w-7xl mx-auto px-4 lg:px-12">
 					<div className="max-w-3xl mx-auto text-center mb-12">
@@ -889,7 +816,7 @@ export function GeometryMarketingSection() {
 
 			<Separator />
 
-			{/* CTA */}
+
 			<section className="py-24 lg:py-32">
 				<div className="max-w-7xl mx-auto px-4 lg:px-12">
 					<div className="rounded-2xl bg-primary/5 border p-10 lg:p-16 text-center">

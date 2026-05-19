@@ -32,7 +32,7 @@ import { Separator } from "@/components/ui/separator";
 export function PracticeMarketingSection() {
 	return (
 		<main className="flex flex-col">
-			{/* Hero */}
+
 			<section className="py-24 lg:py-32">
 				<div className="max-w-7xl mx-auto px-4 lg:px-12">
 					<div className="max-w-3xl">
@@ -71,7 +71,7 @@ export function PracticeMarketingSection() {
 				</div>
 			</section>
 
-			{/* Stats */}
+
 			<section className="py-24 lg:py-32 border-t">
 				<div className="max-w-7xl mx-auto px-4 lg:px-12">
 					<div className="text-center max-w-2xl mx-auto mb-16">
@@ -108,7 +108,7 @@ export function PracticeMarketingSection() {
 				</div>
 			</section>
 
-			{/* How it works */}
+
 			<section className="py-24 lg:py-32 border-t">
 				<div className="max-w-7xl mx-auto px-4 lg:px-12">
 					<div className="max-w-2xl mb-16">
@@ -151,7 +151,7 @@ export function PracticeMarketingSection() {
 				</div>
 			</section>
 
-			{/* Session steps */}
+
 			<section className="py-24 lg:py-32 border-t">
 				<div className="max-w-7xl mx-auto px-4 lg:px-12">
 					<div className="max-w-2xl mb-16">
@@ -195,7 +195,7 @@ export function PracticeMarketingSection() {
 				</div>
 			</section>
 
-			{/* Categories */}
+
 			<section className="py-24 lg:py-32 border-t">
 				<div className="max-w-7xl mx-auto px-4 lg:px-12">
 					<div className="text-center max-w-2xl mx-auto mb-16">
@@ -256,7 +256,7 @@ export function PracticeMarketingSection() {
 				</div>
 			</section>
 
-			{/* Differentiators */}
+
 			<section className="py-24 lg:py-32 border-t">
 				<div className="max-w-7xl mx-auto px-4 lg:px-12">
 					<div className="max-w-2xl mb-16">
@@ -290,7 +290,7 @@ export function PracticeMarketingSection() {
 				</div>
 			</section>
 
-			{/* Comparison */}
+
 			<section className="py-24 lg:py-32 border-t">
 				<div className="max-w-7xl mx-auto px-4 lg:px-12">
 					<div className="text-center max-w-2xl mx-auto mb-16">
@@ -325,7 +325,7 @@ export function PracticeMarketingSection() {
 				</div>
 			</section>
 
-			{/* Testimonial */}
+
 			<section className="py-24 lg:py-32 border-t">
 				<div className="max-w-7xl mx-auto px-4 lg:px-12">
 					<div className="max-w-3xl mx-auto">
@@ -360,7 +360,7 @@ export function PracticeMarketingSection() {
 				</div>
 			</section>
 
-			{/* FAQ */}
+
 			<section className="py-24 lg:py-32 border-t">
 				<div className="max-w-7xl mx-auto px-4 lg:px-12">
 					<div className="max-w-2xl mb-16">
@@ -392,7 +392,7 @@ export function PracticeMarketingSection() {
 				</div>
 			</section>
 
-			{/* CTA */}
+
 			<section className="py-24 lg:py-32 border-t">
 				<div className="max-w-7xl mx-auto px-4 lg:px-12">
 					<div className="rounded-2xl bg-primary/5 border p-8 lg:p-16">

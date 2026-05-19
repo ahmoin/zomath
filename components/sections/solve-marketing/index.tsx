@@ -40,7 +40,7 @@ import { Button } from "@/components/ui/button";
 export function SolveMarketing() {
 	return (
 		<main className="flex min-h-svh flex-col">
-			{/* Hero */}
+
 			<section className="py-24 lg:py-32">
 				<div className="max-w-7xl mx-auto px-4 lg:px-12">
 					<div className="max-w-3xl mx-auto text-center">
@@ -86,7 +86,7 @@ export function SolveMarketing() {
 				</div>
 			</section>
 
-			{/* How it works */}
+
 			<section className="py-24 lg:py-32 bg-muted">
 				<div className="max-w-7xl mx-auto px-4 lg:px-12">
 					<div className="text-center mb-16">
@@ -142,7 +142,7 @@ export function SolveMarketing() {
 				</div>
 			</section>
 
-			{/* Why different */}
+
 			<section className="py-24 lg:py-32">
 				<div className="max-w-7xl mx-auto px-4 lg:px-12">
 					<div className="max-w-2xl mb-16">
@@ -202,7 +202,7 @@ export function SolveMarketing() {
 				</div>
 			</section>
 
-			{/* Comparison */}
+
 			<section className="py-24 lg:py-32 bg-muted">
 				<div className="max-w-7xl mx-auto px-4 lg:px-12">
 					<div className="text-center mb-16">
@@ -262,7 +262,7 @@ export function SolveMarketing() {
 				</div>
 			</section>
 
-			{/* Works with */}
+
 			<section className="py-24 lg:py-32">
 				<div className="max-w-7xl mx-auto px-4 lg:px-12">
 					<div className="text-center mb-16">
@@ -323,7 +323,7 @@ export function SolveMarketing() {
 				</div>
 			</section>
 
-			{/* Coverage */}
+
 			<section className="py-24 lg:py-32 bg-muted">
 				<div className="max-w-7xl mx-auto px-4 lg:px-12">
 					<div className="text-center mb-16">
@@ -356,7 +356,7 @@ export function SolveMarketing() {
 				</div>
 			</section>
 
-			{/* Beyond solve */}
+
 			<section className="py-24 lg:py-32">
 				<div className="max-w-7xl mx-auto px-4 lg:px-12">
 					<div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
@@ -448,7 +448,7 @@ export function SolveMarketing() {
 				</div>
 			</section>
 
-			{/* Testimonials */}
+
 			<section className="py-24 lg:py-32 bg-muted">
 				<div className="max-w-7xl mx-auto px-4 lg:px-12">
 					<div className="text-center mb-16">
@@ -483,7 +483,7 @@ export function SolveMarketing() {
 				</div>
 			</section>
 
-			{/* FAQ */}
+
 			<section className="py-24 lg:py-32">
 				<div className="max-w-7xl mx-auto px-4 lg:px-12">
 					<div className="max-w-2xl mx-auto">
@@ -515,7 +515,7 @@ export function SolveMarketing() {
 				</div>
 			</section>
 
-			{/* CTA */}
+
 			<section className="py-24 lg:py-32 bg-muted">
 				<div className="max-w-7xl mx-auto px-4 lg:px-12 text-center">
 					<h2 className="text-3xl lg:text-5xl font-medium tracking-tight text-foreground">
