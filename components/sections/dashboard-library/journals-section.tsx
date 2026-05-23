@@ -2,6 +2,8 @@
 
 import {
 	ArrowDown01Icon,
+	Copy01Icon,
+	Delete02Icon,
 	Loading03Icon,
 	MoreHorizontalIcon,
 	PlusSignIcon,
@@ -10,7 +12,7 @@ import {
 import { HugeiconsIcon } from "@hugeicons/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { type MouseEvent, useState } from "react";
 import { EditorPreview } from "@/components/sections/editor-preview";
 import { Button } from "@/components/ui/button";
 import {
@@ -42,6 +44,25 @@ export function JournalsSection({
 	const router = useRouter();
 	const [creating, setCreating] = useState(false);
 	const [sort, setSort] = useState<SortMode>("edited-newest");
+
+	async function cloneJournal(j: Journal, e: MouseEvent) {
+		e.preventDefault();
+		const created = await fetch("/api/journals", { method: "POST" }).then((r) =>
+			r.json(),
+		);
+		await fetch(`/api/journals/${created.id}`, {
+			method: "PATCH",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify({ title: `${j.title} (copy)`, content: j.content }),
+		});
+		router.refresh();
+	}
+
+	async function deleteJournal(id: string, e: MouseEvent) {
+		e.preventDefault();
+		await fetch(`/api/journals/${id}`, { method: "DELETE" });
+		router.refresh();
+	}
 
 	const sorted = [...journals].sort((a, b) => {
 		if (sort === "alpha-az") return a.title.localeCompare(b.title);
@@ -210,17 +231,42 @@ export function JournalsSection({
 										{formatDate(j.updatedAt)}
 									</span>
 								</div>
-								<Button
-									variant="ghost"
-									size="icon-sm"
-									onClick={(e) => e.preventDefault()}
-								>
-									<HugeiconsIcon
-										icon={MoreHorizontalIcon}
-										className="size-4"
-										strokeWidth={2}
-									/>
-								</Button>
+								<DropdownMenu>
+									<DropdownMenuTrigger asChild>
+										<Button
+											variant="ghost"
+											size="icon-sm"
+											onClick={(e) => e.preventDefault()}
+										>
+											<HugeiconsIcon
+												icon={MoreHorizontalIcon}
+												className="size-4"
+												strokeWidth={2}
+											/>
+										</Button>
+									</DropdownMenuTrigger>
+									<DropdownMenuContent align="end">
+										<DropdownMenuItem onClick={(e) => cloneJournal(j, e)}>
+											<HugeiconsIcon
+												icon={Copy01Icon}
+												className="size-4"
+												strokeWidth={2}
+											/>
+											Clone
+										</DropdownMenuItem>
+										<DropdownMenuItem
+											className="text-destructive focus:text-destructive"
+											onClick={(e) => deleteJournal(j.id, e)}
+										>
+											<HugeiconsIcon
+												icon={Delete02Icon}
+												className="size-4"
+												strokeWidth={2}
+											/>
+											Move to trash
+										</DropdownMenuItem>
+									</DropdownMenuContent>
+								</DropdownMenu>
 							</div>
 						</Link>
 					))}
