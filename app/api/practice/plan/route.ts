@@ -21,8 +21,9 @@ Ask at most 1-2 clarifying questions per turn. Be concise and encouraging.
 
 When you have enough information to generate a good quiz (topic, rough difficulty, any specific focus areas),
 end your message with a JSON block on its own line in this exact format:
-READY:{"topic":"<specific topic string>","notes":"<any extra instructions for generation>"}
+READY:{"topic":"<specific topic string>","notes":"<any extra instructions for generation>","count":<number, default 6, max 50>}
 
+If the student specifies how many questions/words/pairs they want, use that number (capped at 50).
 Do NOT include the READY block until you are confident you have enough to generate a great session.
 Do NOT include it if the user hasn't given you a topic yet.`;
 
@@ -64,12 +65,14 @@ export async function POST(request: Request) {
 			const parsed = JSON.parse(readyMatch[1]) as {
 				topic: string;
 				notes: string;
+				count?: number;
 			};
 			return Response.json({
 				text: clean,
 				ready: true,
 				topic: parsed.topic,
 				notes: parsed.notes,
+				count: parsed.count ?? 6,
 			});
 		} catch {
 			// fall through to non-ready response

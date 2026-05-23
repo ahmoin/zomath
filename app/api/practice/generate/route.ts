@@ -2,10 +2,11 @@ import { generateText, Output } from "ai";
 import { headers } from "next/headers";
 import type { z } from "zod";
 import {
+	matchUpSchema,
 	postRequestBodySchema,
 	quizSchema,
 } from "@/app/api/practice/generate/schema";
-import { practicePrompt } from "@/lib/ai/prompts";
+import { matchUpPrompt, practicePrompt } from "@/lib/ai/prompts";
 import { auth } from "@/lib/auth";
 import { ChatbotError } from "@/lib/errors";
 
@@ -20,7 +21,16 @@ export async function POST(request: Request) {
 		return new ChatbotError("bad_request:api").toResponse();
 	}
 
-	const { topic, count } = body;
+	const { topic, count, formatId } = body;
+
+	if (formatId === "match-up") {
+		const { output: object } = await generateText({
+			model: "google/gemini-2.5-flash",
+			output: Output.object({ schema: matchUpSchema }),
+			prompt: matchUpPrompt(topic, count),
+		});
+		return Response.json({ ...object, formatId: "match-up" });
+	}
 
 	const { output: object } = await generateText({
 		model: "google/gemini-2.5-flash",

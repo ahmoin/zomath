@@ -4,8 +4,14 @@ import { z } from "zod";
 import { auth } from "@/lib/auth";
 import { ChatbotError } from "@/lib/errors";
 
+const messageSchema = z.object({
+	role: z.enum(["user", "newton"]),
+	text: z.string(),
+});
+
 const bodySchema = z.object({
 	message: z.string().min(1).max(2000),
+	history: z.array(messageSchema).optional().default([]),
 	context: z.string().optional(),
 });
 
@@ -26,9 +32,12 @@ export async function POST(request: Request) {
 		return new ChatbotError("bad_request:api").toResponse();
 	}
 
-	const prompt = body.context
-		? `Context: ${body.context}\n\nStudent: ${body.message}\n\nNewton:`
-		: `Student: ${body.message}\n\nNewton:`;
+	const historyText = body.history
+		.map((m) => `${m.role === "user" ? "Student" : "Newton"}: ${m.text}`)
+		.join("\n");
+
+	const contextLine = body.context ? `Context: ${body.context}\n\n` : "";
+	const prompt = `${contextLine}${historyText ? `${historyText}\n` : ""}Student: ${body.message}\n\nNewton:`;
 
 	const { text } = await generateText({
 		model: "google/gemini-2.5-flash",

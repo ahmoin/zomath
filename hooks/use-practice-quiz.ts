@@ -3,9 +3,16 @@
 import { useRouter } from "next/navigation";
 import { useCallback, useState } from "react";
 import { templates } from "@/components/sections/practice-hero/data";
-import type { PracticePhase, QuestionState, QuizData } from "@/lib/types";
+import type {
+	MatchUpData,
+	PracticePhase,
+	QuestionState,
+	QuizData,
+} from "@/lib/types";
 
 export type {
+	MatchUpData,
+	MatchUpPair,
 	PracticePhase,
 	QuestionState,
 	QuizData,
@@ -23,6 +30,7 @@ export function usePracticeQuiz(formatId: string) {
 	const [phase, setPhase] = useState<PracticePhase>("topic-select");
 	const [topic, setTopic] = useState("");
 	const [quiz, setQuiz] = useState<QuizData | null>(null);
+	const [matchUp, setMatchUp] = useState<MatchUpData | null>(null);
 	const [currentQ, setCurrentQ] = useState(0);
 	const [answers, setAnswers] = useState<(string | null)[]>([]);
 	const [questionStates, setQuestionStates] = useState<QuestionState[]>([]);
@@ -36,6 +44,7 @@ export function usePracticeQuiz(formatId: string) {
 	const [planLoading, setPlanLoading] = useState(false);
 	const [planReady, setPlanReady] = useState(false);
 	const [planTopic, setPlanTopic] = useState("");
+	const [planCount, setPlanCount] = useState(6);
 
 	const goIdle = useCallback(() => {
 		router.push("/practice");
@@ -68,6 +77,7 @@ export function usePracticeQuiz(formatId: string) {
 					text: string;
 					ready: boolean;
 					topic?: string;
+					count?: number;
 				};
 				setPlanMessages((prev) => [
 					...prev,
@@ -76,6 +86,7 @@ export function usePracticeQuiz(formatId: string) {
 				if (data.ready && data.topic) {
 					setPlanReady(true);
 					setPlanTopic(data.topic);
+					setPlanCount(data.count ?? 6);
 				}
 			} catch {
 				setPlanMessages((prev) => [
@@ -101,18 +112,29 @@ export function usePracticeQuiz(formatId: string) {
 			const res = await fetch("/api/practice/generate", {
 				method: "POST",
 				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify({ topic: t, count: 6 }),
+				body: JSON.stringify({ topic: t, count: planCount, formatId }),
 			});
 			if (!res.ok) throw new Error("Failed");
-			const data = (await res.json()) as QuizData;
-			setQuiz(data);
-			setAnswers(new Array(data.questions.length).fill(null));
-			setQuestionStates(new Array(data.questions.length).fill("unanswered"));
-			setPhase("quiz");
+			const data = (await res.json()) as { formatId?: string } & (
+				| QuizData
+				| MatchUpData
+			);
+			if (data.formatId === "match-up") {
+				setMatchUp(data as MatchUpData);
+				setPhase("match-up");
+			} else {
+				const quizData = data as QuizData;
+				setQuiz(quizData);
+				setAnswers(new Array(quizData.questions.length).fill(null));
+				setQuestionStates(
+					new Array(quizData.questions.length).fill("unanswered"),
+				);
+				setPhase("quiz");
+			}
 		} catch {
 			setPhase("topic-select");
 		}
-	}, [planMessages]);
+	}, [planMessages, formatId, planCount]);
 
 	const handleAnswer = useCallback(
 		(label: string) => {
@@ -158,7 +180,7 @@ export function usePracticeQuiz(formatId: string) {
 
 	const handleChatSubmit = useCallback(
 		async ({ text }: { text: string }) => {
-			if (!text.trim() || !quiz) return;
+			if (!text.trim()) return;
 			setChatMessages((prev) => [...prev, { role: "user", text }]);
 			setChatLoading(true);
 			try {
@@ -167,7 +189,10 @@ export function usePracticeQuiz(formatId: string) {
 					headers: { "Content-Type": "application/json" },
 					body: JSON.stringify({
 						message: text,
-						context: `Practice format: ${topic}. Current question: ${quiz.questions[currentQ]?.question ?? ""}`,
+						history: chatMessages,
+						context: quiz
+							? `Practice format: quiz on ${topic}. Current question: ${quiz.questions[currentQ]?.question ?? ""}`
+							: `Practice format: match-up on ${topic}.`,
 					}),
 				});
 				if (!res.ok) throw new Error("Failed");
@@ -194,6 +219,7 @@ export function usePracticeQuiz(formatId: string) {
 		topic,
 		selectedFormat,
 		quiz,
+		matchUp,
 		currentQ,
 		setCurrentQ,
 		answers,
@@ -208,6 +234,7 @@ export function usePracticeQuiz(formatId: string) {
 		planLoading,
 		planReady,
 		planTopic,
+		planCount,
 		goIdle,
 		handlePlanSubmit,
 		startQuiz,

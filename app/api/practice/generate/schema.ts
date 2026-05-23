@@ -22,9 +22,23 @@ export const quizSchema = z.object({
 
 export type Quiz = z.infer<typeof quizSchema>;
 
+const matchUpPairSchema = z.object({
+	keyword: z.string(),
+	definition: z.string(),
+});
+
+export const matchUpSchema = z.object({
+	title: z.string(),
+	intro: z.string(),
+	pairs: z.array(matchUpPairSchema),
+});
+
+export type MatchUp = z.infer<typeof matchUpSchema>;
+
 export const postRequestBodySchema = z.object({
 	topic: z.string().min(1).max(200),
-	count: z.number().int().min(1).max(20).optional().default(6),
+	formatId: z.string().optional().default("quiz"),
+	count: z.number().int().min(1).max(50).optional().default(6),
 });
 
 export type PostRequestBody = z.infer<typeof postRequestBodySchema>;

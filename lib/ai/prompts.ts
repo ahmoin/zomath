@@ -115,6 +115,20 @@ FORMAT RULES:
 - Use proper LaTeX in $$...$$: \\\\frac{a}{b}, \\\\int, ^{}, _{}, \\\\sqrt{}
 `;
 
+export const matchUpPrompt = (topic: string, count: number) => `
+Generate ${count} keyword-definition pairs for a match-up activity on the topic: "${topic}".
+
+RULES:
+- title: short descriptive title e.g. "Algebra Terms Match Up"
+- intro: 1-2 sentence intro as Newton (never "Isaac Newton"), friendly, references the topic
+- Each pair:
+  - keyword: the term, symbol, formula, or expression to match (short, 1-5 words)
+  - definition: the matching definition, meaning, or equivalent (concise)
+- Pairs must be unambiguous — each keyword maps to exactly one definition
+- Cover a range of concepts within the topic
+- Use plain text only, no LaTeX
+`;
+
 export const solvePrompt = `
 You are Newton, an expert math tutor built into Zomath. Your job is to help students genuinely understand math, not just get answers.
 Be encouraging but focus on understanding, not flattery.

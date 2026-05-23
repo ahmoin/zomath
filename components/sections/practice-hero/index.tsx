@@ -3,6 +3,7 @@
 import { SparklesIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Shimmer } from "@/components/ai-elements/shimmer";
+import { MatchUpActiveView } from "@/components/sections/practice-hero/match-up-active-view";
 import { QuizActiveView } from "@/components/sections/practice-hero/quiz-active-view";
 import { QuizPlanView } from "@/components/sections/practice-hero/quiz-plan-view";
 import { QuizResultsView } from "@/components/sections/practice-hero/quiz-results-view";
@@ -21,6 +22,7 @@ export function PracticeHeroSection({
 		topic,
 		selectedFormat,
 		quiz,
+		matchUp,
 		currentQ,
 		setCurrentQ,
 		answers,
@@ -78,6 +80,20 @@ export function PracticeHeroSection({
 					</Shimmer>
 				</div>
 			</div>
+		);
+	}
+
+	if (phase === "match-up" && matchUp) {
+		return (
+			<MatchUpActiveView
+				matchUp={matchUp}
+				topic={topic}
+				chatMessages={chatMessages}
+				chatLoading={chatLoading}
+				handleChatSubmit={handleChatSubmit}
+				setPhase={setPhase}
+				onRestart={() => startQuiz(topic)}
+			/>
 		);
 	}
 
