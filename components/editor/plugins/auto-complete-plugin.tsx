@@ -108,7 +108,7 @@ export function AutoCompletePlugin(): JSX.Element | null {
 				autocompleteNodeKey !== null
 					? $getNodeByKey(autocompleteNodeKey)
 					: null;
-			if (autocompleteNode !== null && autocompleteNode.isAttached()) {
+			if (autocompleteNode?.isAttached()) {
 				autocompleteNode.remove();
 				autocompleteNodeKey = null;
 			}

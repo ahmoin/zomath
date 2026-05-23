@@ -1,11 +1,6 @@
 "use client";
 
-import {
-	Alert01Icon,
-	ArrowLeft01Icon,
-	CloudSavingDone01Icon,
-	Loading01Icon,
-} from "@hugeicons/core-free-icons";
+import { ArrowLeft01Icon, Loading01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import type { SerializedEditorState } from "lexical";
 import Link from "next/link";
@@ -29,7 +24,7 @@ interface JournalViewProps {
 
 export function JournalView({ journal, parentProject }: JournalViewProps) {
 	const [title, setTitle] = useState(journal.title);
-	const [syncStatus, setSyncStatus] = useState<"saved" | "syncing" | "error">(
+	const [_syncStatus, setSyncStatus] = useState<"saved" | "syncing" | "error">(
 		"saved",
 	);
 	const [initialState, setInitialState] = useState<
@@ -77,7 +72,7 @@ export function JournalView({ journal, parentProject }: JournalViewProps) {
 			setIsReady(true);
 		}
 		loadData();
-	}, [journal.id]);
+	}, [journal.id, journal.content.trim, journal.content]);
 
 	const handleContentChange = (state: SerializedEditorState) => {
 		localDb.journals.put({

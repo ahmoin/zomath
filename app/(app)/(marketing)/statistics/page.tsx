@@ -8,7 +8,6 @@ import {
 	LightbulbOffIcon,
 	Pen01Icon,
 	Rocket02Icon,
-	StarIcon,
 	Target01Icon,
 	Timer02Icon,
 } from "@hugeicons/core-free-icons";

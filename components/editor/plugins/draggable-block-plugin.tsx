@@ -100,8 +100,8 @@ export function DraggableBlockPlugin({
 		const handleClickOutside = (event: MouseEvent) => {
 			const target = event.target as Node | null;
 			if (
-				(pickerRef.current && pickerRef.current.contains(target)) ||
-				(menuRef.current && menuRef.current.contains(target))
+				pickerRef.current?.contains(target) ||
+				menuRef.current?.contains(target)
 			) {
 				return;
 			}

@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { headers } from "next/headers";
-import Image from "next/image";
 import { redirect } from "next/navigation";
 import { UserAuthForm } from "@/components/user-auth-form";
 import { auth } from "@/lib/auth";

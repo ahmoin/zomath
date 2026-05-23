@@ -6,7 +6,6 @@ import {
 	Comment02Icon,
 	HashtagIcon,
 	Rocket02Icon,
-	StarIcon,
 	Target01Icon,
 	UserMultipleIcon,
 } from "@hugeicons/core-free-icons";

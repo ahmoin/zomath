@@ -2,16 +2,13 @@
 
 import {
 	ArrowRight02Icon,
-	BookOpen02Icon,
 	Brain02Icon,
 	Calendar02Icon,
-	Camera02Icon,
 	Clock01Icon,
 	Mail01Icon,
 	Rocket02Icon,
 	Search01Icon,
 	SparklesIcon,
-	Target03Icon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import Link from "next/link";

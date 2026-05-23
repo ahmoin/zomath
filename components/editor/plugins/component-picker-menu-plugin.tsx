@@ -132,7 +132,7 @@ export function ComponentPickerMenuPlugin({
 					option.keywords.some((keyword) => regex.test(keyword)),
 			),
 		];
-	}, [editor, queryString, showModal]);
+	}, [queryString, dynamicOptionsFn, baseOptions.filter, baseOptions]);
 
 	const onSelectOption = useCallback(
 		(
@@ -147,7 +147,7 @@ export function ComponentPickerMenuPlugin({
 				closeMenu();
 			});
 		},
-		[editor],
+		[editor, showModal],
 	);
 
 	return (

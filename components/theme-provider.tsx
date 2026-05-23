@@ -1,6 +1,6 @@
 "use client";
 
-import { ThemeProvider as NextThemesProvider, useTheme } from "next-themes";
+import { ThemeProvider as NextThemesProvider } from "next-themes";
 import type * as React from "react";
 
 function ThemeProvider({

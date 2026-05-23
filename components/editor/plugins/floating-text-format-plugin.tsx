@@ -110,7 +110,7 @@ function TextFormatFloatingToolbar({
 				document.removeEventListener("mouseup", mouseUpListener);
 			};
 		}
-	}, [popupCharStylesEditorRef]);
+	}, [mouseUpListener, mouseMoveListener]);
 
 	const $updateTextFormatFloatingToolbar = useCallback(() => {
 		const selection = $getSelection();
@@ -127,8 +127,7 @@ function TextFormatFloatingToolbar({
 			selection !== null &&
 			nativeSelection !== null &&
 			!nativeSelection.isCollapsed &&
-			rootElement !== null &&
-			rootElement.contains(nativeSelection.anchorNode)
+			rootElement?.contains(nativeSelection.anchorNode)
 		) {
 			const rangeRect = getDOMRangeRect(nativeSelection, rootElement);
 

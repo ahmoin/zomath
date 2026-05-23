@@ -2,7 +2,6 @@ import {
 	Analytics01Icon,
 	BookOpen02Icon,
 	BrainIcon,
-	Cancel01Icon,
 	ChartLineData02Icon,
 	Clock01Icon,
 	Copy01Icon,

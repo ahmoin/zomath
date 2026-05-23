@@ -17,7 +17,6 @@ import {
 	PlayCircleIcon,
 	PuzzleIcon,
 	ShieldKeyIcon,
-	StarIcon,
 	Target03Icon,
 	TaskDaily01Icon,
 	UserMultipleIcon,

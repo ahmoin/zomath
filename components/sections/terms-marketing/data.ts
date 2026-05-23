@@ -1,12 +1,10 @@
 import {
 	AiChipIcon,
-	AuctionIcon,
 	BandageIcon,
 	Bookmark02Icon,
 	Cancel01Icon,
 	CreditCardIcon,
 	EyeIcon,
-	LockPasswordIcon,
 	MailAtSign01Icon,
 	Notification01Icon,
 	PenTool01Icon,

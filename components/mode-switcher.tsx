@@ -2,7 +2,6 @@
 
 import { Monitor, Moon, Sun } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import Script from "next/script";
 import { useTheme } from "next-themes";
 import type { ComponentProps } from "react";
 import {

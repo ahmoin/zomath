@@ -55,7 +55,7 @@ export function FontFamilyToolbarPlugin() {
 			// SELECTION_CHANGE_COMMAND won't run — sync label here.
 			setFontFamily(option);
 		},
-		[activeEditor, style],
+		[activeEditor],
 	);
 
 	const buttonAriaLabel = "Formatting options for font family";

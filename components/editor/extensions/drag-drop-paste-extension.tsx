@@ -21,7 +21,7 @@ export const DragDropPasteExtension = defineExtension({
 				(async () => {
 					const filesResult = await mediaFileReader(
 						files,
-						[ACCEPTABLE_IMAGE_TYPES].flatMap((x) => x),
+						[ACCEPTABLE_IMAGE_TYPES].flat(),
 					);
 					for (const { file, result } of filesResult) {
 						if (isMimeType(file, ACCEPTABLE_IMAGE_TYPES)) {

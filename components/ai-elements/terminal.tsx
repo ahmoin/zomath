@@ -199,7 +199,7 @@ export const TerminalContent = ({
 		if (autoScroll && containerRef.current) {
 			containerRef.current.scrollTop = containerRef.current.scrollHeight;
 		}
-	}, [output, autoScroll]);
+	}, [autoScroll]);
 
 	return (
 		<div

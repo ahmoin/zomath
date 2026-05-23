@@ -169,16 +169,7 @@ export const JSXPreview = memo(
 				setError,
 				setLastGoodJsx,
 			}),
-			[
-				bindings,
-				components,
-				error,
-				isStreaming,
-				jsx,
-				onError,
-				processedJsx,
-				setError,
-			],
+			[bindings, components, error, isStreaming, jsx, onError, processedJsx],
 		);
 
 		return (
@@ -214,7 +205,7 @@ export const JSXPreviewContent = memo(
 		useEffect(() => {
 			errorReportedRef.current = null;
 			setHadError(false);
-		}, [processedJsx]);
+		}, []);
 
 		const handleError = useCallback(
 			(err: Error) => {

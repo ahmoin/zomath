@@ -90,8 +90,7 @@ function FloatingLinkEditor({
 		if (
 			selection !== null &&
 			nativeSelection !== null &&
-			rootElement !== null &&
-			rootElement.contains(nativeSelection.anchorNode) &&
+			rootElement?.contains(nativeSelection.anchorNode) &&
 			editor.isEditable()
 		) {
 			const domRect: DOMRect | undefined =
@@ -178,7 +177,7 @@ function FloatingLinkEditor({
 			inputRef.current.focus();
 			setIsLink(true);
 		}
-	}, [isLinkEditMode, isLink]);
+	}, [isLinkEditMode, setIsLink]);
 
 	const monitorInputInteraction = (
 		event: React.KeyboardEvent<HTMLInputElement>,

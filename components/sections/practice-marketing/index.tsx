@@ -6,7 +6,6 @@ import {
 	FavouriteIcon,
 	GraduateFemaleIcon,
 	PlayCircleIcon,
-	SparklesIcon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import Link from "next/link";
@@ -32,7 +31,6 @@ import { Separator } from "@/components/ui/separator";
 export function PracticeMarketingSection() {
 	return (
 		<main className="flex flex-col">
-
 			<section className="py-24 lg:py-32">
 				<div className="max-w-7xl mx-auto px-4 lg:px-12">
 					<div className="max-w-3xl">

@@ -49,7 +49,12 @@ export interface QuizData {
 }
 
 export type QuestionState = "unanswered" | "correct" | "incorrect";
-export type PracticePhase = "idle" | "topic-select" | "loading" | "quiz" | "match-up";
+export type PracticePhase =
+	| "idle"
+	| "topic-select"
+	| "loading"
+	| "quiz"
+	| "match-up";
 
 export interface MatchUpPair {
 	keyword: string;

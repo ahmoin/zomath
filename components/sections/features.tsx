@@ -202,7 +202,7 @@ function StudyMaterialsCard() {
 			<div className="relative flex h-64 items-center justify-center overflow-hidden">
 				<div className="relative size-full -space-y-2 p-4 group-hover:space-y-2">
 					{STUDY_MATERIALS.map((source) => {
-						const Icon = source.icon;
+						const _Icon = source.icon;
 						return (
 							<div
 								key={source.label}

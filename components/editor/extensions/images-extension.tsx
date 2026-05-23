@@ -169,7 +169,7 @@ export function InsertImageDialog({
 		return () => {
 			document.removeEventListener("keydown", handler);
 		};
-	}, [activeEditor]);
+	}, []);
 
 	const onClick = (payload: InsertImagePayload) => {
 		console.log("onClick", payload);

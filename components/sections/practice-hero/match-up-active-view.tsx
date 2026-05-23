@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
 import {
 	BookOpen02Icon,
 	Cancel01Icon,
@@ -9,6 +8,7 @@ import {
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { math } from "@streamdown/math";
+import { useEffect, useRef, useState } from "react";
 import { Streamdown } from "streamdown";
 import {
 	PromptInput,

@@ -45,7 +45,7 @@ export function MarkdownTogglePlugin({
 				}
 			}
 		});
-		// eslint-disable-next-line react-hooks/exhaustive-deps
+		// biome-ignore lint/correctness/useExhaustiveDependencies: transformers reference is stable
 	}, [editor, shouldPreserveNewLinesInMarkdown]);
 
 	return (

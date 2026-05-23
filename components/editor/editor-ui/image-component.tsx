@@ -344,28 +344,26 @@ export default function ImageComponent({
 	const isFocused = isSelected && isEditable;
 	return (
 		<Suspense fallback={null}>
-			<>
-				<div draggable={draggable}>
-					{isLoadError ? (
-						<BrokenImage />
-					) : (
-						<LazyImage
-							className={
-								isFocused
-									? `focused ${isInNodeSelection ? "draggable" : ""}`
-									: null
-							}
-							src={src}
-							altText={altText}
-							imageRef={imageRef}
-							width={width}
-							height={height}
-							maxWidth={maxWidth}
-							onError={() => setIsLoadError(true)}
-						/>
-					)}
-				</div>
-			</>
+			<div draggable={draggable}>
+				{isLoadError ? (
+					<BrokenImage />
+				) : (
+					<LazyImage
+						className={
+							isFocused
+								? `focused ${isInNodeSelection ? "draggable" : ""}`
+								: null
+						}
+						src={src}
+						altText={altText}
+						imageRef={imageRef}
+						width={width}
+						height={height}
+						maxWidth={maxWidth}
+						onError={() => setIsLoadError(true)}
+					/>
+				)}
+			</div>
 		</Suspense>
 	);
 }

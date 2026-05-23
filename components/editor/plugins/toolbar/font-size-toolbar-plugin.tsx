@@ -29,7 +29,7 @@ export function FontSizeToolbarPlugin() {
 				"font-size",
 				`${DEFAULT_FONT_SIZE}px`,
 			);
-			setFontSize(parseInt(value) || DEFAULT_FONT_SIZE);
+			setFontSize(parseInt(value, 10) || DEFAULT_FONT_SIZE);
 		}
 	};
 
@@ -48,7 +48,7 @@ export function FontSizeToolbarPlugin() {
 			});
 			setFontSize(size);
 		},
-		[activeEditor, style],
+		[activeEditor],
 	);
 
 	return (
@@ -64,7 +64,7 @@ export function FontSizeToolbarPlugin() {
 			<Input
 				value={fontSize}
 				onChange={(e) =>
-					updateFontSize(parseInt(e.target.value) || DEFAULT_FONT_SIZE)
+					updateFontSize(parseInt(e.target.value, 10) || DEFAULT_FONT_SIZE)
 				}
 				className="w-12 text-center h-8"
 				min={MIN_FONT_SIZE}

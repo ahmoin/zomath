@@ -39,16 +39,13 @@ export function SolveInterface() {
 	const [followUp, setFollowUp] = useState("");
 	const bottomRef = useRef<HTMLDivElement>(null);
 
-	const handleFile = useCallback(
-		(f: File) => {
-			if (!f.type.startsWith("image/")) return;
-			setPreview(URL.createObjectURL(f));
-			setFile(f);
-			setBlobUrl(null);
-			setCompletion("");
-		},
-		[setCompletion],
-	);
+	const handleFile = useCallback((f: File) => {
+		if (!f.type.startsWith("image/")) return;
+		setPreview(URL.createObjectURL(f));
+		setFile(f);
+		setBlobUrl(null);
+		setCompletion("");
+	}, []);
 
 	const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const file = e.target.files?.[0];

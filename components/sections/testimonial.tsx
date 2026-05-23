@@ -1,5 +1,3 @@
-import { StarIcon } from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
 import { FiveStars } from "@/components/five-stars";
 
 interface TestimonialProps {

@@ -100,41 +100,44 @@ export function usePracticeQuiz(formatId: string) {
 		[selectedFormat, planMessages],
 	);
 
-	const startQuiz = useCallback(async (t: string) => {
-		setTopic(t);
-		setPhase("loading");
-		setShowResults(false);
-		setCurrentQ(0);
-		setShowHint(false);
-		setChatMessages(planMessages);
+	const startQuiz = useCallback(
+		async (t: string) => {
+			setTopic(t);
+			setPhase("loading");
+			setShowResults(false);
+			setCurrentQ(0);
+			setShowHint(false);
+			setChatMessages(planMessages);
 
-		try {
-			const res = await fetch("/api/practice/generate", {
-				method: "POST",
-				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify({ topic: t, count: planCount, formatId }),
-			});
-			if (!res.ok) throw new Error("Failed");
-			const data = (await res.json()) as { formatId?: string } & (
-				| QuizData
-				| MatchUpData
-			);
-			if (data.formatId === "match-up") {
-				setMatchUp(data as MatchUpData);
-				setPhase("match-up");
-			} else {
-				const quizData = data as QuizData;
-				setQuiz(quizData);
-				setAnswers(new Array(quizData.questions.length).fill(null));
-				setQuestionStates(
-					new Array(quizData.questions.length).fill("unanswered"),
+			try {
+				const res = await fetch("/api/practice/generate", {
+					method: "POST",
+					headers: { "Content-Type": "application/json" },
+					body: JSON.stringify({ topic: t, count: planCount, formatId }),
+				});
+				if (!res.ok) throw new Error("Failed");
+				const data = (await res.json()) as { formatId?: string } & (
+					| QuizData
+					| MatchUpData
 				);
-				setPhase("quiz");
+				if (data.formatId === "match-up") {
+					setMatchUp(data as MatchUpData);
+					setPhase("match-up");
+				} else {
+					const quizData = data as QuizData;
+					setQuiz(quizData);
+					setAnswers(new Array(quizData.questions.length).fill(null));
+					setQuestionStates(
+						new Array(quizData.questions.length).fill("unanswered"),
+					);
+					setPhase("quiz");
+				}
+			} catch {
+				setPhase("topic-select");
 			}
-		} catch {
-			setPhase("topic-select");
-		}
-	}, [planMessages, formatId, planCount]);
+		},
+		[planMessages, formatId, planCount],
+	);
 
 	const handleAnswer = useCallback(
 		(label: string) => {
@@ -210,7 +213,7 @@ export function usePracticeQuiz(formatId: string) {
 				setChatLoading(false);
 			}
 		},
-		[quiz, topic, currentQ],
+		[quiz, topic, currentQ, chatMessages],
 	);
 
 	return {
