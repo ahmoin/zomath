@@ -13,6 +13,7 @@ import { AutocompleteNode } from "@/components/editor/nodes/autocomplete-node";
 import { TweetNode } from "@/components/editor/nodes/embeds/tweet-node";
 import { YouTubeNode } from "@/components/editor/nodes/embeds/youtube-node";
 import { EmojiNode } from "@/components/editor/nodes/emoji-node";
+import { EquationNode } from "@/components/editor/nodes/equation-node";
 import { LayoutContainerNode } from "@/components/editor/nodes/layout-container-node";
 import { LayoutItemNode } from "@/components/editor/nodes/layout-item-node";
 import { MentionNode } from "@/components/editor/nodes/mention-node";
@@ -25,6 +26,7 @@ export function EditorPreview({ content }: { content: string }) {
 		theme: editorTheme,
 		editable: false,
 		nodes: [
+			EquationNode,
 			HeadingNode,
 			QuoteNode,
 			ListNode,

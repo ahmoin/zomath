@@ -7,6 +7,7 @@ import {
 	ListOrderedIcon,
 	ListTodoIcon,
 	QuoteIcon,
+	SigmaIcon,
 	TextIcon,
 } from "lucide-react";
 
@@ -49,5 +50,9 @@ export const blockTypeToBlockName: Record<
 	quote: {
 		label: "Quote",
 		icon: <QuoteIcon className="size-4" />,
+	},
+	equation: {
+		label: "Equation",
+		icon: <SigmaIcon className="size-4" />,
 	},
 };

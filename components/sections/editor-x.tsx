@@ -50,6 +50,7 @@ import { AutocompleteNode } from "@/components/editor/nodes/autocomplete-node";
 import { TweetNode } from "@/components/editor/nodes/embeds/tweet-node";
 import { YouTubeNode } from "@/components/editor/nodes/embeds/youtube-node";
 import { EmojiNode } from "@/components/editor/nodes/emoji-node";
+import { EquationNode } from "@/components/editor/nodes/equation-node";
 import { LayoutContainerNode } from "@/components/editor/nodes/layout-container-node";
 import { LayoutItemNode } from "@/components/editor/nodes/layout-item-node";
 import { MentionNode } from "@/components/editor/nodes/mention-node";
@@ -99,6 +100,7 @@ import { TabFocusPlugin } from "@/components/editor/plugins/tab-focus-plugin";
 import { FormatBulletedList } from "@/components/editor/plugins/toolbar/block-format/format-bulleted-list";
 import { FormatCheckList } from "@/components/editor/plugins/toolbar/block-format/format-check-list";
 import { FormatCodeBlock } from "@/components/editor/plugins/toolbar/block-format/format-code-block";
+import { FormatEquation } from "@/components/editor/plugins/toolbar/block-format/format-equation";
 import { FormatHeading } from "@/components/editor/plugins/toolbar/block-format/format-heading";
 import { FormatNumberedList } from "@/components/editor/plugins/toolbar/block-format/format-numbered-list";
 import { FormatParagraph } from "@/components/editor/plugins/toolbar/block-format/format-paragraph";
@@ -125,6 +127,7 @@ import { ToolbarPlugin } from "@/components/editor/plugins/toolbar/toolbar-plugi
 import { TypingPerfPlugin } from "@/components/editor/plugins/typing-pref-plugin";
 import { editorTheme } from "@/components/editor/themes/editor-theme";
 import { EMOJI } from "@/components/editor/transformers/markdown-emoji-transformer";
+import { EQUATION } from "@/components/editor/transformers/markdown-equation-transformer";
 import { HR } from "@/components/editor/transformers/markdown-hr-transformer";
 import { IMAGE } from "@/components/editor/transformers/markdown-image-transformer";
 import { TABLE } from "@/components/editor/transformers/markdown-table-transformer";
@@ -181,6 +184,7 @@ export function Editor({
 							HR,
 							IMAGE,
 							EMOJI,
+							EQUATION,
 							TWEET,
 							CHECK_LIST,
 							...ELEMENT_TRANSFORMERS,
@@ -214,6 +218,7 @@ export function Editor({
 				name: "@shadcn-editor",
 				namespace: "Playground",
 				nodes: [
+					EquationNode,
 					OverflowNode,
 					TableNode,
 					TableCellNode,
@@ -276,6 +281,7 @@ export function Editor({
 											{blockFormatItems.checkList && <FormatCheckList />}
 											{blockFormatItems.codeBlock && <FormatCodeBlock />}
 											{blockFormatItems.blockquote && <FormatQuote />}
+											<FormatEquation />
 										</BlockFormatDropDown>
 									)}
 									{blockType === "code" ? (
@@ -547,6 +553,7 @@ export function Editor({
 												HR,
 												IMAGE,
 												EMOJI,
+												EQUATION,
 												TWEET,
 												CHECK_LIST,
 												...ELEMENT_TRANSFORMERS,

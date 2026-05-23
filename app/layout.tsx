@@ -1,6 +1,7 @@
 import { Geist_Mono, Inter } from "next/font/google";
 
 import "@/styles/globals.css";
+import "katex/dist/katex.min.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { cn } from "@/lib/utils";
 
