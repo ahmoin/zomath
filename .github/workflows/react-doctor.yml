@@ -13,9 +13,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          fetch-depth: 0
+          node-version: 22
+      - uses: pnpm/action-setup@v4
+      - run: pnpm install --frozen-lockfile
       - uses: millionco/react-doctor@main
-        with:
-          diff: main
-          fail-on: error
