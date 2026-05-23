@@ -1,11 +1,13 @@
 "use client";
 
 import { CodeHighlightNode, CodeNode } from "@lexical/code";
+import { ListItemNode, ListNode } from "@lexical/list";
 import { OverflowNode } from "@lexical/overflow";
 import { LexicalComposer } from "@lexical/react/LexicalComposer";
 import { ContentEditable } from "@lexical/react/LexicalContentEditable";
 import { LexicalErrorBoundary } from "@lexical/react/LexicalErrorBoundary";
 import { RichTextPlugin } from "@lexical/react/LexicalRichTextPlugin";
+import { HeadingNode, QuoteNode } from "@lexical/rich-text";
 import { TableCellNode, TableNode, TableRowNode } from "@lexical/table";
 import { AutocompleteNode } from "@/components/editor/nodes/autocomplete-node";
 import { TweetNode } from "@/components/editor/nodes/embeds/tweet-node";
@@ -23,6 +25,10 @@ export function EditorPreview({ content }: { content: string }) {
 		theme: editorTheme,
 		editable: false,
 		nodes: [
+			HeadingNode,
+			QuoteNode,
+			ListNode,
+			ListItemNode,
 			OverflowNode,
 			TableNode,
 			TableCellNode,
