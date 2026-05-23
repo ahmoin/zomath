@@ -5,10 +5,10 @@ import { FiveStars } from "@/components/five-stars";
 interface TestimonialProps {
 	quote: string;
 	name: string;
-	role: string;
+	title: string;
 }
 
-export function TestimonialSection({ quote, name, role }: TestimonialProps) {
+export function TestimonialSection({ quote, name, title }: TestimonialProps) {
 	return (
 		<section className="w-full py-24 lg:py-32">
 			<div className="mx-auto max-w-lg px-4 text-center">
@@ -19,7 +19,7 @@ export function TestimonialSection({ quote, name, role }: TestimonialProps) {
 					"{quote}"
 				</p>
 				<p className="text-sm text-muted-foreground">
-					{name}, {role}
+					{name}, {title}
 				</p>
 			</div>
 		</section>
