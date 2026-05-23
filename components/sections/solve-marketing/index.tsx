@@ -86,7 +86,6 @@ export function SolveMarketing() {
 				</div>
 			</section>
 
-
 			<section className="py-24 lg:py-32 bg-muted">
 				<div className="max-w-7xl mx-auto px-4 lg:px-12">
 					<div className="text-center mb-16">
@@ -141,7 +140,6 @@ export function SolveMarketing() {
 					</div>
 				</div>
 			</section>
-
 
 			<section className="py-24 lg:py-32">
 				<div className="max-w-7xl mx-auto px-4 lg:px-12">
@@ -202,7 +200,6 @@ export function SolveMarketing() {
 				</div>
 			</section>
 
-
 			<section className="py-24 lg:py-32 bg-muted">
 				<div className="max-w-7xl mx-auto px-4 lg:px-12">
 					<div className="text-center mb-16">
@@ -261,7 +258,6 @@ export function SolveMarketing() {
 					</div>
 				</div>
 			</section>
-
 
 			<section className="py-24 lg:py-32">
 				<div className="max-w-7xl mx-auto px-4 lg:px-12">
@@ -323,7 +319,6 @@ export function SolveMarketing() {
 				</div>
 			</section>
 
-
 			<section className="py-24 lg:py-32 bg-muted">
 				<div className="max-w-7xl mx-auto px-4 lg:px-12">
 					<div className="text-center mb-16">
@@ -355,7 +350,6 @@ export function SolveMarketing() {
 					</div>
 				</div>
 			</section>
-
 
 			<section className="py-24 lg:py-32">
 				<div className="max-w-7xl mx-auto px-4 lg:px-12">
@@ -448,7 +442,6 @@ export function SolveMarketing() {
 				</div>
 			</section>
 
-
 			<section className="py-24 lg:py-32 bg-muted">
 				<div className="max-w-7xl mx-auto px-4 lg:px-12">
 					<div className="text-center mb-16">
@@ -483,7 +476,6 @@ export function SolveMarketing() {
 				</div>
 			</section>
 
-
 			<section className="py-24 lg:py-32">
 				<div className="max-w-7xl mx-auto px-4 lg:px-12">
 					<div className="max-w-2xl mx-auto">
@@ -514,7 +506,6 @@ export function SolveMarketing() {
 					</div>
 				</div>
 			</section>
-
 
 			<section className="py-24 lg:py-32 bg-muted">
 				<div className="max-w-7xl mx-auto px-4 lg:px-12 text-center">

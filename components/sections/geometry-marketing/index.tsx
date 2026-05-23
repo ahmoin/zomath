@@ -89,7 +89,6 @@ export function GeometryMarketingSection() {
 
 			<Separator />
 
-
 			<section className="py-24 lg:py-32">
 				<div className="max-w-7xl mx-auto px-4 lg:px-12">
 					<div className="max-w-2xl mb-16">
@@ -137,7 +136,6 @@ export function GeometryMarketingSection() {
 			</section>
 
 			<Separator />
-
 
 			<section className="py-24 lg:py-32 bg-muted/50">
 				<div className="max-w-7xl mx-auto px-4 lg:px-12">
@@ -240,7 +238,6 @@ export function GeometryMarketingSection() {
 
 			<Separator />
 
-
 			<section className="py-24 lg:py-32">
 				<div className="max-w-7xl mx-auto px-4 lg:px-12">
 					<div className="max-w-2xl mb-16">
@@ -316,7 +313,6 @@ export function GeometryMarketingSection() {
 
 			<Separator />
 
-
 			<section className="py-24 lg:py-32 bg-muted/50">
 				<div className="max-w-7xl mx-auto px-4 lg:px-12">
 					<div className="max-w-2xl mb-16">
@@ -366,7 +362,6 @@ export function GeometryMarketingSection() {
 			</section>
 
 			<Separator />
-
 
 			<section className="py-24 lg:py-32">
 				<div className="max-w-7xl mx-auto px-4 lg:px-12">
@@ -435,7 +430,6 @@ export function GeometryMarketingSection() {
 			</section>
 
 			<Separator />
-
 
 			<section className="py-24 lg:py-32 bg-muted/50">
 				<div className="max-w-7xl mx-auto px-4 lg:px-12">
@@ -556,7 +550,6 @@ export function GeometryMarketingSection() {
 
 			<Separator />
 
-
 			<section className="py-24 lg:py-32">
 				<div className="max-w-7xl mx-auto px-4 lg:px-12">
 					<div className="max-w-2xl mb-16">
@@ -621,7 +614,6 @@ export function GeometryMarketingSection() {
 			</section>
 
 			<Separator />
-
 
 			<section className="py-24 lg:py-32 bg-muted/50">
 				<div className="max-w-7xl mx-auto px-4 lg:px-12">
@@ -717,7 +709,6 @@ export function GeometryMarketingSection() {
 
 			<Separator />
 
-
 			<section className="py-24 lg:py-32">
 				<div className="max-w-7xl mx-auto px-4 lg:px-12">
 					<div className="max-w-2xl mb-16">
@@ -777,7 +768,6 @@ export function GeometryMarketingSection() {
 
 			<Separator />
 
-
 			<section className="py-24 lg:py-32 bg-muted/50">
 				<div className="max-w-7xl mx-auto px-4 lg:px-12">
 					<div className="max-w-3xl mx-auto text-center mb-12">
@@ -815,7 +805,6 @@ export function GeometryMarketingSection() {
 			</section>
 
 			<Separator />
-
 
 			<section className="py-24 lg:py-32">
 				<div className="max-w-7xl mx-auto px-4 lg:px-12">

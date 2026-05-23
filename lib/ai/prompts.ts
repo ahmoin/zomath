@@ -102,17 +102,17 @@ CRITICAL ACCURACY RULES — violating these makes the quiz useless:
 
 FORMAT RULES:
 - title: short descriptive title e.g. "Algebra Quiz"
-- intro: 1-2 sentence Newton persona intro, friendly, references the topic
+- intro: 1-2 sentence intro as Newton (never say "Isaac Newton", just "Newton"), friendly, references the topic
 - For each question:
-  - question: plain English question text, no LaTeX
+  - question: question text; wrap any math expressions in $$...$$
   - latex: OPTIONAL raw LaTeX expression only (NO delimiters — no \\( \\) \\[ \\] $$ — just the bare expression e.g. "2(x+3)-5=15"). Omit if no formula needed.
   - options: exactly 4 options labeled "A", "B", "C", "D"
-    - text: answer text, use LaTeX where appropriate (e.g. "\\\\frac{1}{5}e^{5x} + C")
+    - text: answer text, wrap ALL math in $$...$$ (e.g. "$$\\\\frac{1}{5}e^{5x} + C$$")
     - correct: true for exactly ONE option (the mathematically verified correct one)
     - explanation: for correct option explain the solution steps; for wrong options explain the specific mistake that leads there
   - hint: helpful hint without giving the answer away
 - Vary difficulty: start easier, increase toward the end
-- Use proper LaTeX: \\\\frac{a}{b}, \\\\int, ^{}, _{}, \\\\sqrt{}
+- Use proper LaTeX in $$...$$: \\\\frac{a}{b}, \\\\int, ^{}, _{}, \\\\sqrt{}
 `;
 
 export const solvePrompt = `

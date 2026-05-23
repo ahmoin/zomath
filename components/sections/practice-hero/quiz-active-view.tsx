@@ -60,25 +60,6 @@ export function QuizActiveView({
 		<div className="flex flex-1 overflow-hidden">
 			<div className="w-[38%] border-r flex flex-col overflow-hidden">
 				<div className="flex-1 overflow-y-auto px-8 pt-8 pb-4 flex flex-col gap-6">
-					<div className="flex flex-col gap-1">
-						<p className="text-xs text-muted-foreground uppercase tracking-wider font-medium">
-							You
-						</p>
-						<div className="self-end ml-auto rounded-2xl bg-secondary px-4 py-3 text-sm text-foreground max-w-[90%]">
-							Quiz me on {topic}
-						</div>
-					</div>
-					<div className="flex flex-col gap-1">
-						<p className="text-xs text-muted-foreground uppercase tracking-wider font-medium">
-							Newton
-						</p>
-						<Streamdown
-							plugins={{ math }}
-							className="text-sm text-foreground leading-relaxed [&>*:first-child]:mt-0 [&>*:last-child]:mb-0"
-						>
-							{quiz.intro}
-						</Streamdown>
-					</div>
 					{chatMessages.map((msg, i) => (
 						<div key={i} className="flex flex-col gap-1">
 							<p className="text-xs text-muted-foreground uppercase tracking-wider font-medium">
@@ -183,9 +164,15 @@ export function QuizActiveView({
 
 				<div className="flex-1 overflow-y-auto px-8 py-4 flex flex-col gap-6">
 					<div className="flex flex-col gap-3">
-						<p className="text-base font-medium text-foreground">
-							{currentQ + 1}. {q.question}
-						</p>
+						<div className="flex gap-1 text-base font-medium text-foreground">
+							<span className="shrink-0">{currentQ + 1}.</span>
+							<Streamdown
+								plugins={{ math }}
+								className="[&>*:first-child]:mt-0 [&>*:last-child]:mb-0"
+							>
+								{q.question}
+							</Streamdown>
+						</div>
 						{q.latex && (
 							<div className="rounded-lg bg-muted px-4 py-3">
 								<Streamdown

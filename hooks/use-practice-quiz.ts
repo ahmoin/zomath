@@ -95,6 +95,7 @@ export function usePracticeQuiz(formatId: string) {
 		setShowResults(false);
 		setCurrentQ(0);
 		setShowHint(false);
+		setChatMessages(planMessages);
 
 		try {
 			const res = await fetch("/api/practice/generate", {
@@ -111,7 +112,7 @@ export function usePracticeQuiz(formatId: string) {
 		} catch {
 			setPhase("topic-select");
 		}
-	}, []);
+	}, [planMessages]);
 
 	const handleAnswer = useCallback(
 		(label: string) => {
@@ -161,7 +162,7 @@ export function usePracticeQuiz(formatId: string) {
 			setChatMessages((prev) => [...prev, { role: "user", text }]);
 			setChatLoading(true);
 			try {
-				const res = await fetch("/api/chat", {
+				const res = await fetch("/api/practice/chat", {
 					method: "POST",
 					headers: { "Content-Type": "application/json" },
 					body: JSON.stringify({

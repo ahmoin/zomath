@@ -71,7 +71,6 @@ export function PracticeMarketingSection() {
 				</div>
 			</section>
 
-
 			<section className="py-24 lg:py-32 border-t">
 				<div className="max-w-7xl mx-auto px-4 lg:px-12">
 					<div className="text-center max-w-2xl mx-auto mb-16">
@@ -107,7 +106,6 @@ export function PracticeMarketingSection() {
 					</div>
 				</div>
 			</section>
-
 
 			<section className="py-24 lg:py-32 border-t">
 				<div className="max-w-7xl mx-auto px-4 lg:px-12">
@@ -151,7 +149,6 @@ export function PracticeMarketingSection() {
 				</div>
 			</section>
 
-
 			<section className="py-24 lg:py-32 border-t">
 				<div className="max-w-7xl mx-auto px-4 lg:px-12">
 					<div className="max-w-2xl mb-16">
@@ -194,7 +191,6 @@ export function PracticeMarketingSection() {
 					</div>
 				</div>
 			</section>
-
 
 			<section className="py-24 lg:py-32 border-t">
 				<div className="max-w-7xl mx-auto px-4 lg:px-12">
@@ -256,7 +252,6 @@ export function PracticeMarketingSection() {
 				</div>
 			</section>
 
-
 			<section className="py-24 lg:py-32 border-t">
 				<div className="max-w-7xl mx-auto px-4 lg:px-12">
 					<div className="max-w-2xl mb-16">
@@ -289,7 +284,6 @@ export function PracticeMarketingSection() {
 					</div>
 				</div>
 			</section>
-
 
 			<section className="py-24 lg:py-32 border-t">
 				<div className="max-w-7xl mx-auto px-4 lg:px-12">
@@ -325,7 +319,6 @@ export function PracticeMarketingSection() {
 				</div>
 			</section>
 
-
 			<section className="py-24 lg:py-32 border-t">
 				<div className="max-w-7xl mx-auto px-4 lg:px-12">
 					<div className="max-w-3xl mx-auto">
@@ -360,7 +353,6 @@ export function PracticeMarketingSection() {
 				</div>
 			</section>
 
-
 			<section className="py-24 lg:py-32 border-t">
 				<div className="max-w-7xl mx-auto px-4 lg:px-12">
 					<div className="max-w-2xl mb-16">
@@ -391,7 +383,6 @@ export function PracticeMarketingSection() {
 					</div>
 				</div>
 			</section>
-
 
 			<section className="py-24 lg:py-32 border-t">
 				<div className="max-w-7xl mx-auto px-4 lg:px-12">
