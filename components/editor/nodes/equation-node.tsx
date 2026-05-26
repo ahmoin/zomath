@@ -175,7 +175,7 @@ export class EquationNode extends DecoratorNode<JSX.Element> {
 				conversion: (el): DOMConversionOutput => {
 					const equation = el.getAttribute("data-lexical-equation");
 					const inline = el.getAttribute("data-lexical-inline") !== "false";
-					if (!equation) return null;
+					if (!equation) return { node: null };
 					return { node: $createEquationNode(equation, inline) };
 				},
 				priority: 2,
