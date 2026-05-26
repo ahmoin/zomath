@@ -1,4 +1,4 @@
-import { $createTextNode, $getSelection, $isRangeSelection } from "lexical";
+import { $getSelection, $isRangeSelection } from "lexical";
 import { useToolbarContext } from "@/components/editor/context/toolbar-context";
 import { $createEquationNode } from "@/components/editor/nodes/equation-node";
 import { blockTypeToBlockName } from "@/components/editor/plugins/toolbar/block-format/block-format-data";
@@ -14,15 +14,9 @@ export function FormatEquation() {
 			const selection = $getSelection();
 			if (!$isRangeSelection(selection)) return;
 
-			const text = selection.getTextContent();
-			if (text) {
-				const equationNode = $createEquationNode(text, true);
-				selection.insertNodes([equationNode]);
-			} else {
-				const open = $createTextNode("$");
-				selection.insertNodes([open]);
-				open.select(1, 1);
-			}
+			const text = selection.getTextContent().trim();
+			const equationNode = $createEquationNode(text, true);
+			selection.insertNodes([equationNode]);
 		});
 	}
 

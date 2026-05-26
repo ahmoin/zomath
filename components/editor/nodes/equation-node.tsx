@@ -12,7 +12,7 @@ import type {
 	SerializedLexicalNode,
 	Spread,
 } from "lexical";
-import { DecoratorNode } from "lexical";
+import { $getNodeByKey, DecoratorNode } from "lexical";
 import { useEffect, useRef, useState } from "react";
 
 export type SerializedEquationNode = Spread<
@@ -62,10 +62,8 @@ function EquationComponent({
 
 	function commitEdit() {
 		editor.update(() => {
-			const node = editor
-				.getEditorState()
-				.read(() => $getEquationNode(nodeKey));
-			if (node) node.setEquation(draft);
+			const node = $getNodeByKey(nodeKey);
+			if ($isEquationNode(node)) node.setEquation(draft);
 		});
 		setEditing(false);
 	}
@@ -122,10 +120,6 @@ function EquationComponent({
 			)}
 		</span>
 	);
-}
-
-function $getEquationNode(key: NodeKey): EquationNode | null {
-	return null;
 }
 
 export class EquationNode extends DecoratorNode<JSX.Element> {
