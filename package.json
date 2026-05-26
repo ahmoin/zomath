@@ -59,6 +59,7 @@
 		"@streamdown/math": "^1.0.2",
 		"@streamdown/mermaid": "^1.0.2",
 		"@tanstack/react-table": "^8.21.3",
+		"@tavily/core": "^0.7.3",
 		"@vercel/blob": "^2.3.3",
 		"@vercel/functions": "^3.5.1",
 		"@xyflow/react": "^12.10.2",

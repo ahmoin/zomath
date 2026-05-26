@@ -135,6 +135,8 @@ import { TWEET } from "@/components/editor/transformers/markdown-tweet-transform
 import { validateUrl } from "@/components/editor/utils/url";
 import { Separator } from "@/components/ui/separator";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { AiMagicIcon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 
 const placeholder = 'Start writing or type "/" to see commands...';
 const maxLength = 2147483647;
@@ -144,11 +146,13 @@ export function Editor({
 	editorSerializedState,
 	onChange,
 	onSerializedChange,
+	onAskNewton,
 }: {
 	editorState?: EditorState;
 	editorSerializedState?: SerializedEditorState;
 	onChange?: (editorState: EditorState) => void;
 	onSerializedChange?: (editorSerializedState: SerializedEditorState) => void;
+	onAskNewton?: () => void;
 }) {
 	const {
 		toolbarItems,
@@ -162,7 +166,6 @@ export function Editor({
 	const [floatingAnchorElem, setFloatingAnchorElem] =
 		useState<HTMLDivElement | null>(null);
 	const [isLinkEditMode, setIsLinkEditMode] = useState<boolean>(false);
-
 	const onRef = (_floatingAnchorElem: HTMLDivElement) => {
 		if (_floatingAnchorElem !== null) {
 			setFloatingAnchorElem(_floatingAnchorElem);
@@ -342,6 +345,25 @@ export function Editor({
 								</div>
 							)}
 						</ToolbarPlugin>
+						{onAskNewton !== undefined && (
+							<div className="px-4 pt-3 pb-1">
+								<p className="text-xs text-muted-foreground mb-2">Start with</p>
+								<div className="flex items-center gap-2 flex-wrap">
+									<button
+										type="button"
+										onClick={onAskNewton}
+										className="flex items-center gap-1.5 px-2 py-1 rounded-md text-sm font-normal transition-all duration-150 bg-muted hover:bg-muted/60"
+									>
+										<HugeiconsIcon
+											icon={AiMagicIcon}
+											className="size-[15px] shrink-0 text-green-600"
+											strokeWidth={1.5}
+										/>
+										Ask Newton
+									</button>
+								</div>
+							</div>
+						)}
 						<div className="relative">
 							<div className="">
 								<div className="" ref={onRef}>

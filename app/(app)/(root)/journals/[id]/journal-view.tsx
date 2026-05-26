@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import { BlockViewerProvider } from "@/components/block-viewer-provider";
 import { useDebounce } from "@/components/editor/editor-hooks/use-debounce";
 import { Editor } from "@/components/sections/editor-x";
+import { JournalAiInput } from "@/components/sections/journal-ai-input";
 import { localDb } from "@/lib/local-db";
 
 interface Journal {
@@ -31,6 +32,7 @@ export function JournalView({ journal, parentProject }: JournalViewProps) {
 		SerializedEditorState | undefined
 	>(undefined);
 	const [isReady, setIsReady] = useState(false);
+	const [newtonOpen, setNewtonOpen] = useState(false);
 
 	const syncToCloud = async (
 		updatedTitle: string,
@@ -98,7 +100,14 @@ export function JournalView({ journal, parentProject }: JournalViewProps) {
 	}
 
 	return (
-		<div className="flex flex-1 flex-col">
+		<div
+			className="flex flex-1 flex-col"
+			onKeyDown={(e) => e.key === "Escape" && setNewtonOpen(false)}
+		>
+			<JournalAiInput
+				centered={newtonOpen}
+				onClose={() => setNewtonOpen(false)}
+			/>
 			<header className="flex items-center justify-between border-b border-border px-4 lg:px-6 py-4">
 				<div className="flex items-center gap-3">
 					{parentProject ? (
@@ -127,6 +136,7 @@ export function JournalView({ journal, parentProject }: JournalViewProps) {
 						</Link>
 					)}
 				</div>
+				<div />
 			</header>
 
 			<div className="flex flex-1 flex-col gap-2 px-4 lg:px-6 py-6 max-w-3xl w-full mx-auto">
@@ -146,6 +156,7 @@ export function JournalView({ journal, parentProject }: JournalViewProps) {
 						key={journal.id}
 						editorSerializedState={initialState}
 						onSerializedChange={handleContentChange}
+						onAskNewton={() => setNewtonOpen(true)}
 					/>
 				</BlockViewerProvider>
 			</div>

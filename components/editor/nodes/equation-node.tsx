@@ -34,7 +34,7 @@ function EquationComponent({
 	nodeKey: NodeKey;
 	editor: LexicalEditor;
 }) {
-	const [editing, setEditing] = useState(equation === "");
+	const [editing, setEditing] = useState(false);
 	const [draft, setDraft] = useState(equation);
 	const inputRef = useRef<HTMLInputElement & HTMLTextAreaElement>(null);
 	const katexRef = useRef<HTMLSpanElement>(null);
@@ -54,18 +54,31 @@ function EquationComponent({
 	}, [equation, inline]);
 
 	useEffect(() => {
+		if (equation === "") {
+			enterEdit();
+		}
+		// biome-ignore lint/correctness/useExhaustiveDependencies: only runs on mount
+	}, []);
+
+	useEffect(() => {
 		if (editing) {
 			inputRef.current?.focus();
 			inputRef.current?.select();
 		}
 	}, [editing]);
 
+	function enterEdit() {
+		editor.blur();
+		enterEdit();
+	}
+
 	function commitEdit() {
+		setEditing(false);
 		editor.update(() => {
 			const node = $getNodeByKey(nodeKey);
 			if ($isEquationNode(node)) node.setEquation(draft);
 		});
-		setEditing(false);
+		editor.focus();
 	}
 
 	if (editing) {
@@ -80,7 +93,10 @@ function EquationComponent({
 				onBlur={commitEdit}
 				onKeyDown={(e) => {
 					if (e.key === "Enter") commitEdit();
-					if (e.key === "Escape") setEditing(false);
+					if (e.key === "Escape") {
+						setEditing(false);
+						editor.focus();
+					}
 				}}
 			/>
 		) : (
@@ -91,7 +107,10 @@ function EquationComponent({
 				onChange={(e) => setDraft(e.target.value)}
 				onBlur={commitEdit}
 				onKeyDown={(e) => {
-					if (e.key === "Escape") setEditing(false);
+					if (e.key === "Escape") {
+						setEditing(false);
+						editor.focus();
+					}
 					if (e.key === "Enter" && e.shiftKey) {
 						e.preventDefault();
 						commitEdit();
@@ -105,9 +124,9 @@ function EquationComponent({
 		<span
 			role="button"
 			tabIndex={0}
-			onClick={() => setEditing(true)}
+			onClick={() => enterEdit()}
 			onKeyDown={(e) => {
-				if (e.key === "Enter" || e.key === " ") setEditing(true);
+				if (e.key === "Enter" || e.key === " ") enterEdit();
 			}}
 			className={`equation-node cursor-pointer rounded px-1 hover:bg-muted transition-colors ${inline ? "inline" : "block my-2 text-center"}`}
 		>
