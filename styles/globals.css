@@ -144,6 +144,15 @@
 	}
 }
 
+.dark .katex,
+.dark .katex-display {
+	color: inherit;
+}
+.dark .katex svg {
+	fill: currentColor;
+	stroke: currentColor;
+}
+
 @layer base {
 	* {
 		@apply border-border outline-ring/50;

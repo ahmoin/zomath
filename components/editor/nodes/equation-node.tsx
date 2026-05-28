@@ -13,6 +13,7 @@ import type {
 	Spread,
 } from "lexical";
 import { $getNodeByKey, DecoratorNode } from "lexical";
+import type React from "react";
 import { useEffect, useRef, useState } from "react";
 
 export type SerializedEquationNode = Spread<
@@ -38,6 +39,7 @@ function EquationComponent({
 	const [draft, setDraft] = useState(equation);
 	const inputRef = useRef<HTMLInputElement & HTMLTextAreaElement>(null);
 	const katexRef = useRef<HTMLSpanElement>(null);
+	const savedScrollRef = useRef<{ el: Element; top: number } | null>(null);
 
 	useEffect(() => {
 		if (katexRef.current) {
@@ -51,7 +53,7 @@ function EquationComponent({
 				katexRef.current.textContent = equation;
 			}
 		}
-	}, [equation, inline]);
+	}, [equation, inline, editing]);
 
 	useEffect(() => {
 		if (equation === "") {
@@ -62,23 +64,45 @@ function EquationComponent({
 
 	useEffect(() => {
 		if (editing) {
-			inputRef.current?.focus();
+			inputRef.current?.focus({ preventScroll: true });
 			inputRef.current?.select();
 		}
 	}, [editing]);
 
-	function enterEdit() {
-		editor.blur();
-		enterEdit();
+	function saveScroll() {
+		let el: Element | null = katexRef.current;
+		while (el && el !== document.documentElement) {
+			if (el.scrollHeight > el.clientHeight) {
+				savedScrollRef.current = { el, top: el.scrollTop };
+				return;
+			}
+			el = el.parentElement;
+		}
 	}
 
-	function commitEdit() {
+	function restoreScroll() {
+		if (savedScrollRef.current) {
+			savedScrollRef.current.el.scrollTop = savedScrollRef.current.top;
+			savedScrollRef.current = null;
+		}
+	}
+
+	function enterEdit(e?: React.MouseEvent | React.KeyboardEvent) {
+		e?.stopPropagation();
+		saveScroll();
+		setEditing(true);
+	}
+
+	function commitEdit(refocus = false) {
 		setEditing(false);
-		editor.update(() => {
-			const node = $getNodeByKey(nodeKey);
-			if ($isEquationNode(node)) node.setEquation(draft);
-		});
-		editor.focus();
+		if (draft !== equation) {
+			editor.update(() => {
+				const node = $getNodeByKey(nodeKey);
+				if ($isEquationNode(node)) node.setEquation(draft);
+			});
+		}
+		if (refocus) editor.focus();
+		requestAnimationFrame(restoreScroll);
 	}
 
 	if (editing) {
@@ -92,7 +116,7 @@ function EquationComponent({
 				onChange={(e) => setDraft(e.target.value)}
 				onBlur={commitEdit}
 				onKeyDown={(e) => {
-					if (e.key === "Enter") commitEdit();
+					if (e.key === "Enter") commitEdit(true);
 					if (e.key === "Escape") {
 						setEditing(false);
 						editor.focus();
@@ -113,7 +137,7 @@ function EquationComponent({
 					}
 					if (e.key === "Enter" && e.shiftKey) {
 						e.preventDefault();
-						commitEdit();
+						commitEdit(true);
 					}
 				}}
 			/>
@@ -124,9 +148,9 @@ function EquationComponent({
 		<span
 			role="button"
 			tabIndex={0}
-			onClick={() => enterEdit()}
+			onClick={(e) => enterEdit(e)}
 			onKeyDown={(e) => {
-				if (e.key === "Enter" || e.key === " ") enterEdit();
+				if (e.key === "Enter" || e.key === " ") enterEdit(e);
 			}}
 			className={`equation-node cursor-pointer rounded px-1 hover:bg-muted transition-colors ${inline ? "inline" : "block my-2 text-center"}`}
 		>

@@ -257,13 +257,13 @@ export function Editor({
 	);
 
 	return (
-		<div className="bg-background overflow-hidden rounded-lg border shadow w-full">
+		<div className="bg-background flex flex-col h-full overflow-hidden shadow w-full">
 			<LexicalExtensionComposer extension={AppExtension} contentEditable={null}>
 				<TooltipProvider>
-					<div className="relative">
+					<div className="flex flex-col flex-1 min-h-0">
 						<ToolbarPlugin>
 							{({ blockType }) => (
-								<div className="vertical-align-middle sticky top-0 z-10 flex items-center gap-2 overflow-auto border-b p-1">
+								<div className="vertical-align-middle flex shrink-0 items-center gap-2 overflow-auto p-1">
 									{toolbarItems.undoRedo && <HistoryToolbarPlugin />}
 									{toolbarItems.undoRedo && (
 										<Separator orientation="vertical" className="!h-7" />
@@ -345,32 +345,38 @@ export function Editor({
 								</div>
 							)}
 						</ToolbarPlugin>
-						{onAskNewton !== undefined && (
-							<div className="px-4 pt-3 pb-1">
-								<p className="text-xs text-muted-foreground mb-2">Start with</p>
-								<div className="flex items-center gap-2 flex-wrap">
-									<button
-										type="button"
-										onClick={onAskNewton}
-										className="flex items-center gap-1.5 px-2 py-1 rounded-md text-sm font-normal transition-all duration-150 bg-muted hover:bg-muted/60"
-									>
-										<HugeiconsIcon
-											icon={AiMagicIcon}
-											className="size-[15px] shrink-0 text-green-600"
-											strokeWidth={1.5}
-										/>
-										Ask Newton
-									</button>
-								</div>
-							</div>
-						)}
-						<div className="relative">
-							<div className="">
-								<div className="" ref={onRef}>
+						<div className="flex flex-col flex-1 min-h-0">
+							<div className="flex flex-col flex-1 min-h-0 max-w-[816px] mx-auto w-full">
+								{onAskNewton !== undefined && (
+									<div className="px-4 pt-3 pb-1">
+										<p className="text-xs text-muted-foreground mb-2">
+											Start with
+										</p>
+										<div className="flex items-center gap-2 flex-wrap">
+											<button
+												type="button"
+												onClick={onAskNewton}
+												className="flex items-center gap-1.5 px-2 py-1 rounded-md text-sm font-normal transition-all duration-150 bg-muted hover:bg-muted/60"
+											>
+												<HugeiconsIcon
+													icon={AiMagicIcon}
+													className="size-[15px] shrink-0 text-green-600"
+													strokeWidth={1.5}
+												/>
+												Ask Newton
+											</button>
+										</div>
+									</div>
+								)}
+								<div
+									className="relative flex flex-col flex-1 min-h-0"
+									ref={onRef}
+								>
 									<ContentEditable
 										placeholder={placeholder}
 										placeholderClassName={`${pluginItems.draggableBlock ? "pl-14" : "pl-4"}`}
-										className={`h-[calc(100vh-141px)] ${pluginItems.draggableBlock ? "pl-14" : "pl-4"}`}
+										className={`h-full ${pluginItems.draggableBlock ? "pl-14" : "pl-4"}`}
+										scrollToTop
 									/>
 								</div>
 							</div>

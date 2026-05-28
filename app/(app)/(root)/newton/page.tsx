@@ -1,7 +1,7 @@
 import { headers } from "next/headers";
 import { AppSidebar } from "@/components/app-sidebar";
 import { DashboardHeader } from "@/components/dashboard-header";
-import { NewtonHeroSection } from "@/components/sections/newton-hero";
+import { NewtonHeroSection } from "@/components/sections/newton-hero-loader";
 import { NewtonMarketingSection } from "@/components/sections/newton-marketing";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -31,12 +31,8 @@ export default async function NewtonPage() {
 					/>
 					<SidebarInset>
 						<DashboardHeader name={session.user.name} />
-						<div className="flex flex-1 flex-col">
-							<div className="@container/main flex flex-1 flex-col gap-2">
-								<div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
-									<NewtonHeroSection isAuthed />
-								</div>
-							</div>
+						<div className="flex flex-1 flex-col overflow-hidden">
+							<NewtonHeroSection isAuthed />
 						</div>
 					</SidebarInset>
 				</SidebarProvider>

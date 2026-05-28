@@ -46,9 +46,11 @@ type Message = { role: "user" | "assistant"; text: string; sources?: Source[] };
 export function JournalAiInput({
 	centered,
 	onClose,
+	journalId,
 }: {
 	centered?: boolean;
 	onClose?: () => void;
+	journalId?: string;
 }) {
 	const [value, setValue] = useState("");
 	const [placeholderIndex, setPlaceholderIndex] = useState(0);
@@ -144,6 +146,7 @@ export function JournalAiInput({
 
 		const userText = value.trim();
 		setValue("");
+		setFiles([]);
 		if (textareaRef.current) textareaRef.current.style.height = "36px";
 		onClose?.();
 		setMessages((prev) => [...prev, { role: "user", text: userText }]);
@@ -159,7 +162,7 @@ export function JournalAiInput({
 				method: "POST",
 				headers: { "Content-Type": "application/json" },
 				signal: controller.signal,
-				body: JSON.stringify({ query: userText }),
+				body: JSON.stringify({ query: userText, journalId, files }),
 			});
 
 			if (!res.ok || !res.body) throw new Error("Request failed");

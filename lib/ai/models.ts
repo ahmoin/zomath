@@ -21,15 +21,29 @@ export type ChatModel = {
 	description: string;
 	gatewayOrder?: string[];
 	reasoningEffort?: "none" | "minimal" | "low" | "medium" | "high";
+	caps?: {
+		vision?: boolean;
+		tools?: boolean;
+		reasoning?: boolean;
+	};
 };
 
 export const chatModels: ChatModel[] = [
+	{
+		id: "google/gemini-2.5-flash",
+		name: "Gemini 2.5 Flash",
+		provider: "google",
+		description: "Fast and capable multimodal model",
+		gatewayOrder: ["google"],
+		caps: { vision: true, tools: true },
+	},
 	{
 		id: "deepseek/deepseek-v3.2",
 		name: "DeepSeek V3.2",
 		provider: "deepseek",
 		description: "Fast and capable model with tool use",
 		gatewayOrder: ["bedrock", "deepinfra"],
+		caps: { tools: true },
 	},
 	{
 		id: "mistral/codestral",
@@ -37,6 +51,7 @@ export const chatModels: ChatModel[] = [
 		provider: "mistral",
 		description: "Code-focused model with tool use",
 		gatewayOrder: ["mistral"],
+		caps: { tools: true },
 	},
 	{
 		id: "mistral/mistral-small",
@@ -44,6 +59,7 @@ export const chatModels: ChatModel[] = [
 		provider: "mistral",
 		description: "Fast vision model with tool use",
 		gatewayOrder: ["mistral"],
+		caps: { vision: true, tools: true },
 	},
 	{
 		id: "moonshotai/kimi-k2.5",
@@ -51,6 +67,7 @@ export const chatModels: ChatModel[] = [
 		provider: "moonshotai",
 		description: "Moonshot AI flagship model",
 		gatewayOrder: ["fireworks", "bedrock"],
+		caps: { tools: true },
 	},
 	{
 		id: "openai/gpt-oss-20b",
@@ -59,6 +76,7 @@ export const chatModels: ChatModel[] = [
 		description: "Compact reasoning model",
 		gatewayOrder: ["groq", "bedrock"],
 		reasoningEffort: "low",
+		caps: { reasoning: true },
 	},
 	{
 		id: "openai/gpt-oss-120b",
@@ -67,6 +85,7 @@ export const chatModels: ChatModel[] = [
 		description: "Open-source 120B parameter model",
 		gatewayOrder: ["fireworks", "bedrock"],
 		reasoningEffort: "low",
+		caps: { reasoning: true },
 	},
 	{
 		id: "xai/grok-4.1-fast-non-reasoning",
@@ -74,6 +93,7 @@ export const chatModels: ChatModel[] = [
 		provider: "xai",
 		description: "Fast non-reasoning model with tool use",
 		gatewayOrder: ["xai"],
+		caps: { tools: true },
 	},
 ];
 

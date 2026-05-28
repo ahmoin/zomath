@@ -1,9 +1,8 @@
 "use client";
 
-import { ArrowLeft01Icon, Loading01Icon } from "@hugeicons/core-free-icons";
+import { Loading01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import type { SerializedEditorState } from "lexical";
-import Link from "next/link";
 import { useEffect, useState } from "react";
 import { BlockViewerProvider } from "@/components/block-viewer-provider";
 import { useDebounce } from "@/components/editor/editor-hooks/use-debounce";
@@ -101,45 +100,15 @@ export function JournalView({ journal, parentProject }: JournalViewProps) {
 
 	return (
 		<div
-			className="flex flex-1 flex-col"
+			className="flex flex-1 flex-col overflow-hidden"
 			onKeyDown={(e) => e.key === "Escape" && setNewtonOpen(false)}
 		>
 			<JournalAiInput
 				centered={newtonOpen}
 				onClose={() => setNewtonOpen(false)}
+				journalId={journal.id}
 			/>
-			<header className="flex items-center justify-between border-b border-border px-4 lg:px-6 py-4">
-				<div className="flex items-center gap-3">
-					{parentProject ? (
-						<Link
-							href={`/projects/${parentProject.id}`}
-							className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground transition-colors"
-						>
-							<HugeiconsIcon
-								icon={ArrowLeft01Icon}
-								className="size-3.5"
-								strokeWidth={2}
-							/>
-							{parentProject.title}
-						</Link>
-					) : (
-						<Link
-							href="/"
-							className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground transition-colors"
-						>
-							<HugeiconsIcon
-								icon={ArrowLeft01Icon}
-								className="size-3.5"
-								strokeWidth={2}
-							/>
-							Dashboard
-						</Link>
-					)}
-				</div>
-				<div />
-			</header>
-
-			<div className="flex flex-1 flex-col gap-2 px-4 lg:px-6 py-6 max-w-3xl w-full mx-auto">
+			<header className="flex items-center gap-3 border-b border-border px-4 lg:px-6 py-4">
 				<input
 					type="text"
 					value={title}
@@ -147,10 +116,12 @@ export function JournalView({ journal, parentProject }: JournalViewProps) {
 						setTitle(e.target.value);
 						setSyncStatus("syncing");
 					}}
-					className="text-4xl font-bold bg-transparent border-none outline-none focus:ring-0 p-0 mb-4 placeholder:opacity-20"
+					className="text-sm font-semibold bg-transparent border-none outline-none focus:ring-0 p-0 placeholder:opacity-30 min-w-0 flex-1"
 					placeholder="Untitled Journal"
 				/>
+			</header>
 
+			<div className="flex flex-1 flex-col gap-2 px-2 py-2 w-full overflow-hidden min-h-0">
 				<BlockViewerProvider>
 					<Editor
 						key={journal.id}
