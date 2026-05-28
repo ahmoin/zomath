@@ -1,4 +1,4 @@
-import { streamText, tool } from "ai";
+import { stepCountIs, streamText, tool } from "ai";
 import { headers } from "next/headers";
 import { tavily } from "@tavily/core";
 import { eq, and } from "drizzle-orm";
@@ -117,12 +117,12 @@ export async function POST(request: Request) {
 		system: researchNewtonPrompt + currentJournalContext,
 		// biome-ignore lint/suspicious/noExplicitAny: AI SDK union type
 		messages: [{ role: "user", content: messageContent as any }],
-		maxSteps: 8,
+		stopWhen: stepCountIs(8),
 		tools: {
 			listJournals: tool({
 				description:
 					"List all journals belonging to the user with their titles. Use this to find relevant journals before reading them.",
-				parameters: z.object({}),
+				inputSchema: z.object({}),
 				execute: async () => {
 					const entries = await db.query.journal.findMany({
 						where: eq(journal.userId, userId),
@@ -138,7 +138,7 @@ export async function POST(request: Request) {
 			}),
 			readJournal: tool({
 				description: "Read the full content of a specific journal by ID.",
-				parameters: z.object({
+				inputSchema: z.object({
 					journalId: z.string().describe("The ID of the journal to read"),
 				}),
 				execute: async ({ journalId: jid }) => {
@@ -162,7 +162,7 @@ export async function POST(request: Request) {
 			}),
 			listProjects: tool({
 				description: "List all projects belonging to the user.",
-				parameters: z.object({}),
+				inputSchema: z.object({}),
 				execute: async () => {
 					const entries = await db.query.project.findMany({
 						where: eq(project.userId, userId),
@@ -173,7 +173,7 @@ export async function POST(request: Request) {
 			}),
 			readProject: tool({
 				description: "Read a project and all its journals.",
-				parameters: z.object({
+				inputSchema: z.object({
 					projectId: z.string().describe("The ID of the project to read"),
 				}),
 				execute: async ({ projectId }) => {
@@ -190,7 +190,7 @@ export async function POST(request: Request) {
 			searchWeb: tool({
 				description:
 					"Search the web for up-to-date information on a topic using Tavily.",
-				parameters: z.object({
+				inputSchema: z.object({
 					query: z.string().describe("The search query"),
 				}),
 				execute: async ({ query: searchQuery }) => {

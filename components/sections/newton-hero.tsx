@@ -1,5 +1,7 @@
 "use client";
 
+import "katex/dist/katex.min.css";
+
 import {
 	AiBrain01Icon,
 	ArrowRight02Icon,
