@@ -114,7 +114,7 @@ function EquationComponent({
 				className={`${sharedClass} inline w-48`}
 				value={draft}
 				onChange={(e) => setDraft(e.target.value)}
-				onBlur={commitEdit}
+				onBlur={() => commitEdit()}
 				onKeyDown={(e) => {
 					if (e.key === "Enter") commitEdit(true);
 					if (e.key === "Escape") {
@@ -129,7 +129,7 @@ function EquationComponent({
 				className={`${sharedClass} block w-full min-h-[60px] resize-y`}
 				value={draft}
 				onChange={(e) => setDraft(e.target.value)}
-				onBlur={commitEdit}
+				onBlur={() => commitEdit()}
 				onKeyDown={(e) => {
 					if (e.key === "Escape") {
 						setEditing(false);
