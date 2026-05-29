@@ -12,6 +12,7 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { EditorPreview } from "@/components/sections/editor-preview";
 import { Button } from "@/components/ui/button";
 
 interface Journal {
@@ -126,9 +127,13 @@ export function ProjectView({ project, journals }: ProjectViewProps) {
 									href={`/journals/${j.id}`}
 									className="flex flex-col rounded-xl border border-border bg-card p-4 text-left transition-colors hover:border-primary/30 hover:bg-accent/50"
 								>
-									<p className="line-clamp-3 text-xs text-muted-foreground leading-relaxed">
-										{j.content || "Empty journal"}
-									</p>
+									<div className="line-clamp-3 text-muted-foreground">
+										{j.content ? (
+											<EditorPreview content={j.content} />
+										) : (
+											<span className="text-xs">Empty journal</span>
+										)}
+									</div>
 									<div className="mt-3 flex items-center justify-between">
 										<span className="text-sm font-medium text-foreground">
 											{j.title}
