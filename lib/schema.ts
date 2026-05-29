@@ -1,27 +1,32 @@
-import { relations } from "drizzle-orm";
-import { boolean, index, pgTable, text, timestamp } from "drizzle-orm/pg-core";
+import { relations, sql } from "drizzle-orm";
+import { index, integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
 
-export const user = pgTable("user", {
+export const user = sqliteTable("user", {
 	id: text("id").primaryKey(),
 	name: text("name").notNull(),
 	email: text("email").notNull().unique(),
-	emailVerified: boolean("emailVerified").default(false).notNull(),
+	emailVerified: integer("emailVerified", { mode: "boolean" }).default(false).notNull(),
 	image: text("image"),
-	createdAt: timestamp("createdAt").defaultNow().notNull(),
-	updatedAt: timestamp("updatedAt")
-		.defaultNow()
+	createdAt: integer("createdAt", { mode: "timestamp" })
+		.$defaultFn(() => new Date())
+		.notNull(),
+	updatedAt: integer("updatedAt", { mode: "timestamp" })
+		.$defaultFn(() => new Date())
 		.$onUpdate(() => new Date())
 		.notNull(),
 });
 
-export const session = pgTable(
+export const session = sqliteTable(
 	"session",
 	{
 		id: text("id").primaryKey(),
-		expiresAt: timestamp("expiresAt").notNull(),
+		expiresAt: integer("expiresAt", { mode: "timestamp" }).notNull(),
 		token: text("token").notNull().unique(),
-		createdAt: timestamp("createdAt").defaultNow().notNull(),
-		updatedAt: timestamp("updatedAt")
+		createdAt: integer("createdAt", { mode: "timestamp" })
+			.$defaultFn(() => new Date())
+			.notNull(),
+		updatedAt: integer("updatedAt", { mode: "timestamp" })
+			.$defaultFn(() => new Date())
 			.$onUpdate(() => new Date())
 			.notNull(),
 		ipAddress: text("ipAddress"),
@@ -33,7 +38,7 @@ export const session = pgTable(
 	(table) => [index("session_userId_idx").on(table.userId)],
 );
 
-export const account = pgTable(
+export const account = sqliteTable(
 	"account",
 	{
 		id: text("id").primaryKey(),
@@ -45,35 +50,40 @@ export const account = pgTable(
 		accessToken: text("accessToken"),
 		refreshToken: text("refreshToken"),
 		idToken: text("idToken"),
-		accessTokenExpiresAt: timestamp("accessTokenExpiresAt"),
-		refreshTokenExpiresAt: timestamp("refreshTokenExpiresAt"),
+		accessTokenExpiresAt: integer("accessTokenExpiresAt", { mode: "timestamp" }),
+		refreshTokenExpiresAt: integer("refreshTokenExpiresAt", { mode: "timestamp" }),
 		scope: text("scope"),
 		password: text("password"),
-		createdAt: timestamp("createdAt").defaultNow().notNull(),
-		updatedAt: timestamp("updatedAt")
+		createdAt: integer("createdAt", { mode: "timestamp" })
+			.$defaultFn(() => new Date())
+			.notNull(),
+		updatedAt: integer("updatedAt", { mode: "timestamp" })
+			.$defaultFn(() => new Date())
 			.$onUpdate(() => new Date())
 			.notNull(),
 	},
 	(table) => [index("account_userId_idx").on(table.userId)],
 );
 
-export const verification = pgTable(
+export const verification = sqliteTable(
 	"verification",
 	{
 		id: text("id").primaryKey(),
 		identifier: text("identifier").notNull(),
 		value: text("value").notNull(),
-		expiresAt: timestamp("expiresAt").notNull(),
-		createdAt: timestamp("createdAt").defaultNow().notNull(),
-		updatedAt: timestamp("updatedAt")
-			.defaultNow()
+		expiresAt: integer("expiresAt", { mode: "timestamp" }).notNull(),
+		createdAt: integer("createdAt", { mode: "timestamp" })
+			.$defaultFn(() => new Date())
+			.notNull(),
+		updatedAt: integer("updatedAt", { mode: "timestamp" })
+			.$defaultFn(() => new Date())
 			.$onUpdate(() => new Date())
 			.notNull(),
 	},
 	(table) => [index("verification_identifier_idx").on(table.identifier)],
 );
 
-export const project = pgTable(
+export const project = sqliteTable(
 	"project",
 	{
 		id: text("id").primaryKey(),
@@ -81,16 +91,18 @@ export const project = pgTable(
 		userId: text("userId")
 			.notNull()
 			.references(() => user.id, { onDelete: "cascade" }),
-		createdAt: timestamp("createdAt").defaultNow().notNull(),
-		updatedAt: timestamp("updatedAt")
-			.defaultNow()
+		createdAt: integer("createdAt", { mode: "timestamp" })
+			.$defaultFn(() => new Date())
+			.notNull(),
+		updatedAt: integer("updatedAt", { mode: "timestamp" })
+			.$defaultFn(() => new Date())
 			.$onUpdate(() => new Date())
 			.notNull(),
 	},
 	(table) => [index("project_userId_idx").on(table.userId)],
 );
 
-export const journal = pgTable(
+export const journal = sqliteTable(
 	"journal",
 	{
 		id: text("id").primaryKey(),
@@ -102,9 +114,11 @@ export const journal = pgTable(
 		projectId: text("projectId").references(() => project.id, {
 			onDelete: "set null",
 		}),
-		createdAt: timestamp("createdAt").defaultNow().notNull(),
-		updatedAt: timestamp("updatedAt")
-			.defaultNow()
+		createdAt: integer("createdAt", { mode: "timestamp" })
+			.$defaultFn(() => new Date())
+			.notNull(),
+		updatedAt: integer("updatedAt", { mode: "timestamp" })
+			.$defaultFn(() => new Date())
 			.$onUpdate(() => new Date())
 			.notNull(),
 	},
@@ -114,7 +128,7 @@ export const journal = pgTable(
 	],
 );
 
-export const practice = pgTable(
+export const practice = sqliteTable(
 	"practice",
 	{
 		id: text("id").primaryKey(),
@@ -125,16 +139,18 @@ export const practice = pgTable(
 		userId: text("userId")
 			.notNull()
 			.references(() => user.id, { onDelete: "cascade" }),
-		createdAt: timestamp("createdAt").defaultNow().notNull(),
-		updatedAt: timestamp("updatedAt")
-			.defaultNow()
+		createdAt: integer("createdAt", { mode: "timestamp" })
+			.$defaultFn(() => new Date())
+			.notNull(),
+		updatedAt: integer("updatedAt", { mode: "timestamp" })
+			.$defaultFn(() => new Date())
 			.$onUpdate(() => new Date())
 			.notNull(),
 	},
 	(table) => [index("practice_userId_idx").on(table.userId)],
 );
 
-export const newtonChat = pgTable(
+export const newtonChat = sqliteTable(
 	"newton_chat",
 	{
 		id: text("id").primaryKey(),
@@ -143,9 +159,11 @@ export const newtonChat = pgTable(
 		userId: text("userId")
 			.notNull()
 			.references(() => user.id, { onDelete: "cascade" }),
-		createdAt: timestamp("createdAt").defaultNow().notNull(),
-		updatedAt: timestamp("updatedAt")
-			.defaultNow()
+		createdAt: integer("createdAt", { mode: "timestamp" })
+			.$defaultFn(() => new Date())
+			.notNull(),
+		updatedAt: integer("updatedAt", { mode: "timestamp" })
+			.$defaultFn(() => new Date())
 			.$onUpdate(() => new Date())
 			.notNull(),
 	},
