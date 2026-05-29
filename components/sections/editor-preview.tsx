@@ -1,6 +1,7 @@
 "use client";
 
 import { CodeHighlightNode, CodeNode } from "@lexical/code";
+import { LinkNode } from "@lexical/link";
 import { ListItemNode, ListNode } from "@lexical/list";
 import { OverflowNode } from "@lexical/overflow";
 import { LexicalComposer } from "@lexical/react/LexicalComposer";
@@ -28,6 +29,7 @@ export function EditorPreview({ content }: { content: string }) {
 		editable: false,
 		nodes: [
 			EquationNode,
+			LinkNode,
 			HeadingNode,
 			QuoteNode,
 			ListNode,

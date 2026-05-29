@@ -46,19 +46,17 @@ const YEARS = Array.from({ length: 100 }, (_, i) =>
 	String(new Date().getFullYear() - i),
 );
 
-interface SettingsSectionProps {
-	name: string;
-	email: string;
-	hasGithub: boolean;
-	hasGoogle: boolean;
-}
-
 export function SettingsSection({
 	name,
 	email,
 	hasGithub,
 	hasGoogle,
-}: SettingsSectionProps) {
+}: {
+	name: string;
+	email: string;
+	hasGithub: boolean;
+	hasGoogle: boolean;
+}) {
 	const [firstName, ...rest] = name.split(" ");
 	const lastName = rest.join(" ");
 

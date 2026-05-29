@@ -15,13 +15,16 @@ import {
 
 export function NavMain({
 	items,
+	historySlot,
 }: {
 	items: {
 		title: string;
 		url: string;
 		icon?: React.ReactNode;
 	}[];
+	historySlot?: React.ReactNode;
 }) {
+	const [first, ...rest] = items;
 	return (
 		<SidebarGroup>
 			<SidebarGroupContent className="flex flex-col gap-2">
@@ -48,7 +51,20 @@ export function NavMain({
 					</SidebarMenuItem>
 				</SidebarMenu>
 				<SidebarMenu>
-					{items.map((item) => (
+					{first && (
+						<SidebarMenuItem key={first.title}>
+							<SidebarMenuButton asChild tooltip={first.title}>
+								<Link href={first.url}>
+									{first.icon}
+									<span>{first.title}</span>
+								</Link>
+							</SidebarMenuButton>
+						</SidebarMenuItem>
+					)}
+					{historySlot && (
+						<SidebarMenuItem>{historySlot}</SidebarMenuItem>
+					)}
+					{rest.map((item) => (
 						<SidebarMenuItem key={item.title}>
 							<SidebarMenuButton asChild tooltip={item.title}>
 								<Link href={item.url}>

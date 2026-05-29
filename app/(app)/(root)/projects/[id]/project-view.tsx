@@ -14,33 +14,13 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { EditorPreview } from "@/components/sections/editor-preview";
 import { Button } from "@/components/ui/button";
+import { Journal, Project } from "@/lib/types";
+import { formatDate } from "@/lib/utils";
 
-interface Journal {
-	id: string;
-	title: string;
-	content: string;
-	updatedAt: Date;
-}
-
-interface Project {
-	id: string;
-	title: string;
-	updatedAt: Date;
-}
-
-interface ProjectViewProps {
+export function ProjectView({ project, journals }: {
 	project: Project;
 	journals: Journal[];
-}
-
-function formatDate(date: Date | string) {
-	return new Date(date).toLocaleDateString("en-US", {
-		month: "short",
-		day: "numeric",
-	});
-}
-
-export function ProjectView({ project, journals }: ProjectViewProps) {
+}) {
 	const router = useRouter();
 	const [creatingJournal, setCreatingJournal] = useState(false);
 

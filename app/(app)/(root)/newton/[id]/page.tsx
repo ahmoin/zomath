@@ -2,30 +2,34 @@ import { eq } from "drizzle-orm";
 import { headers } from "next/headers";
 import { notFound, redirect } from "next/navigation";
 import { AppSidebar } from "@/components/app-sidebar";
+import { DashboardHeader } from "@/components/dashboard-header";
+import { NewtonHeroSection } from "@/components/sections/newton-hero-loader";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { auth } from "@/lib/auth";
 import { db } from "@/lib/db";
-import { journal, project } from "@/lib/schema";
-import { JournalView } from "./journal-view";
+import { newtonChat } from "@/lib/schema";
 
-export default async function JournalPage({ params }: {
+export default async function NewtonChatPage({ params }: {
 	params: Promise<{ id: string }>;
 }) {
 	const { id } = await params;
 	const session = await auth.api.getSession({ headers: await headers() });
 	if (!session) redirect("/log-in");
 
-	const [doc] = await db.select().from(journal).where(eq(journal.id, id));
-	if (!doc || doc.userId !== session.user.id) notFound();
+	const [chat] = await db
+		.select()
+		.from(newtonChat)
+		.where(eq(newtonChat.id, id));
 
-	const parentProject = doc.projectId
-		? await db
-				.select({ id: project.id, title: project.title })
-				.from(project)
-				.where(eq(project.id, doc.projectId))
-				.then((r) => r[0] ?? null)
-		: null;
+	if (!chat || chat.userId !== session.user.id) notFound();
+
+	let initialMessages: unknown[] = [];
+	try {
+		initialMessages = JSON.parse(chat.messages);
+	} catch {
+		initialMessages = [];
+	}
 
 	return (
 		<TooltipProvider>
@@ -46,7 +50,15 @@ export default async function JournalPage({ params }: {
 					}}
 				/>
 				<SidebarInset>
-					<JournalView journal={doc} parentProject={parentProject} />
+					<DashboardHeader name={session.user.name} />
+					<div className="flex flex-1 flex-col overflow-hidden">
+						<NewtonHeroSection
+							isAuthed
+							initialChatId={id}
+							// biome-ignore lint/suspicious/noExplicitAny: persisted message shape
+							initialMessages={initialMessages as any}
+						/>
+					</div>
 				</SidebarInset>
 			</SidebarProvider>
 		</TooltipProvider>

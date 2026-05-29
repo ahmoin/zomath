@@ -223,6 +223,24 @@ export async function POST(request: Request) {
 	const stream = new ReadableStream({
 		async start(controller) {
 			for await (const part of result.fullStream) {
+				if (part.type === "tool-call") {
+					const p = part as unknown as { toolName: string };
+					controller.enqueue(
+						encoder.encode(
+							`data:step:${JSON.stringify({ name: p.toolName, status: "running" })}\n\n`,
+						),
+					);
+					continue;
+				}
+				if (part.type === "tool-result") {
+					const p = part as unknown as { toolName: string };
+					controller.enqueue(
+						encoder.encode(
+							`data:step:${JSON.stringify({ name: p.toolName, status: "done" })}\n\n`,
+						),
+					);
+					continue;
+				}
 				if (part.type !== "text-delta") continue;
 				const chunk = (part as unknown as { text: string }).text;
 				if (!sourcesSent && collectedSources.length > 0) {

@@ -97,3 +97,18 @@ export type Attachment = {
 	url: string;
 	contentType: string;
 };
+
+export type HistoryItem = {
+	id: string;
+	title: string;
+	updatedAt: Date;
+	type: "chat" | "journal" | "practice" | "project";
+};
+
+export type RecentItem = {
+	id: string;
+	title: string;
+	updatedAt: Date;
+	type: "chat" | "journal" | "practice" | "project";
+	href: string;
+};

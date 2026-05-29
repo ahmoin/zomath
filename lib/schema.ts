@@ -114,11 +114,51 @@ export const journal = pgTable(
 	],
 );
 
+export const practice = pgTable(
+	"practice",
+	{
+		id: text("id").primaryKey(),
+		title: text("title").notNull().default("Untitled Practice"),
+		topic: text("topic").notNull().default(""),
+		format: text("format").notNull().default("quiz"),
+		questions: text("questions").notNull().default("[]"),
+		userId: text("userId")
+			.notNull()
+			.references(() => user.id, { onDelete: "cascade" }),
+		createdAt: timestamp("createdAt").defaultNow().notNull(),
+		updatedAt: timestamp("updatedAt")
+			.defaultNow()
+			.$onUpdate(() => new Date())
+			.notNull(),
+	},
+	(table) => [index("practice_userId_idx").on(table.userId)],
+);
+
+export const newtonChat = pgTable(
+	"newton_chat",
+	{
+		id: text("id").primaryKey(),
+		title: text("title").notNull().default("New Chat"),
+		messages: text("messages").notNull().default("[]"),
+		userId: text("userId")
+			.notNull()
+			.references(() => user.id, { onDelete: "cascade" }),
+		createdAt: timestamp("createdAt").defaultNow().notNull(),
+		updatedAt: timestamp("updatedAt")
+			.defaultNow()
+			.$onUpdate(() => new Date())
+			.notNull(),
+	},
+	(table) => [index("newton_chat_userId_idx").on(table.userId)],
+);
+
 export const userRelations = relations(user, ({ many }) => ({
 	sessions: many(session),
 	accounts: many(account),
 	projects: many(project),
 	journals: many(journal),
+	practices: many(practice),
+	newtonChats: many(newtonChat),
 }));
 
 export const projectRelations = relations(project, ({ one, many }) => ({
@@ -132,6 +172,14 @@ export const journalRelations = relations(journal, ({ one }) => ({
 		fields: [journal.projectId],
 		references: [project.id],
 	}),
+}));
+
+export const practiceRelations = relations(practice, ({ one }) => ({
+	user: one(user, { fields: [practice.userId], references: [user.id] }),
+}));
+
+export const newtonChatRelations = relations(newtonChat, ({ one }) => ({
+	user: one(user, { fields: [newtonChat.userId], references: [user.id] }),
 }));
 
 export const sessionRelations = relations(session, ({ one }) => ({

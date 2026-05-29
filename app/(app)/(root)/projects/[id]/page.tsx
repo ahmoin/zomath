@@ -9,11 +9,9 @@ import { db } from "@/lib/db";
 import { journal, project } from "@/lib/schema";
 import { ProjectView } from "./project-view";
 
-interface Props {
+export default async function ProjectPage({ params }: {
 	params: Promise<{ id: string }>;
-}
-
-export default async function ProjectPage({ params }: Props) {
+}) {
 	const { id } = await params;
 	const session = await auth.api.getSession({ headers: await headers() });
 	if (!session) redirect("/log-in");

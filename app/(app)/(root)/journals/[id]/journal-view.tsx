@@ -9,20 +9,12 @@ import { useDebounce } from "@/components/editor/editor-hooks/use-debounce";
 import { Editor } from "@/components/sections/editor-x";
 import { JournalAiInput } from "@/components/sections/journal-ai-input";
 import { localDb } from "@/lib/local-db";
+import { Journal } from "@/lib/types";
 
-interface Journal {
-	id: string;
-	title: string;
-	content: string;
-	updatedAt: Date;
-}
-
-interface JournalViewProps {
+export function JournalView({ journal, parentProject }: {
 	journal: Journal;
 	parentProject: { id: string; title: string } | null;
-}
-
-export function JournalView({ journal, parentProject }: JournalViewProps) {
+}) {
 	const [title, setTitle] = useState(journal.title);
 	const [_syncStatus, setSyncStatus] = useState<"saved" | "syncing" | "error">(
 		"saved",

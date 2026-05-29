@@ -11,11 +11,12 @@ import {
 	RadioIcon,
 	SparklesIcon,
 } from "@hugeicons/core-free-icons";
-import { BrainIcon, ImageIcon, WrenchIcon } from "lucide-react";
+import { BrainIcon, CheckIcon, ImageIcon, LoaderIcon, WrenchIcon } from "lucide-react";
 import type { HugeiconsIconProps } from "@hugeicons/react";
 import { HugeiconsIcon } from "@hugeicons/react";
 import type { ChatStatus, FileUIPart } from "ai";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useLocalStorage } from "@/hooks/use-local-storage";
 import {
@@ -48,6 +49,17 @@ import {
 	TaskItemFile,
 	TaskTrigger,
 } from "@/components/ai-elements/task";
+import {
+	Queue,
+	QueueItem,
+	QueueItemContent,
+	QueueItemIndicator,
+	QueueList,
+	QueueSection,
+	QueueSectionContent,
+	QueueSectionLabel,
+	QueueSectionTrigger,
+} from "@/components/ai-elements/queue";
 import type { PersonaState } from "@/components/ai-elements/persona";
 import { Persona } from "@/components/ai-elements/persona";
 import {
@@ -85,6 +97,8 @@ import {
 } from "@/components/ai-elements/prompt-input";
 import { chatModels, DEFAULT_CHAT_MODEL } from "@/lib/ai/models";
 import { JournalCreatedCard } from "@/components/sections/journal-created-card";
+import { PracticeCreatedCard } from "@/components/sections/practice-created-card";
+import { ProjectCreatedCard } from "@/components/sections/project-created-card";
 import { SpeechInput } from "@/components/ai-elements/speech-input";
 import {
 	Transcription,
@@ -109,7 +123,9 @@ type ConvMessage = {
 	content: string;
 	files?: FilePart[];
 	reasoning?: string;
-	journals?: { id: string; title: string }[];
+	journals?: { id: string; title: string; updated?: boolean }[];
+	practices?: { id: string; title: string }[];
+	projects?: { id: string; title: string }[];
 };
 
 type SpeechData = {
@@ -169,18 +185,42 @@ function StateButton({
 	);
 }
 
-function AuthedPersona() {
+const STEP_LABELS: Record<string, string> = {
+	createJournal: "Creating journal",
+	updateJournal: "Updating journal",
+	createProject: "Creating project",
+	addJournalToProject: "Adding to project",
+	listJournals: "Listing journals",
+	readJournal: "Reading journal",
+	listProjects: "Listing projects",
+	readProject: "Reading project",
+	searchWeb: "Searching the web",
+};
+
+function AuthedPersona({
+	initialChatId,
+	initialMessages = [],
+}: {
+	initialChatId?: string;
+	initialMessages?: ConvMessage[];
+}) {
+	const pathname = usePathname();
 	const [mode, setMode] = useLocalStorage<Mode>("newton:mode", "voice");
 	const [model, setModel] = useLocalStorage("newton:model", DEFAULT_CHAT_MODEL);
 	const [modelSelectorOpen, setModelSelectorOpen] = useState(false);
 	const [personaState, setPersonaState] = useState<PersonaState>("idle");
-	const [messages, setMessages] = useState<ConvMessage[]>([]);
+	const [messages, setMessages] = useState<ConvMessage[]>(initialMessages);
 	const [streamingText, setStreamingText] = useState("");
 	const [streamingReasoning, setStreamingReasoning] = useState("");
+	const [streamingSteps, setStreamingSteps] = useState<
+		{ name: string; status: "running" | "done" }[]
+	>([]);
+	const [streamingStatus, setStreamingStatus] = useState<string | null>(null);
 	const [chatStatus, setChatStatus] = useState<ChatStatus>("ready");
 	const [currentTime, setCurrentTime] = useState(0);
 	const [speechData, setSpeechData] = useState<SpeechData | null>(null);
 	const abortRef = useRef<AbortController | null>(null);
+	const chatIdRef = useRef<string>(initialChatId ?? crypto.randomUUID());
 	const audioRef = useRef<HTMLAudioElement>(null);
 	const messagesRef = useRef(messages);
 	useEffect(() => {
@@ -268,6 +308,18 @@ function AuthedPersona() {
 			setMessages(updated);
 			setChatStatus("submitted");
 
+			const isFirstMessage = messagesRef.current.length === 0;
+			if (isFirstMessage) {
+				fetch("/api/newton/chats", {
+					method: "POST",
+					headers: { "Content-Type": "application/json" },
+					body: JSON.stringify({ id: chatIdRef.current, title: userText, messages: updated }),
+				}).catch(() => {});
+				if (pathname === "/newton") {
+					window.history.replaceState(null, "", `/newton/${chatIdRef.current}`);
+				}
+			}
+
 			abortRef.current = new AbortController();
 			try {
 				const res = await fetch("/api/newton", {
@@ -303,7 +355,9 @@ function AuthedPersona() {
 				let buffer = "";
 				let fullText = "";
 				let fullReasoning = "";
-				const journals: { id: string; title: string }[] = [];
+				const journals: { id: string; title: string; updated?: boolean }[] = [];
+				const practices: { id: string; title: string }[] = [];
+				const projects: { id: string; title: string }[] = [];
 				setChatStatus("streaming");
 
 				while (true) {
@@ -319,10 +373,42 @@ function AuthedPersona() {
 						} else if (line.startsWith("g:")) {
 							fullReasoning += JSON.parse(line.slice(2)) as string;
 							setStreamingReasoning(fullReasoning);
+						} else if (line.startsWith("s:")) {
+							const step = JSON.parse(line.slice(2)) as {
+								name: string;
+								status: "running" | "done";
+							};
+							setStreamingSteps((prev) => {
+								let idx = -1;
+								for (let i = prev.length - 1; i >= 0; i--) {
+									if (prev[i].name === step.name && prev[i].status === "running") { idx = i; break; }
+								}
+								if (step.status === "done" && idx !== -1) {
+									const next = [...prev];
+									next[idx] = { ...next[idx], status: "done" };
+									return next;
+								}
+								return [...prev, step];
+							});
 						} else if (line.startsWith("j:")) {
 							journals.push(
+								JSON.parse(line.slice(2)) as { id: string; title: string; updated?: boolean },
+							);
+						} else if (line.startsWith("p:")) {
+							practices.push(
 								JSON.parse(line.slice(2)) as { id: string; title: string },
 							);
+						} else if (line.startsWith("r:")) {
+							projects.push(
+								JSON.parse(line.slice(2)) as { id: string; title: string },
+							);
+						} else if (line.startsWith("w:")) {
+							const { seconds } = JSON.parse(line.slice(2)) as { seconds: number };
+							setStreamingStatus(`Rate limited — retrying in ${seconds}s...`);
+							setTimeout(() => setStreamingStatus(null), seconds * 1000);
+						} else if (line.startsWith("e:")) {
+							const { message } = JSON.parse(line.slice(2)) as { message: string };
+							setStreamingStatus(message);
 						}
 					}
 				}
@@ -334,15 +420,37 @@ function AuthedPersona() {
 						content: fullText,
 						reasoning: fullReasoning || undefined,
 						journals: journals.length ? journals : undefined,
+						practices: practices.length ? practices : undefined,
+						projects: projects.length ? projects : undefined,
 					},
 				]);
 				setStreamingText("");
 				setStreamingReasoning("");
+				setStreamingSteps([]);
+				setStreamingStatus(null);
+				const finalMessages = [
+					...messagesRef.current,
+					{
+						role: "assistant" as const,
+						content: fullText,
+						reasoning: fullReasoning || undefined,
+						journals: journals.length ? journals : undefined,
+						practices: practices.length ? practices : undefined,
+						projects: projects.length ? projects : undefined,
+					},
+				];
 				setChatStatus("ready");
+				fetch("/api/newton/chats", {
+					method: "POST",
+					headers: { "Content-Type": "application/json" },
+					body: JSON.stringify({ id: chatIdRef.current, title: userText, messages: finalMessages }),
+				}).catch(() => {});
 				return fullText;
 			} catch (err) {
 				if ((err as Error).name !== "AbortError") setChatStatus("error");
 				setStreamingText("");
+				setStreamingSteps([]);
+				setStreamingStatus(null);
 				setChatStatus("ready");
 				return null;
 			}
@@ -470,6 +578,21 @@ function AuthedPersona() {
 															key={j.id}
 															id={j.id}
 															title={j.title}
+															updated={j.updated}
+														/>
+													))}
+													{msg.practices?.map((p) => (
+														<PracticeCreatedCard
+															key={p.id}
+															id={p.id}
+															title={p.title}
+														/>
+													))}
+													{msg.projects?.map((proj) => (
+														<ProjectCreatedCard
+															key={proj.id}
+															id={proj.id}
+															title={proj.title}
 														/>
 													))}
 												</>
@@ -490,9 +613,43 @@ function AuthedPersona() {
 											</MessageContent>
 										</Message>
 									)}
-								{(streamingText || streamingReasoning) && (
+								{(streamingText || streamingReasoning || streamingSteps.length > 0 || streamingStatus) && (
 									<Message from="assistant">
 										<MessageContent>
+											{streamingSteps.length > 0 && !streamingText && (
+												<Queue className="mb-2">
+													<QueueSection>
+														<QueueSectionTrigger>
+															<QueueSectionLabel
+																label="steps"
+																count={streamingSteps.length}
+															/>
+														</QueueSectionTrigger>
+														<QueueSectionContent>
+															<QueueList>
+																{streamingSteps.map((step, i) => (
+																	<QueueItem key={i}>
+																		<div className="flex items-center gap-2">
+																			<QueueItemIndicator completed={step.status === "done"} />
+																			<QueueItemContent completed={step.status === "done"}>
+																				{STEP_LABELS[step.name] ?? step.name}
+																			</QueueItemContent>
+																			{step.status === "running" ? (
+																				<LoaderIcon className="size-3 animate-spin text-muted-foreground/60" />
+																			) : (
+																				<CheckIcon className="size-3 text-muted-foreground/40" />
+																			)}
+																		</div>
+																	</QueueItem>
+																))}
+															</QueueList>
+														</QueueSectionContent>
+													</QueueSection>
+												</Queue>
+											)}
+											{streamingStatus && (
+												<p className="animate-pulse text-xs text-muted-foreground">{streamingStatus}</p>
+											)}
 											{streamingReasoning && (
 												<Reasoning isStreaming={!streamingText}>
 													<ReasoningTrigger />
@@ -665,9 +822,17 @@ function AuthedPersona() {
 	);
 }
 
-export function NewtonHeroSection({ isAuthed }: { isAuthed: boolean }) {
+export function NewtonHeroSection({
+	isAuthed,
+	initialChatId,
+	initialMessages,
+}: {
+	isAuthed: boolean;
+	initialChatId?: string;
+	initialMessages?: ConvMessage[];
+}) {
 	if (isAuthed) {
-		return <AuthedPersona />;
+		return <AuthedPersona initialChatId={initialChatId} initialMessages={initialMessages} />;
 	}
 
 	return (
