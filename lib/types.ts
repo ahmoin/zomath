@@ -112,3 +112,10 @@ export type RecentItem = {
 	type: "chat" | "journal" | "practice" | "project";
 	href: string;
 };
+
+export type LexNode = {
+	type: string;
+	text?: string;
+	equation?: string;
+	children?: LexNode[];
+};

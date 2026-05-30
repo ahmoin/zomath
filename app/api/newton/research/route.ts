@@ -9,31 +9,7 @@ import { db } from "@/lib/db";
 import { journal, project } from "@/lib/schema";
 import { ChatbotError } from "@/lib/errors";
 import { DEFAULT_CHAT_MODEL } from "@/lib/ai/models";
-
-type LexNode = {
-	type: string;
-	text?: string;
-	equation?: string;
-	children?: LexNode[];
-};
-
-function lexicalToText(node: LexNode): string {
-	if (node.type === "equation") return `$${node.equation ?? ""}$`;
-	if (node.type === "text") return node.text ?? "";
-	if (!node.children?.length) return "";
-	const childText = node.children.map(lexicalToText).join("");
-	const block = ["paragraph", "heading", "quote", "listitem", "root"];
-	return block.includes(node.type) ? `${childText}\n` : childText;
-}
-
-function parseJournalContent(content: string): string {
-	try {
-		const json = JSON.parse(content) as { root: LexNode };
-		return lexicalToText(json.root).trim();
-	} catch {
-		return content;
-	}
-}
+import { parseJournalContent } from "@/lib/utils";
 
 export const maxDuration = 60;
 
