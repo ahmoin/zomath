@@ -23,6 +23,7 @@ import {
 import { HugeiconsIcon } from "@hugeicons/react";
 import Link from "next/link";
 import { GeometryDiagram } from "@/components/illustrations/geometry-diagram";
+import { CallToAction } from "@/components/sections/geometry-marketing/cta";
 import {
 	classicTheorems,
 	conceptMapFeatures,
@@ -34,7 +35,6 @@ import {
 } from "@/components/sections/geometry-marketing/data";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { CallToAction } from "@/components/sections/geometry-marketing/cta";
 
 export function GeometryMarketingSection() {
 	return (

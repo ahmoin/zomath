@@ -1,13 +1,13 @@
 import { desc, eq } from "drizzle-orm";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
+import { HistoryView } from "@/app/(app)/(root)/history/history-view";
 import { AppSidebar } from "@/components/app-sidebar";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { auth } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { journal, newtonChat, practice, project } from "@/lib/schema";
-import { HistoryView } from "@/app/(app)/(root)/history/history-view";
 
 export default async function HistoryPage() {
 	const session = await auth.api.getSession({ headers: await headers() });

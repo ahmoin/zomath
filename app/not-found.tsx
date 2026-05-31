@@ -1,3 +1,5 @@
+import { CompassIcon, Home01Icon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { Button } from "@/components/ui/button";
 import {
 	Empty,
@@ -6,8 +8,6 @@ import {
 	EmptyHeader,
 	EmptyTitle,
 } from "@/components/ui/empty";
-import { HugeiconsIcon } from "@hugeicons/react";
-import { Home01Icon, CompassIcon } from "@hugeicons/core-free-icons";
 
 export default function NotFoundPage() {
 	return (

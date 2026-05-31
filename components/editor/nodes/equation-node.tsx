@@ -53,14 +53,14 @@ function EquationComponent({
 				katexRef.current.textContent = equation;
 			}
 		}
-	}, [equation, inline, editing]);
+	}, [equation, inline]);
 
 	useEffect(() => {
 		if (equation === "") {
 			enterEdit();
 		}
 		// biome-ignore lint/correctness/useExhaustiveDependencies: only runs on mount
-	}, []);
+	}, [equation, enterEdit]);
 
 	useEffect(() => {
 		if (editing) {

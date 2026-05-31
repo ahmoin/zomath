@@ -11,6 +11,9 @@ import {
 	RadioIcon,
 	SparklesIcon,
 } from "@hugeicons/core-free-icons";
+import type { HugeiconsIconProps } from "@hugeicons/react";
+import { HugeiconsIcon } from "@hugeicons/react";
+import type { ChatStatus, FileUIPart } from "ai";
 import {
 	BrainIcon,
 	CheckIcon,
@@ -18,13 +21,15 @@ import {
 	LoaderIcon,
 	WrenchIcon,
 } from "lucide-react";
-import type { HugeiconsIconProps } from "@hugeicons/react";
-import { HugeiconsIcon } from "@hugeicons/react";
-import type { ChatStatus, FileUIPart } from "ai";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { useLocalStorage } from "@/hooks/use-local-storage";
+import {
+	Attachment,
+	AttachmentPreview,
+	AttachmentRemove,
+	Attachments,
+} from "@/components/ai-elements/attachments";
 import {
 	AudioPlayer,
 	AudioPlayerControlBar,
@@ -44,37 +49,6 @@ import {
 	MessageResponse,
 } from "@/components/ai-elements/message";
 import {
-	Reasoning,
-	ReasoningContent,
-	ReasoningTrigger,
-} from "@/components/ai-elements/reasoning";
-import {
-	Task,
-	TaskContent,
-	TaskItem,
-	TaskItemFile,
-	TaskTrigger,
-} from "@/components/ai-elements/task";
-import {
-	Queue,
-	QueueItem,
-	QueueItemContent,
-	QueueItemIndicator,
-	QueueList,
-	QueueSection,
-	QueueSectionContent,
-	QueueSectionLabel,
-	QueueSectionTrigger,
-} from "@/components/ai-elements/queue";
-import type { PersonaState } from "@/components/ai-elements/persona";
-import { Persona } from "@/components/ai-elements/persona";
-import {
-	Attachment,
-	AttachmentPreview,
-	AttachmentRemove,
-	Attachments,
-} from "@/components/ai-elements/attachments";
-import {
 	ModelSelector,
 	ModelSelectorContent,
 	ModelSelectorEmpty,
@@ -86,6 +60,8 @@ import {
 	ModelSelectorName,
 	ModelSelectorTrigger,
 } from "@/components/ai-elements/model-selector";
+import type { PersonaState } from "@/components/ai-elements/persona";
+import { Persona } from "@/components/ai-elements/persona";
 import {
 	PromptInput,
 	PromptInputActionAddAttachments,
@@ -101,15 +77,37 @@ import {
 	PromptInputTools,
 	usePromptInputAttachments,
 } from "@/components/ai-elements/prompt-input";
-import { chatModels, DEFAULT_CHAT_MODEL } from "@/lib/ai/models";
-import { JournalCreatedCard } from "@/components/sections/journal-created-card";
-import { PracticeCreatedCard } from "@/components/sections/practice-created-card";
-import { ProjectCreatedCard } from "@/components/sections/project-created-card";
+import {
+	Queue,
+	QueueItem,
+	QueueItemContent,
+	QueueItemIndicator,
+	QueueList,
+	QueueSection,
+	QueueSectionContent,
+	QueueSectionLabel,
+	QueueSectionTrigger,
+} from "@/components/ai-elements/queue";
+import {
+	Reasoning,
+	ReasoningContent,
+	ReasoningTrigger,
+} from "@/components/ai-elements/reasoning";
 import { SpeechInput } from "@/components/ai-elements/speech-input";
+import {
+	Task,
+	TaskContent,
+	TaskItem,
+	TaskItemFile,
+	TaskTrigger,
+} from "@/components/ai-elements/task";
 import {
 	Transcription,
 	TranscriptionSegment,
 } from "@/components/ai-elements/transcription";
+import { JournalCreatedCard } from "@/components/sections/journal-created-card";
+import { PracticeCreatedCard } from "@/components/sections/practice-created-card";
+import { ProjectCreatedCard } from "@/components/sections/project-created-card";
 import { Button } from "@/components/ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";
 import { Label } from "@/components/ui/label";
@@ -119,6 +117,8 @@ import {
 	TooltipContent,
 	TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { useLocalStorage } from "@/hooks/use-local-storage";
+import { chatModels, DEFAULT_CHAT_MODEL } from "@/lib/ai/models";
 import { cn } from "@/lib/utils";
 
 type HugeIcon = HugeiconsIconProps["icon"];
@@ -483,7 +483,7 @@ function AuthedPersona({
 				return null;
 			}
 		},
-		[],
+		[pathname, model],
 	);
 
 	const handleVoiceTranscription = useCallback(

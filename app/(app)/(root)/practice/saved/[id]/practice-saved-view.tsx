@@ -25,7 +25,7 @@ export function PracticeSavedView({
 		Array<{ role: "user" | "newton"; text: string }>
 	>([]);
 	const [chatLoading] = useState(false);
-	const [phase, setPhase] = useState<PracticePhase>("quiz");
+	const [_phase, setPhase] = useState<PracticePhase>("quiz");
 
 	function handleAnswer(label: string) {
 		if (answers[currentQ] !== null) return;

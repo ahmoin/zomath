@@ -1,15 +1,15 @@
+import { and, eq } from "drizzle-orm";
 import { headers } from "next/headers";
 import { notFound, redirect } from "next/navigation";
+import { PracticeSavedView } from "@/app/(app)/(root)/practice/saved/[id]/practice-saved-view";
 import { AppSidebar } from "@/components/app-sidebar";
 import { DashboardHeader } from "@/components/dashboard-header";
 import { HeaderSlotProvider } from "@/components/dashboard-header-context";
-import { PracticeSavedView } from "@/app/(app)/(root)/practice/saved/[id]/practice-saved-view";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { auth } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { practice } from "@/lib/schema";
-import { eq, and } from "drizzle-orm";
 import type { QuizData } from "@/lib/types";
 
 export default async function PracticeSavedPage({

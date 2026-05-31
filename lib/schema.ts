@@ -1,5 +1,11 @@
-import { relations, sql } from "drizzle-orm";
-import { index, integer, sqliteTable, text, uniqueIndex } from "drizzle-orm/sqlite-core";
+import { relations } from "drizzle-orm";
+import {
+	index,
+	integer,
+	sqliteTable,
+	text,
+	uniqueIndex,
+} from "drizzle-orm/sqlite-core";
 
 export const user = sqliteTable("user", {
 	id: text("id").primaryKey(),
@@ -189,7 +195,11 @@ export const usageLog = sqliteTable(
 		count: integer("count").notNull().default(0),
 	},
 	(table) => [
-		uniqueIndex("usage_log_unique_idx").on(table.userId, table.feature, table.date),
+		uniqueIndex("usage_log_unique_idx").on(
+			table.userId,
+			table.feature,
+			table.date,
+		),
 		index("usage_log_userId_idx").on(table.userId),
 	],
 );

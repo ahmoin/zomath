@@ -16,10 +16,17 @@ export async function POST(request: Request) {
 	if (!session) return new ChatbotError("unauthorized:auth").toResponse();
 
 	if ((session.user as { plan?: string }).plan !== "plus") {
-		const { allowed } = await checkAndIncrementUsage(session.user.id, "practice");
+		const { allowed } = await checkAndIncrementUsage(
+			session.user.id,
+			"practice",
+		);
 		if (!allowed) {
 			return Response.json(
-				{ error: "rate_limit", message: "You've reached your daily practice limit (3/day). Upgrade to Plus for unlimited access." },
+				{
+					error: "rate_limit",
+					message:
+						"You've reached your daily practice limit (3/day). Upgrade to Plus for unlimited access.",
+				},
 				{ status: 429 },
 			);
 		}

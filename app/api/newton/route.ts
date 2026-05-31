@@ -1,22 +1,22 @@
+import { CodeHighlightNode, CodeNode } from "@lexical/code";
+import { createHeadlessEditor } from "@lexical/headless";
+import { LinkNode } from "@lexical/link";
+import { ListItemNode, ListNode } from "@lexical/list";
+import { $convertFromMarkdownString, TRANSFORMERS } from "@lexical/markdown";
+import { HeadingNode, QuoteNode } from "@lexical/rich-text";
 import { jsonSchema, stepCountIs, streamText, tool } from "ai";
+import { eq } from "drizzle-orm";
 import { headers } from "next/headers";
 import type { z } from "zod";
 import { postRequestBodySchema } from "@/app/api/newton/schema";
-import { newtonPrompt } from "@/lib/ai/prompts";
 import { chatModels } from "@/lib/ai/models";
+import { newtonPrompt } from "@/lib/ai/prompts";
 import { getLanguageModel } from "@/lib/ai/providers";
 import { auth } from "@/lib/auth";
 import { db } from "@/lib/db";
-import { eq } from "drizzle-orm";
-import { journal, practice, project } from "@/lib/schema";
 import { ChatbotError } from "@/lib/errors";
+import { journal, practice, project } from "@/lib/schema";
 import { checkAndIncrementUsage } from "@/lib/usage";
-import { createHeadlessEditor } from "@lexical/headless";
-import { $convertFromMarkdownString, TRANSFORMERS } from "@lexical/markdown";
-import { HeadingNode, QuoteNode } from "@lexical/rich-text";
-import { ListNode, ListItemNode } from "@lexical/list";
-import { CodeNode, CodeHighlightNode } from "@lexical/code";
-import { LinkNode } from "@lexical/link";
 
 type LexicalJsonNode = {
 	type: string;
@@ -95,7 +95,11 @@ export async function POST(request: Request) {
 		const { allowed } = await checkAndIncrementUsage(session.user.id, "newton");
 		if (!allowed) {
 			return Response.json(
-				{ error: "rate_limit", message: "You've reached your daily Newton limit (10/day). Upgrade to Plus for unlimited access." },
+				{
+					error: "rate_limit",
+					message:
+						"You've reached your daily Newton limit (10/day). Upgrade to Plus for unlimited access.",
+				},
 				{ status: 429 },
 			);
 		}
@@ -129,7 +133,7 @@ export async function POST(request: Request) {
 				.filter((p) => p.type === "file" && p.data && p.mediaType)
 				.map((p) => {
 					const buf = Buffer.from(p.data!, "base64");
-					if (p.mediaType!.startsWith("image/")) {
+					if (p.mediaType?.startsWith("image/")) {
 						return {
 							type: "image" as const,
 							image: buf,

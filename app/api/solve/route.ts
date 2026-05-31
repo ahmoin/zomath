@@ -21,7 +21,11 @@ export async function POST(request: Request) {
 		const { allowed } = await checkAndIncrementUsage(session.user.id, "solve");
 		if (!allowed) {
 			return Response.json(
-				{ error: "rate_limit", message: "You've reached your daily Solve limit (5/day). Upgrade to Plus for unlimited access." },
+				{
+					error: "rate_limit",
+					message:
+						"You've reached your daily Solve limit (5/day). Upgrade to Plus for unlimited access.",
+				},
 				{ status: 429 },
 			);
 		}

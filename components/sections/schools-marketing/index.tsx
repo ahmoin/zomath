@@ -1,6 +1,5 @@
 "use client";
 
-import { Separator } from "@/components/ui/separator";
 import { Contact } from "@/components/sections/schools-marketing/contact";
 import { Cta } from "@/components/sections/schools-marketing/cta";
 import { EducatorTools } from "@/components/sections/schools-marketing/educator-tools";
@@ -13,6 +12,7 @@ import { Newton } from "@/components/sections/schools-marketing/newton";
 import { Pricing } from "@/components/sections/schools-marketing/pricing";
 import { Stats } from "@/components/sections/schools-marketing/stats";
 import { Testimonials } from "@/components/sections/schools-marketing/testimonials";
+import { Separator } from "@/components/ui/separator";
 
 export function SchoolsMarketingSection() {
 	return (

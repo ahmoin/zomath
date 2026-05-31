@@ -1,5 +1,5 @@
-import { cn } from "@/lib/utils";
 import type React from "react";
+import { cn } from "@/lib/utils";
 
 function Card({ className, ...props }: React.ComponentProps<"div">) {
 	return (
@@ -154,18 +154,18 @@ function Separator({
 }
 
 export {
-	Card,
-	Header,
-	Description,
-	Plan,
-	PlanName,
 	Badge,
-	Price,
-	MainPrice,
-	Period,
-	OriginalPrice,
 	Body,
+	Card,
+	Description,
+	Header,
 	List,
 	ListItem,
+	MainPrice,
+	OriginalPrice,
+	Period,
+	Plan,
+	PlanName,
+	Price,
 	Separator,
 };

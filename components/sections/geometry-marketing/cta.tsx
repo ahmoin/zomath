@@ -1,6 +1,6 @@
-import { Button } from "@/components/ui/button";
-import { HugeiconsIcon } from "@hugeicons/react";
 import { ArrowRight02Icon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { Button } from "@/components/ui/button";
 
 export function CallToAction() {
 	return (

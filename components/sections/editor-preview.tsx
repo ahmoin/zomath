@@ -15,11 +15,11 @@ import { TweetNode } from "@/components/editor/nodes/embeds/tweet-node";
 import { YouTubeNode } from "@/components/editor/nodes/embeds/youtube-node";
 import { EmojiNode } from "@/components/editor/nodes/emoji-node";
 import { EquationNode } from "@/components/editor/nodes/equation-node";
+import { ImageNode } from "@/components/editor/nodes/image-node";
 import { LayoutContainerNode } from "@/components/editor/nodes/layout-container-node";
 import { LayoutItemNode } from "@/components/editor/nodes/layout-item-node";
 import { MentionNode } from "@/components/editor/nodes/mention-node";
 import { SpecialTextNode } from "@/components/editor/nodes/special-text-node";
-import { ImageNode } from "@/components/editor/nodes/image-node";
 import { editorTheme } from "@/components/editor/themes/editor-theme";
 
 export function EditorPreview({ content }: { content: string }) {

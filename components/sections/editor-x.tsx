@@ -1,3 +1,5 @@
+import { AiMagicIcon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { CodeHighlightNode, CodeNode } from "@lexical/code";
 import {
 	AutoFocusExtension,
@@ -36,7 +38,6 @@ import {
 	type SerializedEditorState,
 } from "lexical";
 import { useMemo, useState } from "react";
-
 import { useBlockViewer } from "@/components/block-viewer-provider";
 import { ContentEditable } from "@/components/editor/editor-ui/content-editable";
 import { DateTimeExtension } from "@/components/editor/extensions/date-time-extension";
@@ -135,8 +136,6 @@ import { TWEET } from "@/components/editor/transformers/markdown-tweet-transform
 import { validateUrl } from "@/components/editor/utils/url";
 import { Separator } from "@/components/ui/separator";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { AiMagicIcon } from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
 
 const placeholder = 'Start writing or type "/" to see commands...';
 const maxLength = 2147483647;

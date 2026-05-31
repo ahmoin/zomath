@@ -46,7 +46,7 @@ export function MarkdownTogglePlugin({
 			}
 		});
 		// biome-ignore lint/correctness/useExhaustiveDependencies: transformers reference is stable
-	}, [editor, shouldPreserveNewLinesInMarkdown]);
+	}, [editor, shouldPreserveNewLinesInMarkdown, transformers]);
 
 	return (
 		<Button

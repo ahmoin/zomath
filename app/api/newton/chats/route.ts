@@ -2,8 +2,8 @@ import { eq } from "drizzle-orm";
 import { headers } from "next/headers";
 import { auth } from "@/lib/auth";
 import { db } from "@/lib/db";
-import { newtonChat } from "@/lib/schema";
 import { ChatbotError } from "@/lib/errors";
+import { newtonChat } from "@/lib/schema";
 
 export async function POST(request: Request) {
 	const session = await auth.api.getSession({ headers: await headers() });

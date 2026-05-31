@@ -1,20 +1,17 @@
 "use client";
 
 import "katex/dist/katex.min.css";
-import { HugeiconsIcon } from "@hugeicons/react";
 import {
-	Cancel01Icon,
 	ArrowUp01Icon,
-	StopIcon,
+	Cancel01Icon,
 	Copy01Icon,
 	FileImageIcon,
+	StopIcon,
 } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { math } from "@streamdown/math";
+import { useEffect, useRef, useState } from "react";
 import { Streamdown } from "streamdown";
-import { useRef, useState, useEffect } from "react";
-import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
-import { Shimmer } from "@/components/ai-elements/shimmer";
 import {
 	InlineCitation,
 	InlineCitationCard,
@@ -29,6 +26,9 @@ import {
 	InlineCitationCarouselPrev,
 	InlineCitationSource,
 } from "@/components/ai-elements/inline-citation";
+import { Shimmer } from "@/components/ai-elements/shimmer";
+import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
 
 const PLACEHOLDERS = [
 	"to start research",
@@ -86,7 +86,7 @@ export function JournalAiInput({
 			});
 		}
 		// biome-ignore lint/correctness/useExhaustiveDependencies: only react to centered toggle
-	}, [centered]);
+	}, [centered, value.startsWith]);
 
 	useEffect(() => {
 		if (centered) setChatVisible(true);
@@ -108,7 +108,7 @@ export function JournalAiInput({
 
 	useEffect(() => {
 		messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-	}, [messages, streamingText]);
+	}, []);
 
 	function handleInput() {
 		const el = textareaRef.current;

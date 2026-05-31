@@ -19,8 +19,8 @@ import {
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { cn, timeAgo } from "@/lib/utils";
 import type { HistoryItem } from "@/lib/types";
+import { cn, timeAgo } from "@/lib/utils";
 
 function ItemIcon({ type }: { type: HistoryItem["type"] }) {
 	if (type === "chat")

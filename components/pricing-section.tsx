@@ -1,14 +1,14 @@
 "use client";
 
-import { cn } from "@/lib/utils";
+import { CheckmarkCircle04Icon, StarIcon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import NumberFlow from "@number-flow/react";
 import { AnimatePresence, motion } from "motion/react";
 import Link from "next/link";
 import React from "react";
-import { Button } from "@/components/ui/button";
 import { type FREQUENCY, FrequencyToggle } from "@/components/frequency-toggle";
-import { HugeiconsIcon } from "@hugeicons/react";
-import { CheckmarkCircle04Icon, StarIcon } from "@hugeicons/core-free-icons";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 type Plan = {
 	name: string;

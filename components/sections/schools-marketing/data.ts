@@ -4,7 +4,6 @@ import {
 	BrainIcon,
 	Camera01Icon,
 	ChartLineData02Icon,
-	CheckmarkCircle02Icon,
 	Clock01Icon,
 	PlayCircleIcon,
 	PuzzleIcon,

@@ -1,6 +1,6 @@
 import { type ClassValue, clsx } from "clsx";
-import { twMerge } from "tailwind-merge";
 import { formatDistanceToNow } from "date-fns";
+import { twMerge } from "tailwind-merge";
 import type { LexNode } from "@/lib/types";
 
 export function cn(...inputs: ClassValue[]) {
