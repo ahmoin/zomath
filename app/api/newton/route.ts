@@ -16,8 +16,8 @@ import { auth } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { ChatbotError } from "@/lib/errors";
 import { journal, practice, project } from "@/lib/schema";
-import { checkAndIncrementUsage } from "@/lib/usage";
 import type { LexicalJsonNode } from "@/lib/types";
+import { checkAndIncrementUsage } from "@/lib/usage";
 
 function injectEquationNodes(node: LexicalJsonNode): LexicalJsonNode {
 	if (!node.children) return node;
@@ -125,15 +125,19 @@ export async function POST(request: Request) {
 			const fileParts = parts
 				.filter((p) => p.type === "file" && p.data && p.mediaType)
 				.map((p) => {
-					const buf = Buffer.from(p.data!, "base64");
+					const buf = Buffer.from(p.data ?? "", "base64");
 					if (p.mediaType?.startsWith("image/")) {
 						return {
 							type: "image" as const,
 							image: buf,
-							mimeType: p.mediaType!,
+							mimeType: p.mediaType ?? "",
 						};
 					}
-					return { type: "file" as const, data: buf, mediaType: p.mediaType! };
+					return {
+						type: "file" as const,
+						data: buf,
+						mediaType: p.mediaType ?? "",
+					};
 				});
 			const content =
 				fileParts.length > 0

@@ -9,7 +9,7 @@ import * as schema from "@/lib/schema";
 import { user } from "@/lib/schema";
 
 const polarClient = new Polar({
-	accessToken: process.env.POLAR_ACCESS_TOKEN!,
+	accessToken: process.env.POLAR_ACCESS_TOKEN ?? "",
 	server: process.env.NODE_ENV === "production" ? "production" : "sandbox",
 });
 
@@ -27,11 +27,11 @@ export const auth = betterAuth({
 				checkout({
 					products: [
 						{
-							productId: process.env.POLAR_PLUS_MONTHLY_ID!,
+							productId: process.env.POLAR_PLUS_MONTHLY_ID ?? "",
 							slug: "plus-monthly",
 						},
 						{
-							productId: process.env.POLAR_PLUS_YEARLY_ID!,
+							productId: process.env.POLAR_PLUS_YEARLY_ID ?? "",
 							slug: "plus-yearly",
 						},
 					],
@@ -40,7 +40,7 @@ export const auth = betterAuth({
 				}),
 				portal(),
 				webhooks({
-					secret: process.env.POLAR_WEBHOOK_SECRET!,
+					secret: process.env.POLAR_WEBHOOK_SECRET ?? "",
 					onSubscriptionActive: async (payload) => {
 						const userId = payload.data.customer.externalId;
 						if (!userId) return;

@@ -185,7 +185,7 @@ export async function POST(request: Request) {
 					query: z.string().describe("The search query"),
 				}),
 				execute: async ({ query: searchQuery }) => {
-					const tv = tavily({ apiKey: process.env.TAVILY_API_KEY! });
+					const tv = tavily({ apiKey: process.env.TAVILY_API_KEY ?? "" });
 					const searchResult = await tv.search(searchQuery, { maxResults: 8 });
 					const results = searchResult.results.map((r) => {
 						sourceCounter++;
