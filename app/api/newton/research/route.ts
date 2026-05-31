@@ -10,12 +10,23 @@ import { journal, project } from "@/lib/schema";
 import { ChatbotError } from "@/lib/errors";
 import { DEFAULT_CHAT_MODEL } from "@/lib/ai/models";
 import { parseJournalContent } from "@/lib/utils";
+import { checkAndIncrementUsage } from "@/lib/usage";
 
 export const maxDuration = 60;
 
 export async function POST(request: Request) {
 	const session = await auth.api.getSession({ headers: await headers() });
 	if (!session) return new ChatbotError("unauthorized:auth").toResponse();
+
+	if ((session.user as { plan?: string }).plan !== "plus") {
+		const { allowed } = await checkAndIncrementUsage(session.user.id, "newton");
+		if (!allowed) {
+			return Response.json(
+				{ error: "rate_limit", message: "You've reached your daily Newton limit (10/day). Upgrade to Plus for unlimited access." },
+				{ status: 429 },
+			);
+		}
+	}
 
 	const { query, journalId, files } = await request.json();
 	if (!query?.trim()) return new ChatbotError("bad_request:api").toResponse();

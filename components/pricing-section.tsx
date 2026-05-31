@@ -30,8 +30,8 @@ const plans: Plan[] = [
 		features: [
 			"Ask Newton up to 10 questions/day",
 			"Solve up to 5 problems/day",
-			"Basic Concept Map",
-			"Community support",
+			"3 practice sessions/day",
+			"Unlimited journals",
 		],
 		btn: {
 			text: "Get started free",

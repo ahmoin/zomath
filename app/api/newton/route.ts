@@ -10,6 +10,7 @@ import { db } from "@/lib/db";
 import { eq } from "drizzle-orm";
 import { journal, practice, project } from "@/lib/schema";
 import { ChatbotError } from "@/lib/errors";
+import { checkAndIncrementUsage } from "@/lib/usage";
 import { createHeadlessEditor } from "@lexical/headless";
 import { $convertFromMarkdownString, TRANSFORMERS } from "@lexical/markdown";
 import { HeadingNode, QuoteNode } from "@lexical/rich-text";
@@ -89,6 +90,16 @@ function markdownToLexicalJson(markdown: string): string {
 export async function POST(request: Request) {
 	const session = await auth.api.getSession({ headers: await headers() });
 	if (!session) return new ChatbotError("unauthorized:auth").toResponse();
+
+	if ((session.user as { plan?: string }).plan !== "plus") {
+		const { allowed } = await checkAndIncrementUsage(session.user.id, "newton");
+		if (!allowed) {
+			return Response.json(
+				{ error: "rate_limit", message: "You've reached your daily Newton limit (10/day). Upgrade to Plus for unlimited access." },
+				{ status: 429 },
+			);
+		}
+	}
 
 	let body: z.infer<typeof postRequestBodySchema>;
 	try {

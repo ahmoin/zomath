@@ -7,6 +7,7 @@ import { solvePrompt } from "@/lib/ai/prompts";
 import { getLanguageModel } from "@/lib/ai/providers";
 import { auth } from "@/lib/auth";
 import { ChatbotError } from "@/lib/errors";
+import { checkAndIncrementUsage } from "@/lib/usage";
 
 const requestSchema = postRequestBodySchema.extend({
 	imageUrl: z.string().min(1),
@@ -15,6 +16,16 @@ const requestSchema = postRequestBodySchema.extend({
 export async function POST(request: Request) {
 	const session = await auth.api.getSession({ headers: await headers() });
 	if (!session) return new ChatbotError("unauthorized:auth").toResponse();
+
+	if ((session.user as { plan?: string }).plan !== "plus") {
+		const { allowed } = await checkAndIncrementUsage(session.user.id, "solve");
+		if (!allowed) {
+			return Response.json(
+				{ error: "rate_limit", message: "You've reached your daily Solve limit (5/day). Upgrade to Plus for unlimited access." },
+				{ status: 429 },
+			);
+		}
+	}
 
 	let body: z.infer<typeof requestSchema>;
 	try {

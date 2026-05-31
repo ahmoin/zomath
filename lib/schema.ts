@@ -1,5 +1,5 @@
 import { relations, sql } from "drizzle-orm";
-import { index, integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
+import { index, integer, sqliteTable, text, uniqueIndex } from "drizzle-orm/sqlite-core";
 
 export const user = sqliteTable("user", {
 	id: text("id").primaryKey(),
@@ -9,6 +9,7 @@ export const user = sqliteTable("user", {
 		.default(false)
 		.notNull(),
 	image: text("image"),
+	plan: text("plan").notNull().default("free"),
 	createdAt: integer("createdAt", { mode: "timestamp" })
 		.$defaultFn(() => new Date())
 		.notNull(),
@@ -176,6 +177,23 @@ export const newtonChat = sqliteTable(
 	(table) => [index("newton_chat_userId_idx").on(table.userId)],
 );
 
+export const usageLog = sqliteTable(
+	"usage_log",
+	{
+		id: text("id").primaryKey(),
+		userId: text("userId")
+			.notNull()
+			.references(() => user.id, { onDelete: "cascade" }),
+		feature: text("feature").notNull(),
+		date: text("date").notNull(),
+		count: integer("count").notNull().default(0),
+	},
+	(table) => [
+		uniqueIndex("usage_log_unique_idx").on(table.userId, table.feature, table.date),
+		index("usage_log_userId_idx").on(table.userId),
+	],
+);
+
 export const userRelations = relations(user, ({ many }) => ({
 	sessions: many(session),
 	accounts: many(account),
@@ -183,6 +201,11 @@ export const userRelations = relations(user, ({ many }) => ({
 	journals: many(journal),
 	practices: many(practice),
 	newtonChats: many(newtonChat),
+	usageLogs: many(usageLog),
+}));
+
+export const usageLogRelations = relations(usageLog, ({ one }) => ({
+	user: one(user, { fields: [usageLog.userId], references: [user.id] }),
 }));
 
 export const projectRelations = relations(project, ({ one, many }) => ({
