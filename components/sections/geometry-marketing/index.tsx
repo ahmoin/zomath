@@ -34,6 +34,7 @@ import {
 } from "@/components/sections/geometry-marketing/data";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import { CallToAction } from "@/components/sections/geometry-marketing/cta";
 
 export function GeometryMarketingSection() {
 	return (
@@ -806,46 +807,7 @@ export function GeometryMarketingSection() {
 			<Separator />
 
 			<section className="py-24 lg:py-32">
-				<div className="max-w-7xl mx-auto px-4 lg:px-12">
-					<div className="rounded-2xl bg-primary/5 border p-10 lg:p-16 text-center">
-						<HugeiconsIcon
-							icon={TriangleIcon}
-							className="size-10 text-primary mx-auto mb-6"
-							strokeWidth={1.5}
-						/>
-						<h2 className="text-3xl md:text-4xl font-semibold tracking-tight text-foreground mb-4">
-							Stop memorizing. Start understanding.
-						</h2>
-						<p className="text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto mb-8">
-							Geometry makes sense when you can see it, explain it, and connect
-							it to everything else. Whether you are proving your first triangle
-							congruence or training for national competitions, Newton is ready
-							to help.
-						</p>
-						<div className="flex flex-col sm:flex-row gap-3 justify-center">
-							<Link href="/practice?subject=geometry">
-								<Button size="lg" className="gap-2">
-									Start learning geometry
-									<HugeiconsIcon
-										icon={ArrowRight02Icon}
-										className="size-4"
-										strokeWidth={1.5}
-									/>
-								</Button>
-							</Link>
-							<Link href="/ask">
-								<Button size="lg" variant="outline" className="gap-2">
-									Ask Newton anything
-									<HugeiconsIcon
-										icon={QuestionIcon}
-										className="size-4"
-										strokeWidth={1.5}
-									/>
-								</Button>
-							</Link>
-						</div>
-					</div>
-				</div>
+				<CallToAction />
 			</section>
 		</main>
 	);
