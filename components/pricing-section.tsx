@@ -8,6 +8,7 @@ import Link from "next/link";
 import React from "react";
 import { type FREQUENCY, FrequencyToggle } from "@/components/frequency-toggle";
 import { Button } from "@/components/ui/button";
+import { authClient } from "@/lib/auth-client";
 import { cn } from "@/lib/utils";
 
 type Plan = {
@@ -79,13 +80,52 @@ const plans: Plan[] = [
 type PricingSectionProps = {
 	title?: string;
 	description?: string;
+	isLoggedIn?: boolean;
+	isPlus?: boolean;
 };
 
 export function PricingSection({
 	title = "Simple, Transparent Pricing",
 	description = "Start free, upgrade when you're ready. No hidden fees.",
+	isLoggedIn: isLoggedInProp,
+	isPlus: isPlusProp,
 }: PricingSectionProps) {
 	const [frequency, setFrequency] = React.useState<FREQUENCY>("monthly");
+	const [checkoutLoading, setCheckoutLoading] = React.useState(false);
+	const { data: session } = authClient.useSession();
+
+	const isLoggedIn = isLoggedInProp ?? !!session?.user;
+	const isPlus = isPlusProp ?? (session?.user as { plan?: string } | undefined)?.plan === "plus";
+
+	async function handlePlusCheckout() {
+		setCheckoutLoading(true);
+		try {
+			const slug = frequency === "yearly" ? "plus-yearly" : "plus-monthly";
+			await authClient.checkoutEmbed({ slug });
+		} finally {
+			setCheckoutLoading(false);
+		}
+	}
+
+	function getPlanBtn(plan: Plan): { href: string; text: string; onClick?: () => void } {
+		if (plan.name === "Schools") return { href: plan.btn.href, text: plan.btn.text };
+		if (plan.name === "Free") {
+			return {
+				href: isLoggedIn ? "/dashboard" : "/sign-up",
+				text: isLoggedIn ? "Go to dashboard" : plan.btn.text,
+			};
+		}
+		// Plus
+		if (isPlus) return { href: "/api/auth/customer/portal", text: "Manage subscription" };
+		if (isLoggedIn) {
+			return {
+				href: "",
+				text: checkoutLoading ? "Loading..." : plan.btn.text,
+				onClick: handlePlusCheckout,
+			};
+		}
+		return { href: "/sign-up", text: plan.btn.text };
+	}
 
 	return (
 		<div className="flex w-full flex-col items-center justify-center space-y-7 p-4">
@@ -99,9 +139,20 @@ export function PricingSection({
 			</div>
 			<FrequencyToggle frequency={frequency} setFrequency={setFrequency} />
 			<div className="mx-auto grid w-full max-w-4xl grid-cols-1 gap-6 md:grid-cols-3">
-				{plans.map((plan) => (
-					<PricingCard frequency={frequency} key={plan.name} plan={plan} />
-				))}
+				{plans.map((plan) => {
+					const btn = getPlanBtn(plan);
+					return (
+						<PricingCard
+							btnHref={btn.href}
+							btnLoading={!!btn.onClick && checkoutLoading}
+							btnOnClick={btn.onClick}
+							btnText={btn.text}
+							frequency={frequency}
+							key={plan.name}
+							plan={plan}
+						/>
+					);
+				})}
 			</div>
 			<p className="text-center text-sm text-muted-foreground">
 				All plans include full access to Newton, the AI tutor. Volume discounts
@@ -114,12 +165,20 @@ export function PricingSection({
 type PricingCardProps = React.ComponentProps<"div"> & {
 	plan: Plan;
 	frequency?: FREQUENCY;
+	btnHref?: string;
+	btnText?: string;
+	btnOnClick?: () => void;
+	btnLoading?: boolean;
 };
 
 export function PricingCard({
 	plan,
 	className,
 	frequency = "monthly",
+	btnHref,
+	btnText,
+	btnOnClick,
+	btnLoading,
 	...props
 }: PricingCardProps) {
 	const isNumeric = "monthly" in plan.price;
@@ -247,13 +306,24 @@ export function PricingCard({
 					plan.highlighted && "bg-card dark:bg-card/80",
 				)}
 			>
-				<Button
-					asChild
-					className="w-full"
-					variant={plan.highlighted ? "default" : "outline"}
-				>
-					<Link href={plan.btn.href}>{plan.btn.text}</Link>
-				</Button>
+				{btnOnClick ? (
+					<Button
+						className="w-full"
+						disabled={btnLoading}
+						onClick={btnOnClick}
+						variant={plan.highlighted ? "default" : "outline"}
+					>
+						{btnText ?? plan.btn.text}
+					</Button>
+				) : (
+					<Button
+						asChild
+						className="w-full"
+						variant={plan.highlighted ? "default" : "outline"}
+					>
+						<Link href={btnHref ?? plan.btn.href}>{btnText ?? plan.btn.text}</Link>
+					</Button>
+				)}
 			</div>
 		</div>
 	);
