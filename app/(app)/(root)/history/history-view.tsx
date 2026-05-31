@@ -20,7 +20,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { cn, timeAgo } from "@/lib/utils";
-import { HistoryItem } from "@/lib/types";
+import type { HistoryItem } from "@/lib/types";
 
 function ItemIcon({ type }: { type: HistoryItem["type"] }) {
 	if (type === "chat")
@@ -86,7 +86,11 @@ function HistoryRow({ item }: { item: HistoryItem }) {
 						size="icon"
 						className="size-7 opacity-0 transition-opacity group-hover:opacity-100"
 					>
-						<HugeiconsIcon icon={MoreVerticalIcon} className="size-4" strokeWidth={2} />
+						<HugeiconsIcon
+							icon={MoreVerticalIcon}
+							className="size-4"
+							strokeWidth={2}
+						/>
 					</Button>
 				</DropdownMenuTrigger>
 				<DropdownMenuContent align="end">
@@ -94,7 +98,11 @@ function HistoryRow({ item }: { item: HistoryItem }) {
 						<Link href={itemHref(item)}>Open</Link>
 					</DropdownMenuItem>
 					<DropdownMenuItem className="text-destructive focus:text-destructive">
-						<HugeiconsIcon icon={Delete02Icon} className="size-4" strokeWidth={2} />
+						<HugeiconsIcon
+							icon={Delete02Icon}
+							className="size-4"
+							strokeWidth={2}
+						/>
 						Delete
 					</DropdownMenuItem>
 				</DropdownMenuContent>
@@ -111,7 +119,13 @@ function EmptyState({ label }: { label: string }) {
 	);
 }
 
-function ItemList({ items, emptyLabel }: { items: HistoryItem[]; emptyLabel: string }) {
+function ItemList({
+	items,
+	emptyLabel,
+}: {
+	items: HistoryItem[];
+	emptyLabel: string;
+}) {
 	if (items.length === 0) return <EmptyState label={emptyLabel} />;
 	return (
 		<div>
@@ -140,11 +154,15 @@ export function HistoryView({
 		...journals.map((j) => ({ ...j, type: "journal" as const })),
 		...practices.map((p) => ({ ...p, type: "practice" as const })),
 		...projects.map((p) => ({ ...p, type: "project" as const })),
-	].sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime());
+	].sort(
+		(a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime(),
+	);
 
 	const filter = (items: HistoryItem[]) =>
 		search.trim()
-			? items.filter((i) => i.title.toLowerCase().includes(search.toLowerCase()))
+			? items.filter((i) =>
+					i.title.toLowerCase().includes(search.toLowerCase()),
+				)
 			: items;
 
 	return (
@@ -168,7 +186,9 @@ export function HistoryView({
 			<Tabs defaultValue="all" className="flex flex-1 flex-col overflow-hidden">
 				<div className="border-b border-border px-6">
 					<TabsList className="h-10 bg-transparent p-0 gap-1">
-						{(["all", "chats", "journals", "practices", "projects"] as const).map((tab) => (
+						{(
+							["all", "chats", "journals", "practices", "projects"] as const
+						).map((tab) => (
 							<TabsTrigger
 								key={tab}
 								value={tab}
@@ -194,25 +214,33 @@ export function HistoryView({
 					</TabsContent>
 					<TabsContent value="chats" className="mt-0">
 						<ItemList
-							items={filter(chats.map((c) => ({ ...c, type: "chat" as const })))}
+							items={filter(
+								chats.map((c) => ({ ...c, type: "chat" as const })),
+							)}
 							emptyLabel="chats"
 						/>
 					</TabsContent>
 					<TabsContent value="journals" className="mt-0">
 						<ItemList
-							items={filter(journals.map((j) => ({ ...j, type: "journal" as const })))}
+							items={filter(
+								journals.map((j) => ({ ...j, type: "journal" as const })),
+							)}
 							emptyLabel="journals"
 						/>
 					</TabsContent>
 					<TabsContent value="practices" className="mt-0">
 						<ItemList
-							items={filter(practices.map((p) => ({ ...p, type: "practice" as const })))}
+							items={filter(
+								practices.map((p) => ({ ...p, type: "practice" as const })),
+							)}
 							emptyLabel="practices"
 						/>
 					</TabsContent>
 					<TabsContent value="projects" className="mt-0">
 						<ItemList
-							items={filter(projects.map((p) => ({ ...p, type: "project" as const })))}
+							items={filter(
+								projects.map((p) => ({ ...p, type: "project" as const })),
+							)}
 							emptyLabel="projects"
 						/>
 					</TabsContent>

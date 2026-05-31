@@ -9,7 +9,9 @@ import { db } from "@/lib/db";
 import { journal, project } from "@/lib/schema";
 import { ProjectView } from "./project-view";
 
-export default async function ProjectPage({ params }: {
+export default async function ProjectPage({
+	params,
+}: {
 	params: Promise<{ id: string }>;
 }) {
 	const { id } = await params;

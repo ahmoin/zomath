@@ -1,6 +1,10 @@
 import { FiveStars } from "@/components/five-stars";
 
-export function TestimonialSection({ quote, name, title }: {
+export function TestimonialSection({
+	quote,
+	name,
+	title,
+}: {
 	quote: string;
 	name: string;
 	title: string;

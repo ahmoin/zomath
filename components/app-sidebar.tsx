@@ -19,7 +19,11 @@ import { NavDocuments } from "@/components/nav-documents";
 import { NavMain } from "@/components/nav-main";
 import { NavSecondary } from "@/components/nav-secondary";
 import { NavUser } from "@/components/nav-user";
-import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
+import {
+	HoverCard,
+	HoverCardContent,
+	HoverCardTrigger,
+} from "@/components/ui/hover-card";
 import {
 	Sidebar,
 	SidebarContent,
@@ -30,7 +34,7 @@ import {
 	SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { siteConfig } from "@/lib/config";
-import { RecentItem } from "@/lib/types";
+import type { RecentItem } from "@/lib/types";
 
 function HistoryHoverItem() {
 	const [items, setItems] = useState<RecentItem[]>([]);

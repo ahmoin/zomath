@@ -11,7 +11,13 @@ import {
 	RadioIcon,
 	SparklesIcon,
 } from "@hugeicons/core-free-icons";
-import { BrainIcon, CheckIcon, ImageIcon, LoaderIcon, WrenchIcon } from "lucide-react";
+import {
+	BrainIcon,
+	CheckIcon,
+	ImageIcon,
+	LoaderIcon,
+	WrenchIcon,
+} from "lucide-react";
 import type { HugeiconsIconProps } from "@hugeicons/react";
 import { HugeiconsIcon } from "@hugeicons/react";
 import type { ChatStatus, FileUIPart } from "ai";
@@ -313,7 +319,11 @@ function AuthedPersona({
 				fetch("/api/newton/chats", {
 					method: "POST",
 					headers: { "Content-Type": "application/json" },
-					body: JSON.stringify({ id: chatIdRef.current, title: userText, messages: updated }),
+					body: JSON.stringify({
+						id: chatIdRef.current,
+						title: userText,
+						messages: updated,
+					}),
 				}).catch(() => {});
 				if (pathname === "/newton") {
 					window.history.replaceState(null, "", `/newton/${chatIdRef.current}`);
@@ -381,7 +391,13 @@ function AuthedPersona({
 							setStreamingSteps((prev) => {
 								let idx = -1;
 								for (let i = prev.length - 1; i >= 0; i--) {
-									if (prev[i].name === step.name && prev[i].status === "running") { idx = i; break; }
+									if (
+										prev[i].name === step.name &&
+										prev[i].status === "running"
+									) {
+										idx = i;
+										break;
+									}
 								}
 								if (step.status === "done" && idx !== -1) {
 									const next = [...prev];
@@ -392,7 +408,11 @@ function AuthedPersona({
 							});
 						} else if (line.startsWith("j:")) {
 							journals.push(
-								JSON.parse(line.slice(2)) as { id: string; title: string; updated?: boolean },
+								JSON.parse(line.slice(2)) as {
+									id: string;
+									title: string;
+									updated?: boolean;
+								},
 							);
 						} else if (line.startsWith("p:")) {
 							practices.push(
@@ -403,11 +423,15 @@ function AuthedPersona({
 								JSON.parse(line.slice(2)) as { id: string; title: string },
 							);
 						} else if (line.startsWith("w:")) {
-							const { seconds } = JSON.parse(line.slice(2)) as { seconds: number };
+							const { seconds } = JSON.parse(line.slice(2)) as {
+								seconds: number;
+							};
 							setStreamingStatus(`Rate limited — retrying in ${seconds}s...`);
 							setTimeout(() => setStreamingStatus(null), seconds * 1000);
 						} else if (line.startsWith("e:")) {
-							const { message } = JSON.parse(line.slice(2)) as { message: string };
+							const { message } = JSON.parse(line.slice(2)) as {
+								message: string;
+							};
 							setStreamingStatus(message);
 						}
 					}
@@ -443,7 +467,11 @@ function AuthedPersona({
 				fetch("/api/newton/chats", {
 					method: "POST",
 					headers: { "Content-Type": "application/json" },
-					body: JSON.stringify({ id: chatIdRef.current, title: userText, messages: finalMessages }),
+					body: JSON.stringify({
+						id: chatIdRef.current,
+						title: userText,
+						messages: finalMessages,
+					}),
 				}).catch(() => {});
 				return fullText;
 			} catch (err) {
@@ -613,7 +641,10 @@ function AuthedPersona({
 											</MessageContent>
 										</Message>
 									)}
-								{(streamingText || streamingReasoning || streamingSteps.length > 0 || streamingStatus) && (
+								{(streamingText ||
+									streamingReasoning ||
+									streamingSteps.length > 0 ||
+									streamingStatus) && (
 									<Message from="assistant">
 										<MessageContent>
 											{streamingSteps.length > 0 && !streamingText && (
@@ -630,8 +661,12 @@ function AuthedPersona({
 																{streamingSteps.map((step, i) => (
 																	<QueueItem key={i}>
 																		<div className="flex items-center gap-2">
-																			<QueueItemIndicator completed={step.status === "done"} />
-																			<QueueItemContent completed={step.status === "done"}>
+																			<QueueItemIndicator
+																				completed={step.status === "done"}
+																			/>
+																			<QueueItemContent
+																				completed={step.status === "done"}
+																			>
 																				{STEP_LABELS[step.name] ?? step.name}
 																			</QueueItemContent>
 																			{step.status === "running" ? (
@@ -648,7 +683,9 @@ function AuthedPersona({
 												</Queue>
 											)}
 											{streamingStatus && (
-												<p className="animate-pulse text-xs text-muted-foreground">{streamingStatus}</p>
+												<p className="animate-pulse text-xs text-muted-foreground">
+													{streamingStatus}
+												</p>
 											)}
 											{streamingReasoning && (
 												<Reasoning isStreaming={!streamingText}>
@@ -832,7 +869,12 @@ export function NewtonHeroSection({
 	initialMessages?: ConvMessage[];
 }) {
 	if (isAuthed) {
-		return <AuthedPersona initialChatId={initialChatId} initialMessages={initialMessages} />;
+		return (
+			<AuthedPersona
+				initialChatId={initialChatId}
+				initialMessages={initialMessages}
+			/>
+		);
 	}
 
 	return (

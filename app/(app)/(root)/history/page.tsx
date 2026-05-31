@@ -17,22 +17,38 @@ export default async function HistoryPage() {
 
 	const [chats, journals, practices, projects] = await Promise.all([
 		db
-			.select({ id: newtonChat.id, title: newtonChat.title, updatedAt: newtonChat.updatedAt })
+			.select({
+				id: newtonChat.id,
+				title: newtonChat.title,
+				updatedAt: newtonChat.updatedAt,
+			})
 			.from(newtonChat)
 			.where(eq(newtonChat.userId, userId))
 			.orderBy(desc(newtonChat.updatedAt)),
 		db
-			.select({ id: journal.id, title: journal.title, updatedAt: journal.updatedAt })
+			.select({
+				id: journal.id,
+				title: journal.title,
+				updatedAt: journal.updatedAt,
+			})
 			.from(journal)
 			.where(eq(journal.userId, userId))
 			.orderBy(desc(journal.updatedAt)),
 		db
-			.select({ id: practice.id, title: practice.title, updatedAt: practice.updatedAt })
+			.select({
+				id: practice.id,
+				title: practice.title,
+				updatedAt: practice.updatedAt,
+			})
 			.from(practice)
 			.where(eq(practice.userId, userId))
 			.orderBy(desc(practice.updatedAt)),
 		db
-			.select({ id: project.id, title: project.title, updatedAt: project.updatedAt })
+			.select({
+				id: project.id,
+				title: project.title,
+				updatedAt: project.updatedAt,
+			})
 			.from(project)
 			.where(eq(project.userId, userId))
 			.orderBy(desc(project.updatedAt)),

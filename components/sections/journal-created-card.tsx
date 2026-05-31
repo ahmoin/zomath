@@ -20,7 +20,9 @@ export function JournalCreatedCard({
 			</div>
 			<div className="min-w-0 flex-1">
 				<p className="truncate text-sm font-medium">{title}</p>
-				<p className="text-xs text-muted-foreground">{updated ? "Journal updated" : "Journal created"}</p>
+				<p className="text-xs text-muted-foreground">
+					{updated ? "Journal updated" : "Journal created"}
+				</p>
 			</div>
 			<Button asChild size="sm" variant="outline" className="shrink-0">
 				<Link href={`/journals/${id}`}>

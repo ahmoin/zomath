@@ -14,10 +14,13 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { EditorPreview } from "@/components/sections/editor-preview";
 import { Button } from "@/components/ui/button";
-import { Journal, Project } from "@/lib/types";
+import type { Journal, Project } from "@/lib/types";
 import { formatDate } from "@/lib/utils";
 
-export function ProjectView({ project, journals }: {
+export function ProjectView({
+	project,
+	journals,
+}: {
 	project: Project;
 	journals: Journal[];
 }) {

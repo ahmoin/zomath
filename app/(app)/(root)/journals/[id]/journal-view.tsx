@@ -9,9 +9,12 @@ import { useDebounce } from "@/components/editor/editor-hooks/use-debounce";
 import { Editor } from "@/components/sections/editor-x";
 import { JournalAiInput } from "@/components/sections/journal-ai-input";
 import { localDb } from "@/lib/local-db";
-import { Journal } from "@/lib/types";
+import type { Journal } from "@/lib/types";
 
-export function JournalView({ journal, parentProject }: {
+export function JournalView({
+	journal,
+	parentProject,
+}: {
 	journal: Journal;
 	parentProject: { id: string; title: string } | null;
 }) {

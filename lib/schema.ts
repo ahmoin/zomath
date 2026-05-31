@@ -5,7 +5,9 @@ export const user = sqliteTable("user", {
 	id: text("id").primaryKey(),
 	name: text("name").notNull(),
 	email: text("email").notNull().unique(),
-	emailVerified: integer("emailVerified", { mode: "boolean" }).default(false).notNull(),
+	emailVerified: integer("emailVerified", { mode: "boolean" })
+		.default(false)
+		.notNull(),
 	image: text("image"),
 	createdAt: integer("createdAt", { mode: "timestamp" })
 		.$defaultFn(() => new Date())
@@ -50,8 +52,12 @@ export const account = sqliteTable(
 		accessToken: text("accessToken"),
 		refreshToken: text("refreshToken"),
 		idToken: text("idToken"),
-		accessTokenExpiresAt: integer("accessTokenExpiresAt", { mode: "timestamp" }),
-		refreshTokenExpiresAt: integer("refreshTokenExpiresAt", { mode: "timestamp" }),
+		accessTokenExpiresAt: integer("accessTokenExpiresAt", {
+			mode: "timestamp",
+		}),
+		refreshTokenExpiresAt: integer("refreshTokenExpiresAt", {
+			mode: "timestamp",
+		}),
 		scope: text("scope"),
 		password: text("password"),
 		createdAt: integer("createdAt", { mode: "timestamp" })

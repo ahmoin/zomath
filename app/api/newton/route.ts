@@ -119,7 +119,11 @@ export async function POST(request: Request) {
 				.map((p) => {
 					const buf = Buffer.from(p.data!, "base64");
 					if (p.mediaType!.startsWith("image/")) {
-						return { type: "image" as const, image: buf, mimeType: p.mediaType! };
+						return {
+							type: "image" as const,
+							image: buf,
+							mimeType: p.mediaType!,
+						};
 					}
 					return { type: "file" as const, data: buf, mediaType: p.mediaType! };
 				});
@@ -133,213 +137,263 @@ export async function POST(request: Request) {
 	);
 
 	const tools = {
-			createJournal: tool({
-				description:
-					"Create a new study notes journal document for the user in Zomath. A journal is a markdown document for study notes, summaries, explanations, or any written content — not a diary. Call this whenever the user asks to 'make a journal', 'create notes', 'write a document', or similar. Pass projectId to immediately associate the journal with a project.",
-				inputSchema: jsonSchema<{ title: string; content: string; projectId?: string }>({
-					type: "object",
-					properties: {
-						title: {
-							type: "string",
-							description: "A short descriptive title for the journal",
-						},
-						content: {
-							type: "string",
-							description: "The full markdown content of the journal",
-						},
-						projectId: {
-							type: "string",
-							description: "Optional project ID to add this journal to immediately",
-						},
+		createJournal: tool({
+			description:
+				"Create a new study notes journal document for the user in Zomath. A journal is a markdown document for study notes, summaries, explanations, or any written content — not a diary. Call this whenever the user asks to 'make a journal', 'create notes', 'write a document', or similar. Pass projectId to immediately associate the journal with a project.",
+			inputSchema: jsonSchema<{
+				title: string;
+				content: string;
+				projectId?: string;
+			}>({
+				type: "object",
+				properties: {
+					title: {
+						type: "string",
+						description: "A short descriptive title for the journal",
 					},
-					required: ["title", "content"],
-				}),
-				execute: async ({
-					title,
-					content,
-					projectId,
-				}: {
-					title: string;
-					content: string;
-					projectId?: string;
-				}): Promise<{ journalId: string; title: string }> => {
-					const id = crypto.randomUUID();
-					await db.insert(journal).values({
-						id,
-						userId: session.user.id,
-						title,
-						content: markdownToLexicalJson(content),
-						projectId: projectId ?? null,
-					});
-					return { journalId: id, title };
+					content: {
+						type: "string",
+						description: "The full markdown content of the journal",
+					},
+					projectId: {
+						type: "string",
+						description:
+							"Optional project ID to add this journal to immediately",
+					},
 				},
+				required: ["title", "content"],
 			}),
-			createPractice: tool({
-				description:
-					"Create a practice quiz for the user in Zomath. Call this when the user asks to 'make a practice', 'create a quiz', 'test me on', or similar. Generate multiple-choice questions with 4 options each, one correct answer, an explanation per option, and a hint per question.",
-				inputSchema: jsonSchema<{
-					title: string;
-					topic: string;
-					format: string;
-					questions: {
-						question: string;
-						hint: string;
-						options: {
-							label: string;
-							text: string;
-							correct: boolean;
-							explanation: string;
-						}[];
+			execute: async ({
+				title,
+				content,
+				projectId,
+			}: {
+				title: string;
+				content: string;
+				projectId?: string;
+			}): Promise<{ journalId: string; title: string }> => {
+				const id = crypto.randomUUID();
+				await db.insert(journal).values({
+					id,
+					userId: session.user.id,
+					title,
+					content: markdownToLexicalJson(content),
+					projectId: projectId ?? null,
+				});
+				return { journalId: id, title };
+			},
+		}),
+		createPractice: tool({
+			description:
+				"Create a practice quiz for the user in Zomath. Call this when the user asks to 'make a practice', 'create a quiz', 'test me on', or similar. Generate multiple-choice questions with 4 options each, one correct answer, an explanation per option, and a hint per question.",
+			inputSchema: jsonSchema<{
+				title: string;
+				topic: string;
+				format: string;
+				questions: {
+					question: string;
+					hint: string;
+					options: {
+						label: string;
+						text: string;
+						correct: boolean;
+						explanation: string;
 					}[];
-				}>({
-					type: "object",
-					properties: {
-						title: { type: "string", description: "Short descriptive title" },
-						topic: { type: "string", description: "The subject being practiced" },
-						format: {
-							type: "string",
-							enum: ["quiz", "flashcard"],
-							description: "Practice format",
-						},
-						questions: {
-							type: "array",
-							description: "6-10 questions",
-							items: {
-								type: "object",
-								properties: {
-									question: { type: "string" },
-									hint: { type: "string" },
-									options: {
-										type: "array",
-										items: {
-											type: "object",
-											properties: {
-												label: { type: "string" },
-												text: { type: "string" },
-												correct: { type: "boolean" },
-												explanation: { type: "string" },
-											},
-											required: ["label", "text", "correct", "explanation"],
+				}[];
+			}>({
+				type: "object",
+				properties: {
+					title: { type: "string", description: "Short descriptive title" },
+					topic: { type: "string", description: "The subject being practiced" },
+					format: {
+						type: "string",
+						enum: ["quiz", "flashcard"],
+						description: "Practice format",
+					},
+					questions: {
+						type: "array",
+						description: "6-10 questions",
+						items: {
+							type: "object",
+							properties: {
+								question: { type: "string" },
+								hint: { type: "string" },
+								options: {
+									type: "array",
+									items: {
+										type: "object",
+										properties: {
+											label: { type: "string" },
+											text: { type: "string" },
+											correct: { type: "boolean" },
+											explanation: { type: "string" },
 										},
+										required: ["label", "text", "correct", "explanation"],
 									},
 								},
-								required: ["question", "hint", "options"],
 							},
+							required: ["question", "hint", "options"],
 						},
 					},
-					required: ["title", "topic", "format", "questions"],
-				}),
-				execute: async ({
+				},
+				required: ["title", "topic", "format", "questions"],
+			}),
+			execute: async ({
+				title,
+				topic,
+				format,
+				questions,
+			}: {
+				title: string;
+				topic: string;
+				format: string;
+				questions: object[];
+			}): Promise<{ practiceId: string; title: string }> => {
+				const id = crypto.randomUUID();
+				await db.insert(practice).values({
+					id,
+					userId: session.user.id,
 					title,
 					topic,
 					format,
-					questions,
-				}: {
-					title: string;
-					topic: string;
-					format: string;
-					questions: object[];
-				}): Promise<{ practiceId: string; title: string }> => {
-					const id = crypto.randomUUID();
-					await db.insert(practice).values({
-						id,
-						userId: session.user.id,
-						title,
-						topic,
-						format,
-						questions: JSON.stringify(questions),
-					});
-					return { practiceId: id, title };
-				},
-			}),
-			updateJournal: tool({
-				description:
-					"Update the content (and optionally title) of an existing journal. Use this when the user asks to edit, modify, add to, or fix an existing journal. Call listJournals first to find the journal ID if you don't have it.",
-				inputSchema: jsonSchema<{ journalId: string; content: string; title?: string }>({
-					type: "object",
-					properties: {
-						journalId: { type: "string", description: "The ID of the journal to update" },
-						content: { type: "string", description: "The full new markdown content of the journal" },
-						title: { type: "string", description: "Optional new title" },
+					questions: JSON.stringify(questions),
+				});
+				return { practiceId: id, title };
+			},
+		}),
+		updateJournal: tool({
+			description:
+				"Update the content (and optionally title) of an existing journal. Use this when the user asks to edit, modify, add to, or fix an existing journal. Call listJournals first to find the journal ID if you don't have it.",
+			inputSchema: jsonSchema<{
+				journalId: string;
+				content: string;
+				title?: string;
+			}>({
+				type: "object",
+				properties: {
+					journalId: {
+						type: "string",
+						description: "The ID of the journal to update",
 					},
-					required: ["journalId", "content"],
-				}),
-				execute: async ({
-					journalId,
-					content,
-					title,
-				}: {
-					journalId: string;
-					content: string;
-					title?: string;
-				}): Promise<{ journalId: string; title: string; updated: boolean }> => {
-					const existing = await db
-						.select({ title: journal.title })
-						.from(journal)
-						.where(eq(journal.id, journalId))
-						.then((r) => r[0] ?? null);
-					if (!existing) return { journalId, title: title ?? "Unknown", updated: false };
-					await db
-						.update(journal)
-						.set({ content: markdownToLexicalJson(content), ...(title ? { title } : {}) })
-						.where(eq(journal.id, journalId));
-					return { journalId, title: title ?? existing.title, updated: true };
-				},
-			}),
-			listJournals: tool({
-				description: "List the user's journals with their IDs and titles. Use this to find a journal ID before calling addJournalToProject.",
-				inputSchema: jsonSchema<Record<string, never>>({ type: "object", properties: {} }),
-				execute: async () => {
-					const entries = await db
-						.select({ id: journal.id, title: journal.title, projectId: journal.projectId })
-						.from(journal)
-						.where(eq(journal.userId, session.user.id));
-					return entries;
-				},
-			}),
-			listProjects: tool({
-				description: "List the user's projects with their IDs and titles. Use this to find a project ID before calling addJournalToProject.",
-				inputSchema: jsonSchema<Record<string, never>>({ type: "object", properties: {} }),
-				execute: async () => {
-					const entries = await db
-						.select({ id: project.id, title: project.title })
-						.from(project)
-						.where(eq(project.userId, session.user.id));
-					return entries;
-				},
-			}),
-			createProject: tool({
-				description:
-					"Create a new project (folder) in Zomath. A project groups journals together. Call this when the user asks to 'create a project', 'make a folder', or similar.",
-				inputSchema: jsonSchema<{ title: string }>({
-					type: "object",
-					properties: {
-						title: { type: "string", description: "Short descriptive project name" },
+					content: {
+						type: "string",
+						description: "The full new markdown content of the journal",
 					},
-					required: ["title"],
-				}),
-				execute: async ({ title }: { title: string }): Promise<{ projectId: string; title: string }> => {
-					const id = crypto.randomUUID();
-					await db.insert(project).values({ id, userId: session.user.id, title });
-					return { projectId: id, title };
+					title: { type: "string", description: "Optional new title" },
 				},
+				required: ["journalId", "content"],
 			}),
-			addJournalToProject: tool({
-				description:
-					"Add an existing journal to an existing project by setting its projectId. Use this after createProject or when the user asks to move a journal into a project.",
-				inputSchema: jsonSchema<{ journalId: string; projectId: string }>({
-					type: "object",
-					properties: {
-						journalId: { type: "string", description: "The journal ID to add" },
-						projectId: { type: "string", description: "The project ID to add it to" },
+			execute: async ({
+				journalId,
+				content,
+				title,
+			}: {
+				journalId: string;
+				content: string;
+				title?: string;
+			}): Promise<{ journalId: string; title: string; updated: boolean }> => {
+				const existing = await db
+					.select({ title: journal.title })
+					.from(journal)
+					.where(eq(journal.id, journalId))
+					.then((r) => r[0] ?? null);
+				if (!existing)
+					return { journalId, title: title ?? "Unknown", updated: false };
+				await db
+					.update(journal)
+					.set({
+						content: markdownToLexicalJson(content),
+						...(title ? { title } : {}),
+					})
+					.where(eq(journal.id, journalId));
+				return { journalId, title: title ?? existing.title, updated: true };
+			},
+		}),
+		listJournals: tool({
+			description:
+				"List the user's journals with their IDs and titles. Use this to find a journal ID before calling addJournalToProject.",
+			inputSchema: jsonSchema<Record<string, never>>({
+				type: "object",
+				properties: {},
+			}),
+			execute: async () => {
+				const entries = await db
+					.select({
+						id: journal.id,
+						title: journal.title,
+						projectId: journal.projectId,
+					})
+					.from(journal)
+					.where(eq(journal.userId, session.user.id));
+				return entries;
+			},
+		}),
+		listProjects: tool({
+			description:
+				"List the user's projects with their IDs and titles. Use this to find a project ID before calling addJournalToProject.",
+			inputSchema: jsonSchema<Record<string, never>>({
+				type: "object",
+				properties: {},
+			}),
+			execute: async () => {
+				const entries = await db
+					.select({ id: project.id, title: project.title })
+					.from(project)
+					.where(eq(project.userId, session.user.id));
+				return entries;
+			},
+		}),
+		createProject: tool({
+			description:
+				"Create a new project (folder) in Zomath. A project groups journals together. Call this when the user asks to 'create a project', 'make a folder', or similar.",
+			inputSchema: jsonSchema<{ title: string }>({
+				type: "object",
+				properties: {
+					title: {
+						type: "string",
+						description: "Short descriptive project name",
 					},
-					required: ["journalId", "projectId"],
-				}),
-				execute: async ({ journalId, projectId }: { journalId: string; projectId: string }) => {
-					await db.update(journal).set({ projectId }).where(eq(journal.id, journalId));
-					return { ok: true };
 				},
+				required: ["title"],
 			}),
+			execute: async ({
+				title,
+			}: {
+				title: string;
+			}): Promise<{ projectId: string; title: string }> => {
+				const id = crypto.randomUUID();
+				await db.insert(project).values({ id, userId: session.user.id, title });
+				return { projectId: id, title };
+			},
+		}),
+		addJournalToProject: tool({
+			description:
+				"Add an existing journal to an existing project by setting its projectId. Use this after createProject or when the user asks to move a journal into a project.",
+			inputSchema: jsonSchema<{ journalId: string; projectId: string }>({
+				type: "object",
+				properties: {
+					journalId: { type: "string", description: "The journal ID to add" },
+					projectId: {
+						type: "string",
+						description: "The project ID to add it to",
+					},
+				},
+				required: ["journalId", "projectId"],
+			}),
+			execute: async ({
+				journalId,
+				projectId,
+			}: {
+				journalId: string;
+				projectId: string;
+			}) => {
+				await db
+					.update(journal)
+					.set({ projectId })
+					.where(eq(journal.id, journalId));
+				return { ok: true };
+			},
+		}),
 	};
 
 	const encoder = new TextEncoder();
@@ -361,25 +415,49 @@ export async function POST(request: Request) {
 			} else if (part.type === "tool-call") {
 				const p = part as unknown as { toolName: string };
 				controller.enqueue(
-					encoder.encode(`s:${JSON.stringify({ name: p.toolName, status: "running" })}\n`),
+					encoder.encode(
+						`s:${JSON.stringify({ name: p.toolName, status: "running" })}\n`,
+					),
 				);
 			} else if (part.type === "tool-result") {
 				const p = part as unknown as { toolName: string; output: unknown };
 				controller.enqueue(
-					encoder.encode(`s:${JSON.stringify({ name: p.toolName, status: "done" })}\n`),
+					encoder.encode(
+						`s:${JSON.stringify({ name: p.toolName, status: "done" })}\n`,
+					),
 				);
 				if (p.toolName === "createJournal") {
 					const r = p.output as { journalId: string; title: string };
-					controller.enqueue(encoder.encode(`j:${JSON.stringify({ id: r.journalId, title: r.title, updated: false })}\n`));
+					controller.enqueue(
+						encoder.encode(
+							`j:${JSON.stringify({ id: r.journalId, title: r.title, updated: false })}\n`,
+						),
+					);
 				} else if (p.toolName === "updateJournal") {
-					const r = p.output as { journalId: string; title: string; updated: boolean };
-					controller.enqueue(encoder.encode(`j:${JSON.stringify({ id: r.journalId, title: r.title, updated: true })}\n`));
+					const r = p.output as {
+						journalId: string;
+						title: string;
+						updated: boolean;
+					};
+					controller.enqueue(
+						encoder.encode(
+							`j:${JSON.stringify({ id: r.journalId, title: r.title, updated: true })}\n`,
+						),
+					);
 				} else if (p.toolName === "createPractice") {
 					const r = p.output as { practiceId: string; title: string };
-					controller.enqueue(encoder.encode(`p:${JSON.stringify({ id: r.practiceId, title: r.title })}\n`));
+					controller.enqueue(
+						encoder.encode(
+							`p:${JSON.stringify({ id: r.practiceId, title: r.title })}\n`,
+						),
+					);
 				} else if (p.toolName === "createProject") {
 					const r = p.output as { projectId: string; title: string };
-					controller.enqueue(encoder.encode(`r:${JSON.stringify({ id: r.projectId, title: r.title })}\n`));
+					controller.enqueue(
+						encoder.encode(
+							`r:${JSON.stringify({ id: r.projectId, title: r.title })}\n`,
+						),
+					);
 				}
 			}
 		}
@@ -404,7 +482,9 @@ export async function POST(request: Request) {
 						attempt++;
 					} else {
 						controller.enqueue(
-							encoder.encode(`e:${JSON.stringify({ message: status === 429 ? "Rate limit reached. Please try again later." : "Something went wrong. Please try again." })}\n`),
+							encoder.encode(
+								`e:${JSON.stringify({ message: status === 429 ? "Rate limit reached. Please try again later." : "Something went wrong. Please try again." })}\n`,
+							),
 						);
 						break;
 					}

@@ -10,7 +10,9 @@ import { auth } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { newtonChat } from "@/lib/schema";
 
-export default async function NewtonChatPage({ params }: {
+export default async function NewtonChatPage({
+	params,
+}: {
 	params: Promise<{ id: string }>;
 }) {
 	const { id } = await params;

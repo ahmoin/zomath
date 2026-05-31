@@ -61,10 +61,7 @@ export function PracticeSavedView({
 	}
 
 	function handleChatSubmit(msg: { text: string }) {
-		setChatMessages((prev) => [
-			...prev,
-			{ role: "user", text: msg.text },
-		]);
+		setChatMessages((prev) => [...prev, { role: "user", text: msg.text }]);
 	}
 
 	function restartWithTopic() {

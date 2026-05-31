@@ -61,9 +61,7 @@ export function NavMain({
 							</SidebarMenuButton>
 						</SidebarMenuItem>
 					)}
-					{historySlot && (
-						<SidebarMenuItem>{historySlot}</SidebarMenuItem>
-					)}
+					{historySlot && <SidebarMenuItem>{historySlot}</SidebarMenuItem>}
 					{rest.map((item) => (
 						<SidebarMenuItem key={item.title}>
 							<SidebarMenuButton asChild tooltip={item.title}>
