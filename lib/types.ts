@@ -119,3 +119,11 @@ export type LexNode = {
 	equation?: string;
 	children?: LexNode[];
 };
+
+export type LexicalJsonNode = {
+	type: string;
+	text?: string;
+	version: number;
+	children?: LexicalJsonNode[];
+	[key: string]: unknown;
+};

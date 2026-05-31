@@ -17,14 +17,7 @@ import { db } from "@/lib/db";
 import { ChatbotError } from "@/lib/errors";
 import { journal, practice, project } from "@/lib/schema";
 import { checkAndIncrementUsage } from "@/lib/usage";
-
-type LexicalJsonNode = {
-	type: string;
-	text?: string;
-	version: number;
-	children?: LexicalJsonNode[];
-	[key: string]: unknown;
-};
+import type { LexicalJsonNode } from "@/lib/types";
 
 function injectEquationNodes(node: LexicalJsonNode): LexicalJsonNode {
 	if (!node.children) return node;
