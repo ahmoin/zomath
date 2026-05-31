@@ -1,5 +1,15 @@
-import type { UIMessage } from "ai";
+import type { InferUITool, UIMessage } from "ai";
 import { z } from "zod";
+import type { addJournalToProject } from "@/lib/ai/tools/add-journal-to-project";
+import type { createJournal } from "@/lib/ai/tools/create-journal";
+import type { createPractice } from "@/lib/ai/tools/create-practice";
+import type { createProject } from "@/lib/ai/tools/create-project";
+import type { listJournals } from "@/lib/ai/tools/list-journals";
+import type { listProjects } from "@/lib/ai/tools/list-projects";
+import type { readJournal } from "@/lib/ai/tools/read-journal";
+import type { readProject } from "@/lib/ai/tools/read-project";
+import type { searchWeb } from "@/lib/ai/tools/search-web";
+import type { updateJournal } from "@/lib/ai/tools/update-journal";
 
 export const messageMetadataSchema = z.object({
 	createdAt: z.string(),
@@ -7,7 +17,18 @@ export const messageMetadataSchema = z.object({
 
 export type MessageMetadata = z.infer<typeof messageMetadataSchema>;
 
-export type ChatTools = {};
+export type ChatTools = {
+	createJournal: InferUITool<ReturnType<typeof createJournal>>;
+	updateJournal: InferUITool<ReturnType<typeof updateJournal>>;
+	createPractice: InferUITool<ReturnType<typeof createPractice>>;
+	createProject: InferUITool<ReturnType<typeof createProject>>;
+	addJournalToProject: InferUITool<ReturnType<typeof addJournalToProject>>;
+	listJournals: InferUITool<ReturnType<typeof listJournals>>;
+	listProjects: InferUITool<ReturnType<typeof listProjects>>;
+	readJournal: InferUITool<ReturnType<typeof readJournal>>;
+	readProject: InferUITool<ReturnType<typeof readProject>>;
+	searchWeb: InferUITool<ReturnType<typeof searchWeb>>;
+};
 
 export type CustomUIDataTypes = {
 	textDelta: string;
