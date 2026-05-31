@@ -1,7 +1,7 @@
 import { type ClassValue, clsx } from "clsx";
 import { formatDistanceToNow } from "date-fns";
 import { twMerge } from "tailwind-merge";
-import type { LexNode } from "@/lib/types";
+import type { LexicalJsonNode } from "@/lib/types";
 
 export function cn(...inputs: ClassValue[]) {
 	return twMerge(clsx(inputs));
@@ -18,7 +18,7 @@ export function timeAgo(date: Date) {
 	return formatDistanceToNow(date, { addSuffix: true });
 }
 
-export function lexicalToText(node: LexNode): string {
+export function lexicalToText(node: LexicalJsonNode): string {
 	if (node.type === "equation") return `$${node.equation ?? ""}$`;
 	if (node.type === "text") return node.text ?? "";
 	if (!node.children?.length) return "";
@@ -29,7 +29,7 @@ export function lexicalToText(node: LexNode): string {
 
 export function parseJournalContent(content: string): string {
 	try {
-		const json = JSON.parse(content) as { root: LexNode };
+		const json = JSON.parse(content) as { root: LexicalJsonNode };
 		return lexicalToText(json.root).trim();
 	} catch {
 		return content;

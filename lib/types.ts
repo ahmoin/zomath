@@ -113,17 +113,10 @@ export type RecentItem = {
 	href: string;
 };
 
-export type LexNode = {
-	type: string;
-	text?: string;
-	equation?: string;
-	children?: LexNode[];
-};
-
 export type LexicalJsonNode = {
 	type: string;
 	text?: string;
-	version: number;
+	version?: number;
 	children?: LexicalJsonNode[];
 	[key: string]: unknown;
 };
