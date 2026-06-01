@@ -33,6 +33,7 @@ import {
 	SidebarMenuButton,
 	SidebarMenuItem,
 } from "@/components/ui/sidebar";
+import { authClient } from "@/lib/auth-client";
 import { siteConfig } from "@/lib/config";
 import type { RecentItem } from "@/lib/types";
 
@@ -130,6 +131,34 @@ const data = {
 	],
 };
 
+function UpgradeBanner() {
+	const { data: session } = authClient.useSession();
+	const isPlus = (session?.user as { plan?: string } | undefined)?.plan === "plus";
+
+	if (isPlus) return null;
+
+	return (
+		<div className="group/upgrade relative overflow-hidden border-t p-4 text-xs">
+			<div className="flex flex-col gap-1">
+				<span className="font-medium text-foreground">Unlock unlimited access</span>
+				<p className="text-muted-foreground leading-5">
+					Newton, Solve &amp; Practice with no daily limits.
+				</p>
+			</div>
+			<div className="h-0 overflow-hidden opacity-0 transition-[height,opacity] duration-200 sm:group-hover/upgrade:h-7 sm:group-hover/upgrade:opacity-100">
+				<div className="pt-3">
+					<Link
+						href="/pricing"
+						className="font-medium text-foreground underline-offset-2 hover:underline text-xs"
+					>
+						Upgrade to Plus →
+					</Link>
+				</div>
+			</div>
+		</div>
+	);
+}
+
 export function AppSidebar({
 	user,
 	...props
@@ -165,6 +194,7 @@ export function AppSidebar({
 				<NavSecondary items={data.navSecondary} className="mt-auto" />
 			</SidebarContent>
 			<SidebarFooter>
+				<UpgradeBanner />
 				<NavUser user={user} />
 			</SidebarFooter>
 		</Sidebar>

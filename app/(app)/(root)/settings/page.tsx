@@ -6,6 +6,7 @@ import { SettingsSection } from "@/components/sections/settings-section";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { auth } from "@/lib/auth";
+import { getUserUsageToday } from "@/lib/usage";
 
 export default async function SettingsPage() {
 	const session = await auth.api.getSession({
@@ -15,6 +16,9 @@ export default async function SettingsPage() {
 	if (!session) {
 		redirect("/");
 	}
+
+	const plan = (session.user as { plan?: string }).plan ?? "free";
+	const usage = plan === "free" ? await getUserUsageToday(session.user.id) : null;
 
 	return (
 		<TooltipProvider>
@@ -43,6 +47,8 @@ export default async function SettingsPage() {
 								email={session.user.email}
 								hasGithub={false}
 								hasGoogle={false}
+								plan={plan}
+								usage={usage}
 							/>
 						</div>
 					</div>

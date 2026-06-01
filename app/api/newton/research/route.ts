@@ -1,7 +1,6 @@
 import { stepCountIs, streamText } from "ai";
 import { and, eq } from "drizzle-orm";
 import { headers } from "next/headers";
-import { z } from "zod";
 import { DEFAULT_CHAT_MODEL } from "@/lib/ai/models";
 import { researchNewtonPrompt } from "@/lib/ai/prompts";
 import type { SourceTracker } from "@/lib/ai/tools";

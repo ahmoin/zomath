@@ -1,9 +1,11 @@
 "use client";
 
 import { CircleUser } from "lucide-react";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Icons } from "@/components/icons";
 import { ModeSwitcher } from "@/components/mode-switcher";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
 	Card,
@@ -15,6 +17,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Progress } from "@/components/ui/progress";
 import {
 	Select,
 	SelectContent,
@@ -24,6 +27,8 @@ import {
 } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { useReducedMotion } from "@/hooks/use-reduced-motion";
+
+const FREE_LIMITS = { newton: 10, solve: 5, practice: 3 } as const;
 
 const MONTHS = [
 	"January",
@@ -46,16 +51,28 @@ const YEARS = Array.from({ length: 100 }, (_, i) =>
 	String(new Date().getFullYear() - i),
 );
 
+type UsageData = Record<"newton" | "solve" | "practice", number> | null;
+
+const USAGE_LABELS: Record<"newton" | "solve" | "practice", string> = {
+	newton: "Newton AI",
+	solve: "Solve",
+	practice: "Practice sessions",
+};
+
 export function SettingsSection({
 	name,
 	email,
 	hasGithub,
 	hasGoogle,
+	plan = "free",
+	usage,
 }: {
 	name: string;
 	email: string;
 	hasGithub: boolean;
 	hasGoogle: boolean;
+	plan?: string;
+	usage?: UsageData;
 }) {
 	const [firstName, ...rest] = name.split(" ");
 	const lastName = rest.join(" ");
@@ -263,6 +280,43 @@ export function SettingsSection({
 					<p className="text-sm text-muted-foreground">
 						You don't have any active Notification Recipients.
 					</p>
+				</CardContent>
+			</Card>
+
+			<Card className="mb-10">
+				<CardHeader className="flex flex-row items-center justify-between">
+					<CardTitle>Daily Usage</CardTitle>
+					<Badge variant={plan === "plus" ? "default" : "secondary"} className="capitalize">
+						{plan}
+					</Badge>
+				</CardHeader>
+				<CardContent className="space-y-5">
+					{plan === "plus" ? (
+						<p className="text-sm text-muted-foreground">
+							You&apos;re on Plus. All features are unlimited.
+						</p>
+					) : (
+						<>
+							{(Object.keys(FREE_LIMITS) as (keyof typeof FREE_LIMITS)[]).map((feature) => {
+								const used = usage?.[feature] ?? 0;
+								const limit = FREE_LIMITS[feature];
+								const pct = Math.min((used / limit) * 100, 100);
+								return (
+									<div key={feature} className="space-y-1.5">
+										<div className="flex items-center justify-between text-sm">
+											<span className="font-medium">{USAGE_LABELS[feature]}</span>
+											<span className="text-muted-foreground">{used} / {limit}</span>
+										</div>
+										<Progress value={pct} className="h-2" />
+									</div>
+								);
+							})}
+							<p className="text-xs text-muted-foreground pt-1">Resets daily at midnight UTC.</p>
+							<Button asChild size="sm" className="rounded-full">
+								<Link href="/pricing">Upgrade to Plus for unlimited access</Link>
+							</Button>
+						</>
+					)}
 				</CardContent>
 			</Card>
 

@@ -42,7 +42,7 @@ export function QuizResultsView({
 						{pct >= 80
 							? `Nice work on the ${topic} quiz! You scored ${pct}%. You have a solid understanding of the core concepts.`
 							: pct >= 50
-								? `Good effort on ${topic}. You got ${pct}% — there are a few areas worth revisiting. Try another quiz focused on your weak spots.`
+								? `Good effort on ${topic}. You got ${pct}%, but there are a few areas worth revisiting. Try another quiz focused on your weak spots.`
 								: `${topic} is tricky. You got ${pct}% this time. Let's drill the concepts that tripped you up with a targeted follow-up quiz.`}
 					</p>
 				</div>
@@ -62,7 +62,7 @@ export function QuizResultsView({
 				<div className="flex items-center gap-6">
 					<span className="text-5xl font-bold text-foreground">{pct}%</span>
 					<div className="flex gap-3">
-						<div className="rounded-lg bg-green-500/15 border border-green-500/30 px-4 py-3 text-center min-w-[80px]">
+						<div className="rounded-lg bg-green-500/15 border border-green-500/30 px-4 py-3 text-center min-w-20">
 							<p className="text-xs text-green-600 dark:text-green-400 font-medium">
 								Correct
 							</p>
@@ -70,7 +70,7 @@ export function QuizResultsView({
 								{correct}
 							</p>
 						</div>
-						<div className="rounded-lg bg-red-500/15 border border-red-500/30 px-4 py-3 text-center min-w-[80px]">
+						<div className="rounded-lg bg-red-500/15 border border-red-500/30 px-4 py-3 text-center min-w-20">
 							<p className="text-xs text-red-600 dark:text-red-400 font-medium">
 								Incorrect
 							</p>
@@ -78,7 +78,7 @@ export function QuizResultsView({
 								{incorrect}
 							</p>
 						</div>
-						<div className="rounded-lg bg-muted px-4 py-3 text-center min-w-[80px]">
+						<div className="rounded-lg bg-muted px-4 py-3 text-center min-w-20">
 							<p className="text-xs text-muted-foreground font-medium">
 								Skipped
 							</p>

@@ -6,7 +6,7 @@ import { journal } from "@/lib/schema";
 export const createJournal = ({ userId }: { userId: string }) =>
 	tool({
 		description:
-			"Create a new study notes journal document for the user in Zomath. A journal is a markdown document for study notes, summaries, explanations, or any written content — not a diary. Call this whenever the user asks to 'make a journal', 'create notes', 'write a document', or similar. Pass projectId to immediately associate the journal with a project.",
+			"Create a new study notes journal document for the user in Zomath. A journal is a markdown document for study notes, summaries, explanations, or any written content, not a diary. Call this whenever the user asks to 'make a journal', 'create notes', 'write a document', or similar. Pass projectId to immediately associate the journal with a project.",
 		inputSchema: jsonSchema<{
 			title: string;
 			content: string;

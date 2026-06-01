@@ -1,4 +1,4 @@
-import { and, eq, sql } from "drizzle-orm";
+import { and, eq, inArray, sql } from "drizzle-orm";
 import { db } from "@/lib/db";
 import { usageLog } from "@/lib/schema";
 
@@ -9,6 +9,28 @@ export const FREE_LIMITS = {
 } as const;
 
 export type UsageFeature = keyof typeof FREE_LIMITS;
+
+export async function getUserUsageToday(
+	userId: string,
+): Promise<Record<UsageFeature, number>> {
+	const today = new Date().toISOString().split("T")[0];
+	const rows = await db
+		.select({ feature: usageLog.feature, count: usageLog.count })
+		.from(usageLog)
+		.where(
+			and(
+				eq(usageLog.userId, userId),
+				eq(usageLog.date, today),
+				inArray(usageLog.feature, Object.keys(FREE_LIMITS) as UsageFeature[]),
+			),
+		);
+
+	const result = { newton: 0, solve: 0, practice: 0 } as Record<UsageFeature, number>;
+	for (const row of rows) {
+		result[row.feature as UsageFeature] = row.count;
+	}
+	return result;
+}
 
 export async function checkAndIncrementUsage(
 	userId: string,

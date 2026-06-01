@@ -426,7 +426,7 @@ function AuthedPersona({
 							const { seconds } = JSON.parse(line.slice(2)) as {
 								seconds: number;
 							};
-							setStreamingStatus(`Rate limited — retrying in ${seconds}s...`);
+							setStreamingStatus(`Rate limited. Retrying in ${seconds}s...`);
 							setTimeout(() => setStreamingStatus(null), seconds * 1000);
 						} else if (line.startsWith("e:")) {
 							const { message } = JSON.parse(line.slice(2)) as {

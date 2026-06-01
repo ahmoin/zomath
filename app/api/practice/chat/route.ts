@@ -19,7 +19,7 @@ const SYSTEM = `You are Newton (never refer to yourself as "Isaac Newton", only 
 Your job is to help students understand math during their practice session.
 Guide with questions and hints before revealing solutions.
 Keep responses concise and conversational. Avoid bullet points and headers. Use natural flowing sentences.
-Do not use LaTeX or math notation symbols in your spoken responses — spell out math in plain English.`;
+Do not use LaTeX or math notation symbols in your spoken responses. Spell out math in plain English.`;
 
 export async function POST(request: Request) {
 	const session = await auth.api.getSession({ headers: await headers() });
