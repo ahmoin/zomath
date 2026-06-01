@@ -25,7 +25,10 @@ export async function getUserUsageToday(
 			),
 		);
 
-	const result = { newton: 0, solve: 0, practice: 0 } as Record<UsageFeature, number>;
+	const result = { newton: 0, solve: 0, practice: 0 } as Record<
+		UsageFeature,
+		number
+	>;
 	for (const row of rows) {
 		result[row.feature as UsageFeature] = row.count;
 	}

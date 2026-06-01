@@ -18,7 +18,8 @@ export default async function SettingsPage() {
 	}
 
 	const plan = (session.user as { plan?: string }).plan ?? "free";
-	const usage = plan === "free" ? await getUserUsageToday(session.user.id) : null;
+	const usage =
+		plan === "free" ? await getUserUsageToday(session.user.id) : null;
 
 	return (
 		<TooltipProvider>

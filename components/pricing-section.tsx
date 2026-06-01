@@ -95,7 +95,9 @@ export function PricingSection({
 	const { data: session } = authClient.useSession();
 
 	const isLoggedIn = isLoggedInProp ?? !!session?.user;
-	const isPlus = isPlusProp ?? (session?.user as { plan?: string } | undefined)?.plan === "plus";
+	const isPlus =
+		isPlusProp ??
+		(session?.user as { plan?: string } | undefined)?.plan === "plus";
 
 	async function handlePlusCheckout() {
 		setCheckoutLoading(true);
@@ -107,8 +109,13 @@ export function PricingSection({
 		}
 	}
 
-	function getPlanBtn(plan: Plan): { href: string; text: string; onClick?: () => void } {
-		if (plan.name === "Schools") return { href: plan.btn.href, text: plan.btn.text };
+	function getPlanBtn(plan: Plan): {
+		href: string;
+		text: string;
+		onClick?: () => void;
+	} {
+		if (plan.name === "Schools")
+			return { href: plan.btn.href, text: plan.btn.text };
 		if (plan.name === "Free") {
 			return {
 				href: isLoggedIn ? "/dashboard" : "/sign-up",
@@ -116,7 +123,8 @@ export function PricingSection({
 			};
 		}
 		// Plus
-		if (isPlus) return { href: "/api/auth/customer/portal", text: "Manage subscription" };
+		if (isPlus)
+			return { href: "/api/auth/customer/portal", text: "Manage subscription" };
 		if (isLoggedIn) {
 			return {
 				href: "",
@@ -321,7 +329,9 @@ export function PricingCard({
 						className="w-full"
 						variant={plan.highlighted ? "default" : "outline"}
 					>
-						<Link href={btnHref ?? plan.btn.href}>{btnText ?? plan.btn.text}</Link>
+						<Link href={btnHref ?? plan.btn.href}>
+							{btnText ?? plan.btn.text}
+						</Link>
 					</Button>
 				)}
 			</div>

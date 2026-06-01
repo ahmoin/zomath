@@ -286,7 +286,10 @@ export function SettingsSection({
 			<Card className="mb-10">
 				<CardHeader className="flex flex-row items-center justify-between">
 					<CardTitle>Daily Usage</CardTitle>
-					<Badge variant={plan === "plus" ? "default" : "secondary"} className="capitalize">
+					<Badge
+						variant={plan === "plus" ? "default" : "secondary"}
+						className="capitalize"
+					>
 						{plan}
 					</Badge>
 				</CardHeader>
@@ -297,23 +300,33 @@ export function SettingsSection({
 						</p>
 					) : (
 						<>
-							{(Object.keys(FREE_LIMITS) as (keyof typeof FREE_LIMITS)[]).map((feature) => {
-								const used = usage?.[feature] ?? 0;
-								const limit = FREE_LIMITS[feature];
-								const pct = Math.min((used / limit) * 100, 100);
-								return (
-									<div key={feature} className="space-y-1.5">
-										<div className="flex items-center justify-between text-sm">
-											<span className="font-medium">{USAGE_LABELS[feature]}</span>
-											<span className="text-muted-foreground">{used} / {limit}</span>
+							{(Object.keys(FREE_LIMITS) as (keyof typeof FREE_LIMITS)[]).map(
+								(feature) => {
+									const used = usage?.[feature] ?? 0;
+									const limit = FREE_LIMITS[feature];
+									const pct = Math.min((used / limit) * 100, 100);
+									return (
+										<div key={feature} className="space-y-1.5">
+											<div className="flex items-center justify-between text-sm">
+												<span className="font-medium">
+													{USAGE_LABELS[feature]}
+												</span>
+												<span className="text-muted-foreground">
+													{used} / {limit}
+												</span>
+											</div>
+											<Progress value={pct} className="h-2" />
 										</div>
-										<Progress value={pct} className="h-2" />
-									</div>
-								);
-							})}
-							<p className="text-xs text-muted-foreground pt-1">Resets daily at midnight UTC.</p>
+									);
+								},
+							)}
+							<p className="text-xs text-muted-foreground pt-1">
+								Resets daily at midnight UTC.
+							</p>
 							<Button asChild size="sm" className="rounded-full">
-								<Link href="/pricing">Upgrade to Plus for unlimited access</Link>
+								<Link href="/pricing">
+									Upgrade to Plus for unlimited access
+								</Link>
 							</Button>
 						</>
 					)}
