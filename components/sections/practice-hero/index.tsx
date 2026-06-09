@@ -3,11 +3,12 @@
 import { SparklesIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Shimmer } from "@/components/ai-elements/shimmer";
+import { FlashCardsActiveView } from "@/components/sections/practice-hero/flash-cards-active-view";
 import { MatchUpActiveView } from "@/components/sections/practice-hero/match-up-active-view";
 import { QuizActiveView } from "@/components/sections/practice-hero/quiz-active-view";
 import { QuizPlanView } from "@/components/sections/practice-hero/quiz-plan-view";
 import { QuizResultsView } from "@/components/sections/practice-hero/quiz-results-view";
-import { usePracticeQuiz } from "@/hooks/use-practice-quiz";
+import { usePractice } from "@/hooks/use-practice";
 
 export function PracticeHeroSection({
 	name,
@@ -23,6 +24,7 @@ export function PracticeHeroSection({
 		selectedFormat,
 		quiz,
 		matchUp,
+		flashCards,
 		currentQ,
 		setCurrentQ,
 		answers,
@@ -33,6 +35,7 @@ export function PracticeHeroSection({
 		setShowResults,
 		chatMessages,
 		chatLoading,
+		practiceUpdating,
 		planMessages,
 		planLoading,
 		planReady,
@@ -45,7 +48,7 @@ export function PracticeHeroSection({
 		goBack,
 		restartWithTopic,
 		handleChatSubmit,
-	} = usePracticeQuiz(formatId);
+	} = usePractice(formatId);
 
 	if (!selectedFormat) return null;
 
@@ -90,6 +93,22 @@ export function PracticeHeroSection({
 				topic={topic}
 				chatMessages={chatMessages}
 				chatLoading={chatLoading}
+				practiceUpdating={practiceUpdating}
+				handleChatSubmit={handleChatSubmit}
+				setPhase={setPhase}
+				onRestart={() => startQuiz(topic)}
+			/>
+		);
+	}
+
+	if (phase === "flash-cards" && flashCards) {
+		return (
+			<FlashCardsActiveView
+				flashCards={flashCards}
+				topic={topic}
+				chatMessages={chatMessages}
+				chatLoading={chatLoading}
+				practiceUpdating={practiceUpdating}
 				handleChatSubmit={handleChatSubmit}
 				setPhase={setPhase}
 				onRestart={() => startQuiz(topic)}
@@ -124,6 +143,7 @@ export function PracticeHeroSection({
 			setShowHint={setShowHint}
 			chatMessages={chatMessages}
 			chatLoading={chatLoading}
+			practiceUpdating={practiceUpdating}
 			handleChatSubmit={handleChatSubmit}
 			handleAnswer={handleAnswer}
 			goNext={goNext}

@@ -2,11 +2,12 @@ import { generateText, Output } from "ai";
 import { headers } from "next/headers";
 import type { z } from "zod";
 import {
+	flashCardSchema,
 	matchUpSchema,
 	postRequestBodySchema,
 	quizSchema,
 } from "@/app/api/practice/generate/schema";
-import { matchUpPrompt, practicePrompt } from "@/lib/ai/prompts";
+import { flashCardPrompt, matchUpPrompt, practicePrompt } from "@/lib/ai/prompts";
 import { auth } from "@/lib/auth";
 import { ChatbotError } from "@/lib/errors";
 import { checkAndIncrementUsage } from "@/lib/usage";
@@ -48,6 +49,15 @@ export async function POST(request: Request) {
 			prompt: matchUpPrompt(topic, count),
 		});
 		return Response.json({ ...object, formatId: "match-up" });
+	}
+
+	if (formatId === "flash-cards") {
+		const { output: object } = await generateText({
+			model: "google/gemini-2.5-flash",
+			output: Output.object({ schema: flashCardSchema }),
+			prompt: flashCardPrompt(topic, count),
+		});
+		return Response.json({ ...object, formatId: "flash-cards" });
 	}
 
 	const { output: object } = await generateText({

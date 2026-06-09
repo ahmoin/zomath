@@ -35,6 +35,20 @@ export const matchUpSchema = z.object({
 
 export type MatchUp = z.infer<typeof matchUpSchema>;
 
+const flashCardSchema_ = z.object({
+	front: z.string(),
+	back: z.string(),
+	latex: z.string().optional(),
+});
+
+export const flashCardSchema = z.object({
+	title: z.string(),
+	intro: z.string(),
+	cards: z.array(flashCardSchema_),
+});
+
+export type FlashCardDeck = z.infer<typeof flashCardSchema>;
+
 export const postRequestBodySchema = z.object({
 	topic: z.string().min(1).max(200),
 	formatId: z.string().optional().default("quiz"),

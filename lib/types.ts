@@ -75,7 +75,8 @@ export type PracticePhase =
 	| "topic-select"
 	| "loading"
 	| "quiz"
-	| "match-up";
+	| "match-up"
+	| "flash-cards";
 
 export interface MatchUpPair {
 	keyword: string;
@@ -86,6 +87,18 @@ export interface MatchUpData {
 	title: string;
 	intro: string;
 	pairs: MatchUpPair[];
+}
+
+export interface FlashCard {
+	front: string;
+	back: string;
+	latex?: string;
+}
+
+export interface FlashCardData {
+	title: string;
+	intro: string;
+	cards: FlashCard[];
 }
 
 export interface Project {

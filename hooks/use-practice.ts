@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { useCallback, useState } from "react";
 import { templates } from "@/components/sections/practice-hero/data";
 import type {
+	FlashCardData,
 	MatchUpData,
 	PracticePhase,
 	QuestionState,
@@ -11,6 +12,8 @@ import type {
 } from "@/lib/types";
 
 export type {
+	FlashCard,
+	FlashCardData,
 	MatchUpData,
 	MatchUpPair,
 	PracticePhase,
@@ -23,7 +26,7 @@ export type Template = (typeof templates)[number];
 
 export type PlanMessage = { role: "user" | "newton"; text: string };
 
-export function usePracticeQuiz(formatId: string) {
+export function usePractice(formatId: string) {
 	const router = useRouter();
 	const selectedFormat = templates.find((t) => t.id === formatId) ?? null;
 
@@ -31,6 +34,7 @@ export function usePracticeQuiz(formatId: string) {
 	const [topic, setTopic] = useState("");
 	const [quiz, setQuiz] = useState<QuizData | null>(null);
 	const [matchUp, setMatchUp] = useState<MatchUpData | null>(null);
+	const [flashCards, setFlashCards] = useState<FlashCardData | null>(null);
 	const [currentQ, setCurrentQ] = useState(0);
 	const [answers, setAnswers] = useState<(string | null)[]>([]);
 	const [questionStates, setQuestionStates] = useState<QuestionState[]>([]);
@@ -40,6 +44,7 @@ export function usePracticeQuiz(formatId: string) {
 		Array<{ role: "user" | "newton"; text: string }>
 	>([]);
 	const [chatLoading, setChatLoading] = useState(false);
+	const [practiceUpdating, setPracticeUpdating] = useState(false);
 	const [planMessages, setPlanMessages] = useState<PlanMessage[]>([]);
 	const [planLoading, setPlanLoading] = useState(false);
 	const [planReady, setPlanReady] = useState(false);
@@ -119,10 +124,14 @@ export function usePracticeQuiz(formatId: string) {
 				const data = (await res.json()) as { formatId?: string } & (
 					| QuizData
 					| MatchUpData
+					| FlashCardData
 				);
 				if (data.formatId === "match-up") {
 					setMatchUp(data as MatchUpData);
 					setPhase("match-up");
+				} else if (data.formatId === "flash-cards") {
+					setFlashCards(data as FlashCardData);
+					setPhase("flash-cards");
 				} else {
 					const quizData = data as QuizData;
 					setQuiz(quizData);
@@ -187,23 +196,70 @@ export function usePracticeQuiz(formatId: string) {
 			setChatMessages((prev) => [...prev, { role: "user", text }]);
 			setChatLoading(true);
 			try {
+				const currentPractice = quiz ?? matchUp ?? flashCards;
+				const contextStr = quiz
+					? `Practice format: quiz on ${topic}. Current question: ${quiz.questions[currentQ]?.question ?? ""}`
+					: matchUp
+						? `Practice format: match-up on ${topic}.`
+						: `Practice format: flash-cards on ${topic}.`;
+
 				const res = await fetch("/api/practice/chat", {
 					method: "POST",
 					headers: { "Content-Type": "application/json" },
 					body: JSON.stringify({
 						message: text,
 						history: chatMessages,
-						context: quiz
-							? `Practice format: quiz on ${topic}. Current question: ${quiz.questions[currentQ]?.question ?? ""}`
-							: `Practice format: match-up on ${topic}.`,
+						context: contextStr,
 					}),
 				});
 				if (!res.ok) throw new Error("Failed");
-				const data = (await res.json()) as { response: string };
+				const data = (await res.json()) as {
+					response: string;
+					suggestUpdate?: boolean;
+				};
 				setChatMessages((prev) => [
 					...prev,
 					{ role: "newton", text: data.response },
 				]);
+
+				if (data.suggestUpdate && currentPractice) {
+					setChatLoading(false);
+					setPracticeUpdating(true);
+					try {
+						const updateRes = await fetch("/api/practice/update", {
+							method: "POST",
+							headers: { "Content-Type": "application/json" },
+							body: JSON.stringify({
+								formatId,
+								current: currentPractice,
+								instructions: text,
+							}),
+						});
+						if (!updateRes.ok) throw new Error("Update failed");
+						const updated = (await updateRes.json()) as {
+							formatId?: string;
+						} & (QuizData | MatchUpData | FlashCardData);
+						if (updated.formatId === "match-up") {
+							setMatchUp(updated as MatchUpData);
+						} else if (updated.formatId === "flash-cards") {
+							setFlashCards(updated as FlashCardData);
+						} else {
+							const quizData = updated as QuizData;
+							setQuiz(quizData);
+							setAnswers(new Array(quizData.questions.length).fill(null));
+							setQuestionStates(
+								new Array(quizData.questions.length).fill("unanswered"),
+							);
+							setCurrentQ(0);
+							setShowResults(false);
+						}
+					} catch {
+						// TODO: handle error
+					} finally {
+						setPracticeUpdating(false);
+					}
+					return;
+				}
 			} catch {
 				setChatMessages((prev) => [
 					...prev,
@@ -213,7 +269,7 @@ export function usePracticeQuiz(formatId: string) {
 				setChatLoading(false);
 			}
 		},
-		[quiz, topic, currentQ, chatMessages],
+		[quiz, matchUp, flashCards, topic, currentQ, chatMessages, formatId],
 	);
 
 	return {
@@ -223,6 +279,7 @@ export function usePracticeQuiz(formatId: string) {
 		selectedFormat,
 		quiz,
 		matchUp,
+		flashCards,
 		currentQ,
 		setCurrentQ,
 		answers,
@@ -233,6 +290,7 @@ export function usePracticeQuiz(formatId: string) {
 		setShowResults,
 		chatMessages,
 		chatLoading,
+		practiceUpdating,
 		planMessages,
 		planLoading,
 		planReady,

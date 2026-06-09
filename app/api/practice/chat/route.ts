@@ -1,4 +1,4 @@
-import { generateText } from "ai";
+import { generateText, Output } from "ai";
 import { headers } from "next/headers";
 import { z } from "zod";
 import { auth } from "@/lib/auth";
@@ -15,11 +15,21 @@ const bodySchema = z.object({
 	context: z.string().optional(),
 });
 
+const responseSchema = z.object({
+	response: z.string(),
+	suggestUpdate: z.boolean(),
+});
+
 const SYSTEM = `You are Newton (never refer to yourself as "Isaac Newton", only "Newton"), an expert math tutor built into Zomath.
 Your job is to help students understand math during their practice session.
 Guide with questions and hints before revealing solutions.
 Keep responses concise and conversational. Avoid bullet points and headers. Use natural flowing sentences.
-Do not use LaTeX or math notation symbols in your spoken responses. Spell out math in plain English.`;
+Do not use LaTeX or math notation symbols in your spoken responses. Spell out math in plain English.
+
+You also have the ability to update the practice content shown on the right panel.
+Set suggestUpdate to true when the student asks you to change, modify, regenerate, simplify, add more, remove, or fix anything about the practice content itself (the questions, cards, pairs, difficulty, etc.).
+When setting suggestUpdate to true, tell the student what you are going to change in your response (e.g. "I'll update the cards to show just the word and translation.").
+Set suggestUpdate to false for all other messages, questions about content, hints, explanations, etc.`;
 
 export async function POST(request: Request) {
 	const session = await auth.api.getSession({ headers: await headers() });
@@ -39,11 +49,12 @@ export async function POST(request: Request) {
 	const contextLine = body.context ? `Context: ${body.context}\n\n` : "";
 	const prompt = `${contextLine}${historyText ? `${historyText}\n` : ""}Student: ${body.message}\n\nNewton:`;
 
-	const { text } = await generateText({
+	const { output } = await generateText({
 		model: "google/gemini-2.5-flash",
+		output: Output.object({ schema: responseSchema }),
 		system: SYSTEM,
 		prompt,
 	});
 
-	return Response.json({ response: text });
+	return Response.json({ response: output.response, suggestUpdate: output.suggestUpdate });
 }

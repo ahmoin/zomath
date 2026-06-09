@@ -29,7 +29,7 @@ import {
 import { Shimmer } from "@/components/ai-elements/shimmer";
 import { useHeaderSlot } from "@/components/dashboard-header-context";
 import { Button } from "@/components/ui/button";
-import type { PlanMessage, Template } from "@/hooks/use-practice-quiz";
+import type { PlanMessage, Template } from "@/hooks/use-practice";
 import { cn } from "@/lib/utils";
 
 function AttachmentsPreviewer() {
