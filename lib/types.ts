@@ -112,6 +112,22 @@ export interface Journal {
 	id: string;
 	title: string;
 	content: string;
+	projectId: string | null;
+	createdAt: Date;
+	updatedAt: Date;
+}
+
+export type ProjectResourceType = "file" | "link" | "note" | "question";
+
+export interface ProjectResource {
+	id: string;
+	projectId: string;
+	userId: string;
+	type: ProjectResourceType;
+	title: string;
+	url: string | null;
+	body: string | null;
+	mimeType: string | null;
 	createdAt: Date;
 	updatedAt: Date;
 }

@@ -204,6 +204,40 @@ export const usageLog = sqliteTable(
 	],
 );
 
+export const projectResource = sqliteTable(
+	"project_resource",
+	{
+		id: text("id").primaryKey(),
+		projectId: text("projectId")
+			.notNull()
+			.references(() => project.id, { onDelete: "cascade" }),
+		userId: text("userId")
+			.notNull()
+			.references(() => user.id, { onDelete: "cascade" }),
+		type: text("type").notNull(), // 'file' | 'link' | 'note' | 'question'
+		title: text("title").notNull().default("Untitled"),
+		url: text("url"),
+		body: text("body"),
+		mimeType: text("mimeType"),
+		createdAt: integer("createdAt", { mode: "timestamp" })
+			.$defaultFn(() => new Date())
+			.notNull(),
+		updatedAt: integer("updatedAt", { mode: "timestamp" })
+			.$defaultFn(() => new Date())
+			.$onUpdate(() => new Date())
+			.notNull(),
+	},
+	(table) => [
+		index("project_resource_projectId_idx").on(table.projectId),
+		index("project_resource_userId_idx").on(table.userId),
+	],
+);
+
+export const projectResourceRelations = relations(projectResource, ({ one }) => ({
+	project: one(project, { fields: [projectResource.projectId], references: [project.id] }),
+	user: one(user, { fields: [projectResource.userId], references: [user.id] }),
+}));
+
 export const userRelations = relations(user, ({ many }) => ({
 	sessions: many(session),
 	accounts: many(account),
@@ -212,6 +246,7 @@ export const userRelations = relations(user, ({ many }) => ({
 	practices: many(practice),
 	newtonChats: many(newtonChat),
 	usageLogs: many(usageLog),
+	projectResources: many(projectResource),
 }));
 
 export const usageLogRelations = relations(usageLog, ({ one }) => ({
@@ -221,6 +256,7 @@ export const usageLogRelations = relations(usageLog, ({ one }) => ({
 export const projectRelations = relations(project, ({ one, many }) => ({
 	user: one(user, { fields: [project.userId], references: [user.id] }),
 	journals: many(journal),
+	resources: many(projectResource),
 }));
 
 export const journalRelations = relations(journal, ({ one }) => ({

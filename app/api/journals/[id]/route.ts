@@ -36,7 +36,7 @@ export async function PATCH(
 
 	const { id } = await params;
 
-	let body: { title?: string; content?: string };
+	let body: { title?: string; content?: string; projectId?: string | null };
 	try {
 		body = updateJournalSchema.parse(await request.json());
 	} catch (_) {
@@ -46,8 +46,9 @@ export async function PATCH(
 	const [updated] = await db
 		.update(journal)
 		.set({
-			title: body.title,
-			content: body.content,
+			...(body.title !== undefined && { title: body.title }),
+			...(body.content !== undefined && { content: body.content }),
+			...("projectId" in body && { projectId: body.projectId }),
 			updatedAt: new Date(),
 		})
 		.where(and(eq(journal.id, id), eq(journal.userId, session.user.id)))

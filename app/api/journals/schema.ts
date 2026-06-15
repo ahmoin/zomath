@@ -9,6 +9,7 @@ export type CreateJournalBody = z.infer<typeof createJournalSchema>;
 export const updateJournalSchema = z.object({
 	title: z.string().min(1).max(500).optional(),
 	content: z.string().max(100000).optional(),
+	projectId: z.string().nullable().optional(),
 });
 
 export type UpdateJournalBody = z.infer<typeof updateJournalSchema>;
