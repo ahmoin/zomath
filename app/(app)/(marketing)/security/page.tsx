@@ -1,5 +1,5 @@
-import { SecuritySection } from "@/components/sections/security";
+import { redirect } from "next/navigation";
 
 export default function SecurityPage() {
-	return <SecuritySection />;
+	redirect("/coming-soon");
 }

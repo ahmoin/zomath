@@ -1,5 +1,5 @@
-import { PressSection } from "@/components/sections/press";
+import { redirect } from "next/navigation";
 
 export default function PressPage() {
-	return <PressSection />;
+	redirect("/coming-soon");
 }

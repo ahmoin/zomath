@@ -1,5 +1,5 @@
-import { CommunitySection } from "@/components/sections/community";
+import { redirect } from "next/navigation";
 
 export default function CommunityPage() {
-	return <CommunitySection />;
+	redirect("/coming-soon");
 }

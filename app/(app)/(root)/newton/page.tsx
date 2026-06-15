@@ -2,7 +2,7 @@ import { headers } from "next/headers";
 import { AppSidebar } from "@/components/app-sidebar";
 import { DashboardHeader } from "@/components/dashboard-header";
 import { NewtonHeroSection } from "@/components/sections/newton-hero-loader";
-import { NewtonMarketingSection } from "@/components/sections/newton-marketing";
+import { redirect } from "next/navigation";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { auth } from "@/lib/auth";
@@ -40,5 +40,5 @@ export default async function NewtonPage() {
 		);
 	}
 
-	return <NewtonMarketingSection />;
+	redirect("/coming-soon");
 }

@@ -1,5 +1,5 @@
-import { CareersSection } from "@/components/sections/careers";
+import { redirect } from "next/navigation";
 
 export default function CareersPage() {
-	return <CareersSection />;
+	redirect("/coming-soon");
 }

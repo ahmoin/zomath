@@ -1,5 +1,5 @@
-import { CompetitionSection } from "@/components/sections/competition";
+import { redirect } from "next/navigation";
 
 export default function CompetitionPage() {
-	return <CompetitionSection />;
+	redirect("/coming-soon");
 }

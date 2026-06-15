@@ -1,5 +1,5 @@
-import { StudentsSection } from "@/components/sections/students";
+import { redirect } from "next/navigation";
 
 export default function StudentsPage() {
-	return <StudentsSection />;
+	redirect("/coming-soon");
 }

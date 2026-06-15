@@ -1,5 +1,5 @@
-import { ProgressSection } from "@/components/sections/progress";
+import { redirect } from "next/navigation";
 
 export default function ProgressPage() {
-	return <ProgressSection />;
+	redirect("/coming-soon");
 }

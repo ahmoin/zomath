@@ -1,5 +1,5 @@
-import { GeometrySection } from "@/components/sections/geometry-marketing";
+import { redirect } from "next/navigation";
 
 export default function GeometryPage() {
-	return <GeometrySection />;
+	redirect("/coming-soon");
 }

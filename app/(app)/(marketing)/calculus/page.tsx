@@ -1,5 +1,5 @@
-import { CalculusSection } from "@/components/sections/calculus";
+import { redirect } from "next/navigation";
 
 export default function CalculusPage() {
-	return <CalculusSection />;
+	redirect("/coming-soon");
 }

@@ -1,5 +1,5 @@
-import { HelpSection } from "@/components/sections/help";
+import { redirect } from "next/navigation";
 
 export default function HelpPage() {
-	return <HelpSection />;
+	redirect("/coming-soon");
 }

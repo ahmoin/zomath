@@ -1,5 +1,5 @@
-import { ConceptsSection } from "@/components/sections/concepts";
+import { redirect } from "next/navigation";
 
 export default function ConceptsPage() {
-	return <ConceptsSection />;
+	redirect("/coming-soon");
 }

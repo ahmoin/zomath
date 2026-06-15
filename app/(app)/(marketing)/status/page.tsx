@@ -1,5 +1,5 @@
-import { StatusSection } from "@/components/sections/status";
+import { redirect } from "next/navigation";
 
 export default function StatusPage() {
-	return <StatusSection />;
+	redirect("/coming-soon");
 }

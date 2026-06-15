@@ -1,5 +1,5 @@
-import { SchoolsSection } from "@/components/sections/schools-marketing";
+import { redirect } from "next/navigation";
 
 export default function SchoolsPage() {
-	return <SchoolsSection />;
+	redirect("/coming-soon");
 }

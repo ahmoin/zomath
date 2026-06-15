@@ -1,5 +1,5 @@
-import { AlgebraSection } from "@/components/sections/algebra";
+import { redirect } from "next/navigation";
 
 export default function AlgebraPage() {
-	return <AlgebraSection />;
+	redirect("/coming-soon");
 }

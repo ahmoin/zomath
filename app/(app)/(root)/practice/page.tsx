@@ -3,7 +3,7 @@ import { AppSidebar } from "@/components/app-sidebar";
 import { DashboardHeader } from "@/components/dashboard-header";
 import { HeaderSlotProvider } from "@/components/dashboard-header-context";
 import { PracticeFormatSelect } from "@/components/sections/practice-hero/format-select";
-import { PracticeSection } from "@/components/sections/practice-marketing";
+import { redirect } from "next/navigation";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { auth } from "@/lib/auth";
@@ -45,5 +45,5 @@ export default async function PracticePage() {
 		);
 	}
 
-	return <PracticeSection />;
+	redirect("/coming-soon");
 }

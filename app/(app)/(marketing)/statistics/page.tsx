@@ -1,5 +1,5 @@
-import { StatisticsSection } from "@/components/sections/statistics";
+import { redirect } from "next/navigation";
 
 export default function StatisticsPage() {
-	return <StatisticsSection />;
+	redirect("/coming-soon");
 }
