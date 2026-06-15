@@ -103,6 +103,7 @@ export function PracticeSavedView({
 			goNext={goNext}
 			goBack={goBack}
 			setPhase={setPhase}
+			practiceUpdating={false}
 		/>
 	);
 }
