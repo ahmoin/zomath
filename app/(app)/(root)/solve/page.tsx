@@ -1,6 +1,6 @@
 import { headers } from "next/headers";
 import { SolveInterface } from "@/components/sections/solve-interface";
-import { SolveMarketing } from "@/components/sections/solve-marketing";
+import { SolveSection } from "@/components/sections/solve-marketing";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { auth } from "@/lib/auth";
@@ -23,7 +23,7 @@ export default async function SolvePage() {
 	return (
 		<div className="flex min-h-svh flex-col">
 			<SiteHeader />
-			<SolveMarketing />
+			<SolveSection />
 			<SiteFooter />
 		</div>
 	);

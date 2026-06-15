@@ -1,5 +1,5 @@
-import { SchoolsMarketingSection } from "@/components/sections/schools-marketing";
+import { SchoolsSection } from "@/components/sections/schools-marketing";
 
 export default function SchoolsPage() {
-	return <SchoolsMarketingSection />;
+	return <SchoolsSection />;
 }

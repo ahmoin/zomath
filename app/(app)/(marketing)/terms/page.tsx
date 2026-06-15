@@ -1,5 +1,5 @@
-import { TermsMarketingSection } from "@/components/sections/terms-marketing";
+import { TermsSection } from "@/components/sections/terms-marketing";
 
 export default function TermsPage() {
-	return <TermsMarketingSection />;
+	return <TermsSection />;
 }

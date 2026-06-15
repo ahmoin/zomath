@@ -14,7 +14,7 @@ import { Stats } from "@/components/sections/schools-marketing/stats";
 import { Testimonials } from "@/components/sections/schools-marketing/testimonials";
 import { Separator } from "@/components/ui/separator";
 
-export function SchoolsMarketingSection() {
+export function SchoolsSection() {
 	return (
 		<main className="flex min-h-screen flex-col">
 			<Hero />

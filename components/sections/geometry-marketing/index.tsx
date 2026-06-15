@@ -36,7 +36,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 
-export function GeometryMarketingSection() {
+export function GeometrySection() {
 	return (
 		<main className="flex flex-col">
 			<section className="py-24 lg:py-32">

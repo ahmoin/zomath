@@ -37,7 +37,7 @@ import {
 } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 
-export function SolveMarketing() {
+export function SolveSection() {
 	return (
 		<main className="flex min-h-svh flex-col">
 			<section className="py-24 lg:py-32">

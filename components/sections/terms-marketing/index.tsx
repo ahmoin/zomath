@@ -36,7 +36,7 @@ import { TableOfContents } from "@/components/sections/terms-marketing/table-of-
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 
-export function TermsMarketingSection() {
+export function TermsSection() {
 	const [mobileTocOpen, setMobileTocOpen] = useState(false);
 
 	return (
