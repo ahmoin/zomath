@@ -94,11 +94,6 @@ const data = {
 			icon: <HugeiconsIcon icon={DashboardSquare01Icon} strokeWidth={2} />,
 		},
 		{
-			title: "Progress",
-			url: "/progress",
-			icon: <HugeiconsIcon icon={ChartHistogramIcon} strokeWidth={2} />,
-		},
-		{
 			title: "Practice",
 			url: "/practice",
 			icon: <HugeiconsIcon icon={BookOpen01Icon} strokeWidth={2} />,
@@ -119,14 +114,9 @@ const data = {
 	],
 	documents: [
 		{
-			name: "Newton AI",
+			name: "Newton",
 			url: "/newton",
 			icon: <HugeiconsIcon icon={SparklesIcon} strokeWidth={2} />,
-		},
-		{
-			name: "Competitions",
-			url: "/competition",
-			icon: <HugeiconsIcon icon={Trophy} strokeWidth={2} />,
 		},
 	],
 };

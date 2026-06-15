@@ -39,18 +39,26 @@ const PLACEHOLDERS = [
 
 const ACCEPT = ".pdf,.doc,.docx,.png,.jpg,.jpeg,.txt,.md,.csv,.json,.ppt,.pptx";
 
-type UploadedFile = { name: string; url: string };
-type Source = { number: string; title: string; url: string };
-type Message = { role: "user" | "assistant"; text: string; sources?: Source[] };
+import type {
+	JournalMessage,
+	JournalSource,
+	JournalUploadedFile,
+} from "@/lib/types";
+
+type UploadedFile = JournalUploadedFile;
+type Source = JournalSource;
+type Message = JournalMessage;
 
 export function JournalAiInput({
 	centered,
 	onClose,
 	journalId,
+	onSuggestion,
 }: {
 	centered?: boolean;
 	onClose?: () => void;
 	journalId?: string;
+	onSuggestion?: (text: string) => void;
 }) {
 	const [value, setValue] = useState("");
 	const [placeholderIndex, setPlaceholderIndex] = useState(0);
@@ -171,20 +179,44 @@ export function JournalAiInput({
 			const decoder = new TextDecoder();
 			let accumulated = "";
 			let sources: Source[] = [];
+			let lineBuffer = "";
+			let shouldSuggest = false;
 
 			while (true) {
 				const { done, value: chunk } = await reader.read();
-				if (done) break;
-				const text = decoder.decode(chunk, { stream: true });
-				if (accumulated === "" && text.startsWith("data:sources:")) {
-					const newlineIdx = text.indexOf("\n\n");
-					const sourcesJson = text.slice("data:sources:".length, newlineIdx);
-					sources = JSON.parse(sourcesJson);
-					setStreamingSources(sources);
-					accumulated += text.slice(newlineIdx + 2);
-				} else {
-					accumulated += text;
+				if (done) {
+					if (lineBuffer && !lineBuffer.startsWith("data:")) {
+						accumulated += lineBuffer;
+						setStreamingText(accumulated);
+					}
+					break;
 				}
+				lineBuffer += decoder.decode(chunk, { stream: true });
+				const newlineIdx = lineBuffer.lastIndexOf("\n");
+				if (newlineIdx === -1) continue;
+				const completeLines = lineBuffer.slice(0, newlineIdx + 1);
+				lineBuffer = lineBuffer.slice(newlineIdx + 1);
+				const filtered = completeLines
+					.split("\n")
+					.filter((line) => {
+						if (line.startsWith("data:step:")) return false;
+						if (line.startsWith("data:suggest:")) {
+							if (line.slice("data:suggest:".length).trim() === "true") {
+								shouldSuggest = true;
+							}
+							return false;
+						}
+						if (line.startsWith("data:sources:")) {
+							try {
+								sources = JSON.parse(line.slice("data:sources:".length));
+								setStreamingSources(sources);
+							} catch {}
+							return false;
+						}
+						return true;
+					})
+					.join("\n");
+				accumulated += filtered;
 				setStreamingText(accumulated);
 			}
 
@@ -194,6 +226,9 @@ export function JournalAiInput({
 			]);
 			setStreamingText("");
 			setStreamingSources([]);
+			if (shouldSuggest && onSuggestion && accumulated) {
+				onSuggestion(accumulated);
+			}
 		} catch (err) {
 			if ((err as Error).name !== "AbortError") {
 				setMessages((prev) => [
@@ -292,7 +327,7 @@ export function JournalAiInput({
 	return (
 		<>
 			<div
-				className="fixed inset-0 z-[999998] transition-all duration-300 ease-out"
+				className="fixed inset-0 z-999998 transition-all duration-300 ease-out"
 				style={{
 					background: centered ? "rgba(0,0,0,0.2)" : "rgba(0,0,0,0)",
 					backdropFilter: centered ? "blur(4px)" : "blur(0px)",
@@ -303,7 +338,7 @@ export function JournalAiInput({
 
 			<div
 				ref={containerRef}
-				className="fixed isolate z-[999999] left-1/2 transition-all duration-300 ease-out"
+				className="fixed isolate z-999999 left-1/2 transition-all duration-300 ease-out"
 				style={{
 					transform: centered ? "translate(-50%, -50%)" : "translate(-50%, 0)",
 					top: centered ? "50%" : "8px",
@@ -348,7 +383,7 @@ export function JournalAiInput({
 									<Textarea
 										ref={textareaRef}
 										rows={1}
-										className="w-full pl-4 pr-2 pt-1 pb-1.5 bg-transparent text-sm leading-[1.4] text-neutral-800 border-none shadow-none focus-visible:ring-0 resize-none overflow-y-auto min-h-9 max-h-[108px] [transition:height_150ms_cubic-bezier(0.25,0.46,0.45,0.94)]"
+										className="w-full pl-4 pr-2 pt-1 pb-1.5 bg-transparent text-sm leading-[1.4] text-neutral-800 border-none shadow-none focus-visible:ring-0 resize-none overflow-y-auto min-h-9 max-h-27 [transition:height_150ms_cubic-bezier(0.25,0.46,0.45,0.94)]"
 										value={value}
 										onChange={(e) => setValue(e.target.value)}
 										onInput={handleInput}
@@ -439,7 +474,7 @@ export function JournalAiInput({
 												className="size-3.5 shrink-0 text-green-600/70"
 												strokeWidth={1.5}
 											/>
-											<span className="text-[12px] truncate text-neutral-800/80 max-w-[160px]">
+											<span className="text-[12px] truncate text-neutral-800/80 max-w-40">
 												{f.name}
 											</span>
 											<button
@@ -472,7 +507,7 @@ export function JournalAiInput({
 							}}
 							onClick={(e) => e.stopPropagation()}
 						>
-							<div className="px-4 py-4 overflow-y-auto space-y-3 max-h-[35vh] min-h-[120px]">
+							<div className="px-4 py-4 overflow-y-auto space-y-3 max-h-[35vh] min-h-30">
 								{messages.map((msg, i) =>
 									msg.role === "user" ? (
 										<div key={i} className="flex justify-end">

@@ -2,14 +2,66 @@
 
 import { Loading01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import type { SerializedEditorState } from "lexical";
-import { useEffect, useState } from "react";
+import type { LexicalEditor, SerializedEditorState } from "lexical";
+import { $getRoot } from "lexical";
+import { useEffect, useRef, useState } from "react";
 import { BlockViewerProvider } from "@/components/block-viewer-provider";
 import { useDebounce } from "@/components/editor/editor-hooks/use-debounce";
+import { $createSuggestionNode } from "@/components/editor/nodes/suggestion-node";
 import { Editor } from "@/components/sections/editor-x";
 import { JournalAiInput } from "@/components/sections/journal-ai-input";
 import { localDb } from "@/lib/local-db";
-import type { Journal } from "@/lib/types";
+import type { Journal, SuggestionBlock } from "@/lib/types";
+
+function parseMarkdownToBlocks(markdown: string): SuggestionBlock[] {
+	const blocks: SuggestionBlock[] = [];
+	const paragraphs = markdown.split(/\n{2,}/);
+
+	for (const para of paragraphs) {
+		const trimmed = para
+			.trim()
+			.replace(/\[\d+(?:,\s*\d+)*\]/g, "")
+			.replace(/\s{2,}/g, " ")
+			.trim();
+		if (!trimmed) continue;
+
+		const id = crypto.randomUUID();
+		const rawLines = trimmed.split("\n");
+
+		if (trimmed.startsWith("### ")) {
+			blocks.push({ id, raw: trimmed, type: "h3", lines: [trimmed.slice(4)] });
+		} else if (trimmed.startsWith("## ")) {
+			blocks.push({ id, raw: trimmed, type: "h2", lines: [trimmed.slice(3)] });
+		} else if (trimmed.startsWith("# ")) {
+			blocks.push({ id, raw: trimmed, type: "h1", lines: [trimmed.slice(2)] });
+		} else if (rawLines.every((l) => l.startsWith("> "))) {
+			blocks.push({
+				id,
+				raw: trimmed,
+				type: "blockquote",
+				lines: rawLines.map((l) => l.slice(2)),
+			});
+		} else if (rawLines.every((l) => /^[-*]\s/.test(l))) {
+			blocks.push({
+				id,
+				raw: trimmed,
+				type: "bullet",
+				lines: rawLines.map((l) => l.replace(/^[-*]\s/, "")),
+			});
+		} else if (rawLines.every((l) => /^\d+\.\s/.test(l))) {
+			blocks.push({
+				id,
+				raw: trimmed,
+				type: "numbered",
+				lines: rawLines.map((l) => l.replace(/^\d+\.\s/, "")),
+			});
+		} else {
+			blocks.push({ id, raw: trimmed, type: "paragraph", lines: [trimmed] });
+		}
+	}
+
+	return blocks;
+}
 
 export function JournalView({
 	journal,
@@ -27,6 +79,7 @@ export function JournalView({
 	>(undefined);
 	const [isReady, setIsReady] = useState(false);
 	const [newtonOpen, setNewtonOpen] = useState(false);
+	const editorRef = useRef<LexicalEditor | null>(null);
 
 	const syncToCloud = async (
 		updatedTitle: string,
@@ -41,7 +94,6 @@ export function JournalView({
 					content: JSON.stringify(state),
 				}),
 			});
-
 			if (!response.ok) throw new Error("Sync failed");
 			setSyncStatus("saved");
 		} catch (error) {
@@ -55,7 +107,6 @@ export function JournalView({
 	useEffect(() => {
 		async function loadData() {
 			const cached = await localDb.journals.get(journal.id);
-
 			if (cached) {
 				setInitialState(cached.content);
 			} else if (journal.content && journal.content.trim() !== "") {
@@ -73,14 +124,26 @@ export function JournalView({
 	const handleContentChange = (state: SerializedEditorState) => {
 		localDb.journals.put({
 			id: journal.id,
-			title: title,
+			title,
 			content: state,
 			updatedAt: Date.now(),
 		});
-
 		setSyncStatus("syncing");
 		debouncedCloudSync(title, state);
 	};
+
+	function handleSuggestion(text: string) {
+		const editor = editorRef.current;
+		if (!editor) return;
+		const blocks = parseMarkdownToBlocks(text);
+		if (blocks.length === 0) return;
+		editor.update(() => {
+			const root = $getRoot();
+			for (const block of blocks) {
+				root.append($createSuggestionNode(block));
+			}
+		});
+	}
 
 	if (!isReady) {
 		return (
@@ -102,6 +165,7 @@ export function JournalView({
 				centered={newtonOpen}
 				onClose={() => setNewtonOpen(false)}
 				journalId={journal.id}
+				onSuggestion={handleSuggestion}
 			/>
 			<header className="flex items-center gap-3 border-b border-border px-4 lg:px-6 py-4">
 				<input
@@ -123,6 +187,9 @@ export function JournalView({
 						editorSerializedState={initialState}
 						onSerializedChange={handleContentChange}
 						onAskNewton={() => setNewtonOpen(true)}
+						onEditorReady={(editor) => {
+							editorRef.current = editor;
+						}}
 					/>
 				</BlockViewerProvider>
 			</div>

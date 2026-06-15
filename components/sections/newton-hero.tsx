@@ -121,23 +121,18 @@ import { useLocalStorage } from "@/hooks/use-local-storage";
 import { chatModels, DEFAULT_CHAT_MODEL } from "@/lib/ai/models";
 import { cn } from "@/lib/utils";
 
-type HugeIcon = HugeiconsIconProps["icon"];
-type Mode = "text" | "voice";
-type FilePart = { mediaType: string; name: string; data: string };
-type ConvMessage = {
-	role: "user" | "assistant";
-	content: string;
-	files?: FilePart[];
-	reasoning?: string;
-	journals?: { id: string; title: string; updated?: boolean }[];
-	practices?: { id: string; title: string }[];
-	projects?: { id: string; title: string }[];
-};
+import type {
+	NewtonFilePart,
+	NewtonMessage,
+	NewtonMode,
+	NewtonSpeechData,
+} from "@/lib/types";
 
-type SpeechData = {
-	audio: { uint8ArrayData: Record<number, number>; mediaType: string };
-	segments: { text: string; startSecond: number; endSecond: number }[];
-};
+type HugeIcon = HugeiconsIconProps["icon"];
+type Mode = NewtonMode;
+type FilePart = NewtonFilePart;
+type ConvMessage = NewtonMessage;
+type SpeechData = NewtonSpeechData;
 
 const stateButtons: { state: PersonaState; icon: HugeIcon; label: string }[] = [
 	{ state: "idle", icon: RadioIcon, label: "Idle" },
@@ -211,7 +206,7 @@ function AuthedPersona({
 	initialMessages?: ConvMessage[];
 }) {
 	const pathname = usePathname();
-	const [mode, setMode] = useLocalStorage<Mode>("newton:mode", "voice");
+	const [mode, setMode] = useLocalStorage<Mode>("newton:mode", "text");
 	const [model, setModel] = useLocalStorage("newton:model", DEFAULT_CHAT_MODEL);
 	const [modelSelectorOpen, setModelSelectorOpen] = useState(false);
 	const [personaState, setPersonaState] = useState<PersonaState>("idle");

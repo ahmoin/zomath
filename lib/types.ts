@@ -154,3 +154,48 @@ export type LexicalJsonNode = {
 	children?: LexicalJsonNode[];
 	[key: string]: unknown;
 };
+
+export type JournalUploadedFile = { name: string; url: string };
+
+export type JournalSource = { number: string; title: string; url: string };
+
+export type JournalMessage = {
+	role: "user" | "assistant";
+	text: string;
+	sources?: JournalSource[];
+};
+
+export type NewtonMode = "text" | "voice";
+
+export type NewtonFilePart = { mediaType: string; name: string; data: string };
+
+export type NewtonMessage = {
+	role: "user" | "assistant";
+	content: string;
+	files?: NewtonFilePart[];
+	reasoning?: string;
+	journals?: { id: string; title: string; updated?: boolean }[];
+	practices?: { id: string; title: string }[];
+	projects?: { id: string; title: string }[];
+};
+
+export type NewtonSpeechData = {
+	audio: { uint8ArrayData: Record<number, number>; mediaType: string };
+	segments: { text: string; startSecond: number; endSecond: number }[];
+};
+
+export type SuggestionBlockType =
+	| "h1"
+	| "h2"
+	| "h3"
+	| "paragraph"
+	| "bullet"
+	| "numbered"
+	| "blockquote";
+
+export type SuggestionBlock = {
+	id: string;
+	raw: string;
+	type: SuggestionBlockType;
+	lines: string[];
+};

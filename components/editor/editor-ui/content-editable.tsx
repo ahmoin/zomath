@@ -9,6 +9,7 @@ type Props = {
 	className?: string;
 	placeholderClassName?: string;
 	scrollToTop?: boolean;
+	noScroll?: boolean;
 };
 
 export function ContentEditable({
@@ -16,6 +17,7 @@ export function ContentEditable({
 	className,
 	placeholderClassName,
 	scrollToTop,
+	noScroll,
 }: Props): JSX.Element {
 	const ref = useRef<HTMLDivElement>(null);
 
@@ -32,7 +34,7 @@ export function ContentEditable({
 	return (
 		<LexicalContentEditable
 			ref={ref}
-			className={`ContentEditable__root relative min-h-72 overflow-auto px-4 py-2 focus:outline-none ${className ?? ""}`.trim()}
+			className={`ContentEditable__root relative min-h-72 ${noScroll ? "overflow-visible" : "overflow-auto"} px-4 py-2 focus:outline-none ${className ?? ""}`.trim()}
 			aria-placeholder={placeholder}
 			placeholder={
 				<div

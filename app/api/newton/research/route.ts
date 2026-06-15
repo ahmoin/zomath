@@ -1,4 +1,4 @@
-import { stepCountIs, streamText } from "ai";
+import { generateText, stepCountIs, streamText } from "ai";
 import { and, eq } from "drizzle-orm";
 import { headers } from "next/headers";
 import { DEFAULT_CHAT_MODEL } from "@/lib/ai/models";
@@ -103,6 +103,14 @@ export async function POST(request: Request) {
 
 	const tracker: SourceTracker = { sources: [], count: 0 };
 
+	const classifyPromise = journalId
+		? generateText({
+				model: DEFAULT_CHAT_MODEL,
+				maxTokens: 3,
+				prompt: `A user has a journal open and sent this message to an AI assistant: "${query}"\n\nShould the AI's response be offered as journal content to add or apply to the journal? Answer only "yes" or "no".\n\nExamples that should be yes: "add notes about X", "replace Y with Z", "rewrite this", "summarize into notes", "write an intro", "fix the grammar".\nExamples that should be no: "what does this mean?", "is this correct?", "explain this to me", "what is this journal about?", "review my notes".`,
+			}).catch(() => null)
+		: Promise.resolve(null);
+
 	const result = streamText({
 		model: DEFAULT_CHAT_MODEL,
 		system: researchNewtonPrompt + currentJournalContext,
@@ -158,6 +166,10 @@ export async function POST(request: Request) {
 				controller.enqueue(
 					encoder.encode(`data:sources:${JSON.stringify(tracker.sources)}\n\n`),
 				);
+			}
+			const classification = await classifyPromise;
+			if (classification?.text.trim().toLowerCase().startsWith("y")) {
+				controller.enqueue(encoder.encode("\ndata:suggest:true\n\n"));
 			}
 			controller.close();
 		},

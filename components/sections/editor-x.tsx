@@ -35,9 +35,11 @@ import {
 	configExtension,
 	defineExtension,
 	type EditorState,
+	type LexicalEditor,
 	type SerializedEditorState,
 } from "lexical";
-import { useMemo, useState } from "react";
+import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
+import React, { useEffect, useMemo, useState } from "react";
 import { useBlockViewer } from "@/components/block-viewer-provider";
 import { ContentEditable } from "@/components/editor/editor-ui/content-editable";
 import { DateTimeExtension } from "@/components/editor/extensions/date-time-extension";
@@ -48,6 +50,7 @@ import { KeywordsExtension } from "@/components/editor/extensions/keywords-exten
 import { MarkdownShortcutsExtension } from "@/components/editor/extensions/markdown-shortcuts-extension";
 import { MaxLengthExtension } from "@/components/editor/extensions/max-length-extension";
 import { AutocompleteNode } from "@/components/editor/nodes/autocomplete-node";
+import { SuggestionNode } from "@/components/editor/nodes/suggestion-node";
 import { TweetNode } from "@/components/editor/nodes/embeds/tweet-node";
 import { YouTubeNode } from "@/components/editor/nodes/embeds/youtube-node";
 import { EmojiNode } from "@/components/editor/nodes/emoji-node";
@@ -125,6 +128,7 @@ import { HistoryToolbarPlugin } from "@/components/editor/plugins/toolbar/histor
 import { LinkToolbarPlugin } from "@/components/editor/plugins/toolbar/link-toolbar-plugin";
 import { SubSuperToolbarPlugin } from "@/components/editor/plugins/toolbar/subsuper-toolbar-plugin";
 import { ToolbarPlugin } from "@/components/editor/plugins/toolbar/toolbar-plugin";
+import { SuggestionPlugin } from "@/components/editor/plugins/suggestion-plugin";
 import { TypingPerfPlugin } from "@/components/editor/plugins/typing-pref-plugin";
 import { editorTheme } from "@/components/editor/themes/editor-theme";
 import { EMOJI } from "@/components/editor/transformers/markdown-emoji-transformer";
@@ -140,18 +144,32 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 const placeholder = 'Start writing or type "/" to see commands...';
 const maxLength = 2147483647;
 
+function EditorReadyPlugin({
+	onReady,
+}: { onReady: (editor: LexicalEditor) => void }) {
+	const [editor] = useLexicalComposerContext();
+	useEffect(() => {
+		onReady(editor);
+	}, [editor, onReady]);
+	return null;
+}
+
 export function Editor({
 	editorState,
 	editorSerializedState,
 	onChange,
 	onSerializedChange,
 	onAskNewton,
+	onEditorReady,
+	append,
 }: {
 	editorState?: EditorState;
 	editorSerializedState?: SerializedEditorState;
 	onChange?: (editorState: EditorState) => void;
 	onSerializedChange?: (editorSerializedState: SerializedEditorState) => void;
 	onAskNewton?: () => void;
+	onEditorReady?: (editor: LexicalEditor) => void;
+	append?: React.ReactNode;
 }) {
 	const {
 		toolbarItems,
@@ -235,6 +253,7 @@ export function Editor({
 					YouTubeNode,
 					AutocompleteNode,
 					SpecialTextNode,
+					SuggestionNode,
 				],
 				$initialEditorState(editor) {
 					if (editorSerializedState) {
@@ -368,15 +387,17 @@ export function Editor({
 									</div>
 								)}
 								<div
-									className="relative flex flex-col flex-1 min-h-0"
+									className={`relative flex flex-col flex-1 min-h-0 ${append ? "overflow-y-auto" : ""}`}
 									ref={onRef}
 								>
 									<ContentEditable
 										placeholder={placeholder}
 										placeholderClassName={`${pluginItems.draggableBlock ? "pl-14" : "pl-4"}`}
-										className={`h-full ${pluginItems.draggableBlock ? "pl-14" : "pl-4"}`}
-										scrollToTop
+										className={`${append ? "min-h-full" : "h-full"} ${pluginItems.draggableBlock ? "pl-14" : "pl-4"}`}
+										noScroll={!!append}
+										scrollToTop={!append}
 									/>
+									{append}
 								</div>
 							</div>
 							{pluginItems.componentPicker && (
@@ -598,6 +619,8 @@ export function Editor({
 						</ActionsPlugin>
 					</div>
 
+					<SuggestionPlugin />
+					{onEditorReady && <EditorReadyPlugin onReady={onEditorReady} />}
 					<OnChangePlugin
 						ignoreSelectionChange={true}
 						onChange={(editorState) => {
