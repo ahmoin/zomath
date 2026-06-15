@@ -106,7 +106,7 @@ export async function POST(request: Request) {
 	const classifyPromise = journalId
 		? generateText({
 				model: DEFAULT_CHAT_MODEL,
-				maxTokens: 3,
+				maxOutputTokens: 3,
 				prompt: `A user has a journal open and sent this message to an AI assistant: "${query}"\n\nShould the AI's response be offered as journal content to add or apply to the journal? Answer only "yes" or "no".\n\nExamples that should be yes: "add notes about X", "replace Y with Z", "rewrite this", "summarize into notes", "write an intro", "fix the grammar".\nExamples that should be no: "what does this mean?", "is this correct?", "explain this to me", "what is this journal about?", "review my notes".`,
 			}).catch(() => null)
 		: Promise.resolve(null);
