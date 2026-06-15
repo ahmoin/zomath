@@ -7,6 +7,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { auth } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { journal, project, projectResource } from "@/lib/schema";
+import type { ProjectResource } from "@/lib/types";
 import { ProjectView } from "./project-view";
 
 export default async function ProjectPage({
@@ -27,7 +28,7 @@ export default async function ProjectPage({
 			.select()
 			.from(projectResource)
 			.where(eq(projectResource.projectId, id))
-			.orderBy(projectResource.createdAt),
+			.orderBy(projectResource.createdAt) as Promise<ProjectResource[]>,
 		db
 			.select({ id: journal.id, title: journal.title })
 			.from(journal)
