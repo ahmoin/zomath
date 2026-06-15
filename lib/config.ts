@@ -1,7 +1,7 @@
 export const siteConfig = {
 	name: "Zomath",
 	url: "https://zomath.vercel.app",
-	ogImage: "https://zomath.vercel.app/og.jpg",
+	ogImage: "https://zomath.vercel.app/og.png",
 	description:
 		"Unlike traditional math apps that just give answers, Zomath builds genuine understanding through personalized explanations, visual learning, and adaptive practice.",
 	links: {
