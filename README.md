@@ -8,6 +8,8 @@ Zomath is an AI-powered learning platform where your work lives in **Projects** 
 
 > Turn complex problems into clear concepts, for free.
 
+**Try it now:** [zomath.vercel.app](https://zomath.vercel.app)
+
 ## ✨ Features
 
 ### Projects and Journals
@@ -78,11 +80,10 @@ A log of every Newton conversation and Solve session so you can revisit explanat
    | Google OAuth | `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET` | Google login provider |
    | OpenRouter | `OPENROUTER_API_KEY` | LLM API for all AI features (Newton tutor, problem solving, practice, research) |
    | Tavily | `TAVILY_API_KEY` | Web search for AI responses |
-   | ElevenLabs | `ELEVENLABS_API_KEY` | Text-to-speech for tutorials |
+   | ElevenLabs | `ELEVENLABS_API_KEY` | Text-to-speech for Newton voice |
    | Vercel Blob | `BLOB_READ_WRITE_TOKEN` | File storage for PDFs and uploads |
    | Turso | `TURSO_DATABASE_URL`, `TURSO_AUTH_TOKEN` | Database credentials |
    | Polar | `POLAR_ACCESS_TOKEN`, `POLAR_PLUS_MONTHLY_ID`, `POLAR_PLUS_YEARLY_ID`, `POLAR_WEBHOOK_SECRET` | Subscription management |
-   | BetterStack | `BETTERSTACK_API_TOKEN` | Error tracking and monitoring |
 
 4. **Set up the database**
    ```bash
@@ -106,6 +107,9 @@ Build and start the production server:
 pnpm build
 pnpm start
 ```
+
+### Deployment
+Zomath is deployed on [Vercel](https://vercel.com).
 
 ### Database Management
 - **Push schema changes:** `pnpm db:push`
