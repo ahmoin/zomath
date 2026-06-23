@@ -19,9 +19,9 @@ export function Cta() {
 						Your next competition starts here.
 					</h2>
 					<p className="text-muted-foreground text-lg leading-relaxed mb-8 max-w-xl mx-auto">
-						Join thousands of students preparing for their next competition
-						with Newton. Whether you are aiming for your first AIME qualifier
-						or a USAMO medal, the training starts now.
+						Join thousands of students preparing for their next competition with
+						Newton. Whether you are aiming for your first AIME qualifier or a
+						USAMO medal, the training starts now.
 					</p>
 					<Button asChild size="lg">
 						<Link href="/practice">

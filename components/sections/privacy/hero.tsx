@@ -23,8 +23,8 @@ export function Hero() {
 					<p className="mt-6 text-lg text-muted-foreground leading-relaxed max-w-2xl">
 						Zomath exists to help you understand math more deeply, and that
 						requires trust. This policy explains what data we collect, why we
-						collect it, how we protect it, and the control you always have
-						over your information.
+						collect it, how we protect it, and the control you always have over
+						your information.
 					</p>
 					<div className="mt-6 flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
 						<span>Effective date: May 5, 2026</span>

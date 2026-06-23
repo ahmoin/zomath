@@ -12,8 +12,8 @@ export function ProofStats() {
 					</h2>
 					<p className="mt-4 text-muted-foreground leading-relaxed">
 						Most platforms count correct answers and call it progress. Zomath
-						measures whether you actually understand the math, and shows you
-						the proof.
+						measures whether you actually understand the math, and shows you the
+						proof.
 					</p>
 				</div>
 				<div className="mt-16 grid gap-6 md:grid-cols-3">
@@ -22,8 +22,12 @@ export function ProofStats() {
 							key={stat.label}
 							className="flex flex-col gap-4 rounded-2xl border border-border bg-muted/30 p-8"
 						>
-							<div className="text-4xl font-bold text-primary">{stat.value}</div>
-							<p className="text-sm font-medium text-foreground">{stat.label}</p>
+							<div className="text-4xl font-bold text-primary">
+								{stat.value}
+							</div>
+							<p className="text-sm font-medium text-foreground">
+								{stat.label}
+							</p>
 							<p className="text-xs text-muted-foreground leading-relaxed">
 								{stat.description}
 							</p>

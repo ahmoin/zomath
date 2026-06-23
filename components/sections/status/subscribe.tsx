@@ -1,6 +1,10 @@
 "use client";
 
-import { ArrowRight02Icon, Call02Icon, Notification01Icon } from "@hugeicons/core-free-icons";
+import {
+	ArrowRight02Icon,
+	Call02Icon,
+	Notification01Icon,
+} from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -26,8 +30,8 @@ export function Subscribe() {
 								Get Notified About Status Changes
 							</h2>
 							<p className="text-muted-foreground leading-relaxed">
-								Subscribe to real-time updates so you are the first to know
-								when something changes. We only send notifications for actual
+								Subscribe to real-time updates so you are the first to know when
+								something changes. We only send notifications for actual
 								incidents and resolutions, never spam.
 							</p>
 						</div>

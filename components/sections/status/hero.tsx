@@ -1,6 +1,10 @@
 "use client";
 
-import { AlertCircleIcon, BeaterIcon, CheckmarkBadge01Icon } from "@hugeicons/core-free-icons";
+import {
+	AlertCircleIcon,
+	BeaterIcon,
+	CheckmarkBadge01Icon,
+} from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { services } from "@/components/sections/status/data";
 

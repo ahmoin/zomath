@@ -23,16 +23,25 @@ export function LearningPath() {
 
 				<div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
 					{learningPath.map((step) => (
-						<div key={step.step} className="relative rounded-xl border bg-card p-6">
+						<div
+							key={step.step}
+							className="relative rounded-xl border bg-card p-6"
+						>
 							<div className="flex items-center gap-3 mb-3">
 								<span className="flex items-center justify-center size-8 rounded-full bg-primary text-primary-foreground text-sm font-semibold">
 									{step.step}
 								</span>
 								<h3 className="font-semibold text-foreground">{step.title}</h3>
 							</div>
-							<p className="text-sm text-muted-foreground mb-2">{step.topics}</p>
+							<p className="text-sm text-muted-foreground mb-2">
+								{step.topics}
+							</p>
 							<div className="flex items-center gap-1.5 text-xs text-muted-foreground">
-								<HugeiconsIcon icon={AbacusIcon} className="size-3.5" strokeWidth={1.5} />
+								<HugeiconsIcon
+									icon={AbacusIcon}
+									className="size-3.5"
+									strokeWidth={1.5}
+								/>
 								{step.duration}
 							</div>
 						</div>
@@ -41,12 +50,17 @@ export function LearningPath() {
 
 				<div className="mt-8 text-center">
 					<p className="text-sm text-muted-foreground mb-4">
-						Your path may vary based on your starting level. Newton personalizes the sequence for you.
+						Your path may vary based on your starting level. Newton personalizes
+						the sequence for you.
 					</p>
 					<Button variant="outline" asChild>
 						<Link href="/concept-map?subject=algebra">
 							View your concept map
-							<HugeiconsIcon icon={ArrowRight02Icon} className="size-4 ml-1" strokeWidth={1.5} />
+							<HugeiconsIcon
+								icon={ArrowRight02Icon}
+								className="size-4 ml-1"
+								strokeWidth={1.5}
+							/>
 						</Link>
 					</Button>
 				</div>

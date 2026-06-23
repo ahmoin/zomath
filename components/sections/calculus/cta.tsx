@@ -24,8 +24,8 @@ export function Cta() {
 					</h2>
 					<p className="text-muted-foreground text-lg leading-relaxed max-w-lg mx-auto mb-8">
 						Whether you are just starting limits or deep into multivariable,
-						Newton is ready to help you understand, not just compute. Start
-						for free today.
+						Newton is ready to help you understand, not just compute. Start for
+						free today.
 					</p>
 					<div className="flex flex-wrap justify-center gap-3">
 						<Button size="lg" asChild>

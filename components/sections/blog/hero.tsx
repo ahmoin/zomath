@@ -14,8 +14,14 @@ export function Hero({ searchQuery, onSearchChange }: HeroProps) {
 			<div className="max-w-7xl mx-auto px-4 lg:px-12">
 				<div className="max-w-3xl">
 					<div className="flex items-center gap-2 mb-6">
-						<HugeiconsIcon icon={SparklesIcon} className="size-5 text-primary" strokeWidth={1.5} />
-						<span className="text-sm font-medium text-primary">Zomath Blog</span>
+						<HugeiconsIcon
+							icon={SparklesIcon}
+							className="size-5 text-primary"
+							strokeWidth={1.5}
+						/>
+						<span className="text-sm font-medium text-primary">
+							Zomath Blog
+						</span>
 					</div>
 					<h1 className="text-4xl md:text-5xl lg:text-6xl font-semibold tracking-tight text-foreground leading-[1.1]">
 						Learn better, think deeper

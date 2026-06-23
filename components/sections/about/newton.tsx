@@ -42,9 +42,8 @@ export function Newton() {
 					</h2>
 					<p className="text-muted-foreground leading-relaxed">
 						Newton is not a search engine. It is not a calculator with a chat
-						window. It is a patient, adaptive tutor that meets you where you
-						are and guides you toward real understanding, one question at a
-						time.
+						window. It is a patient, adaptive tutor that meets you where you are
+						and guides you toward real understanding, one question at a time.
 					</p>
 				</div>
 

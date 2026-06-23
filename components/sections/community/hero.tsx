@@ -23,8 +23,8 @@ export function Hero() {
 					</h1>
 					<p className="text-lg lg:text-xl text-muted-foreground leading-relaxed mb-10">
 						Math is not a solo sport. Join a community of curious learners who
-						help each other understand deeply, celebrate breakthroughs, and
-						make the hard parts a little less lonely.
+						help each other understand deeply, celebrate breakthroughs, and make
+						the hard parts a little less lonely.
 					</p>
 					<div className="flex flex-col sm:flex-row items-center justify-center gap-4">
 						<Button size="lg" asChild>

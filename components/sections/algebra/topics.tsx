@@ -26,15 +26,24 @@ export function Topics() {
 							className="group rounded-xl border bg-card p-6 hover:border-primary/50 transition-colors"
 						>
 							<div className="rounded-lg bg-muted p-2.5 w-fit mb-4">
-								<HugeiconsIcon icon={AbacusIcon} className="size-5 text-primary" strokeWidth={1.5} />
+								<HugeiconsIcon
+									icon={AbacusIcon}
+									className="size-5 text-primary"
+									strokeWidth={1.5}
+								/>
 							</div>
-							<h3 className="font-semibold text-foreground mb-2">{topic.title}</h3>
+							<h3 className="font-semibold text-foreground mb-2">
+								{topic.title}
+							</h3>
 							<p className="text-sm text-muted-foreground leading-relaxed mb-4">
 								{topic.description}
 							</p>
 							<ul className="space-y-1.5">
 								{topic.skills.map((skill) => (
-									<li key={skill} className="flex items-start gap-2 text-sm text-muted-foreground">
+									<li
+										key={skill}
+										className="flex items-start gap-2 text-sm text-muted-foreground"
+									>
 										<HugeiconsIcon
 											icon={CheckmarkCircle02Icon}
 											className="size-4 text-primary shrink-0 mt-0.5"

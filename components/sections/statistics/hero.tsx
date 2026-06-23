@@ -23,9 +23,9 @@ export function Hero() {
 					</h1>
 					<p className="text-lg text-muted-foreground leading-relaxed mb-8 max-w-2xl">
 						Statistics is the math of the real world. Master probability,
-						distributions, and hypothesis testing with Newton. From AP Stats
-						to college-level data analysis, genuinely understand the story
-						behind the numbers.
+						distributions, and hypothesis testing with Newton. From AP Stats to
+						college-level data analysis, genuinely understand the story behind
+						the numbers.
 					</p>
 					<div className="flex flex-wrap gap-3">
 						<Button asChild size="lg">

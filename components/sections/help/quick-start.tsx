@@ -16,8 +16,8 @@ export function QuickStart() {
 						Learn Zomath in three steps
 					</h2>
 					<p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-						From your first problem to genuine understanding, here is how
-						Zomath fits into your learning routine.
+						From your first problem to genuine understanding, here is how Zomath
+						fits into your learning routine.
 					</p>
 				</div>
 				<div className="grid md:grid-cols-3 gap-8">

@@ -39,8 +39,8 @@ export function DataTable() {
 					</div>
 					<p className="mt-4 text-xs text-muted-foreground text-center">
 						We never collect keystroke patterns, browsing history outside
-						Zomath, contact lists, or location data. If it is not on this
-						list, we do not have it.
+						Zomath, contact lists, or location data. If it is not on this list,
+						we do not have it.
 					</p>
 				</div>
 			</div>

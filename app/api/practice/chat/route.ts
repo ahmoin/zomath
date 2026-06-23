@@ -61,5 +61,8 @@ export async function POST(request: Request) {
 		prompt,
 	});
 
-	return Response.json({ response: output.response, suggestUpdate: output.suggestUpdate });
+	return Response.json({
+		response: output.response,
+		suggestUpdate: output.suggestUpdate,
+	});
 }

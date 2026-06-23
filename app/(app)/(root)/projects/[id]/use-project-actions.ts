@@ -66,9 +66,15 @@ export function useProjectActions(
 		try {
 			const form = new FormData();
 			form.append("file", file);
-			const uploadRes = await fetch("/api/upload", { method: "POST", body: form });
+			const uploadRes = await fetch("/api/upload", {
+				method: "POST",
+				body: form,
+			});
 			if (!uploadRes.ok) return;
-			const { url, name } = (await uploadRes.json()) as { url: string; name: string };
+			const { url, name } = (await uploadRes.json()) as {
+				url: string;
+				name: string;
+			};
 
 			const mimeType = file.type;
 			const res = await fetch(`/api/projects/${projectId}/resources`, {
@@ -95,7 +101,11 @@ export function useProjectActions(
 			const res = await fetch(`/api/projects/${projectId}/resources`, {
 				method: "POST",
 				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify({ type: "link", title: title.trim(), url: url.trim() }),
+				body: JSON.stringify({
+					type: "link",
+					title: title.trim(),
+					url: url.trim(),
+				}),
 			});
 			if (!res.ok) return;
 			const created = (await res.json()) as ProjectResource;
@@ -116,7 +126,11 @@ export function useProjectActions(
 			const res = await fetch(`/api/projects/${projectId}/resources`, {
 				method: "POST",
 				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify({ type: "note", title: title.trim(), body: body.trim() || null }),
+				body: JSON.stringify({
+					type: "note",
+					title: title.trim(),
+					body: body.trim() || null,
+				}),
 			});
 			if (!res.ok) return;
 			const created = (await res.json()) as ProjectResource;

@@ -21,10 +21,10 @@ export function Topics() {
 							Everything from the mean to the margin of error.
 						</h2>
 						<p className="text-muted-foreground leading-relaxed">
-							Whether you are building a foundation in probability or
-							preparing for the rigor of the AP Statistics exam, our
-							curriculum is designed to connect the dots between data
-							collection and statistical inference.
+							Whether you are building a foundation in probability or preparing
+							for the rigor of the AP Statistics exam, our curriculum is
+							designed to connect the dots between data collection and
+							statistical inference.
 						</p>
 					</div>
 					<div>

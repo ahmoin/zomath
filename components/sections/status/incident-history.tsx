@@ -69,7 +69,9 @@ export function IncidentHistory() {
 														<span className="text-sm text-muted-foreground">
 															{incident.date}
 														</span>
-														<span className={`text-sm font-medium ${severityConfig.colorClass}`}>
+														<span
+															className={`text-sm font-medium ${severityConfig.colorClass}`}
+														>
 															{severityConfig.label}
 														</span>
 													</div>

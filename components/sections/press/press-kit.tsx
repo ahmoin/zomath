@@ -37,9 +37,7 @@ export function PressKit() {
 								<p className="text-sm text-muted-foreground mb-2">
 									{asset.description}
 								</p>
-								<p className="text-xs text-muted-foreground">
-									{asset.format}
-								</p>
+								<p className="text-xs text-muted-foreground">{asset.format}</p>
 							</div>
 							<HugeiconsIcon
 								icon={FileDownloadIcon}

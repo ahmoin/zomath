@@ -12,8 +12,8 @@ export function Subjects() {
 						Every major subject, mapped
 					</h2>
 					<p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-						From first year algebra to competition problem solving, the
-						Concept Map covers the territory you need.
+						From first year algebra to competition problem solving, the Concept
+						Map covers the territory you need.
 					</p>
 				</div>
 				<div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">

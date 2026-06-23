@@ -12,9 +12,7 @@ export function Stats() {
 							<p className="text-3xl lg:text-4xl font-semibold text-foreground">
 								{stat.value}
 							</p>
-							<p className="text-sm text-muted-foreground mt-1">
-								{stat.label}
-							</p>
+							<p className="text-sm text-muted-foreground mt-1">{stat.label}</p>
 						</div>
 					))}
 				</div>

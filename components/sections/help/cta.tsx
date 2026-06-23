@@ -21,8 +21,8 @@ export function Cta() {
 						Ready to understand math, not just get answers?
 					</h2>
 					<p className="text-lg text-muted-foreground mb-8">
-						Start your first session with Newton and see how learning feels
-						when the focus is on genuine understanding.
+						Start your first session with Newton and see how learning feels when
+						the focus is on genuine understanding.
 					</p>
 					<div className="flex flex-col sm:flex-row items-center justify-center gap-3">
 						<Link href="/solve">

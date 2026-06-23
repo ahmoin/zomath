@@ -15,8 +15,8 @@ export function Newton() {
 						</h2>
 						<p className="text-lg text-muted-foreground leading-relaxed mb-8">
 							Most math apps give you answers. Newton gives you understanding.
-							It is the AI tutor built specifically for mathematics, trained
-							on proven pedagogy, and designed to adapt to how you think.
+							It is the AI tutor built specifically for mathematics, trained on
+							proven pedagogy, and designed to adapt to how you think.
 						</p>
 						<div className="space-y-6">
 							{newtonBullets.map((bullet) => (
@@ -63,8 +63,8 @@ export function Newton() {
 							<div className="bg-primary/10 rounded-xl rounded-tr-sm p-4 border border-primary/20">
 								<p className="text-sm text-foreground">
 									Of course! Before I explain, let me ask: when you apply the
-									chain rule, what do you think the &quot;inner function&quot; and
-									&quot;outer function&quot; are in a problem like sin(x²)?
+									chain rule, what do you think the &quot;inner function&quot;
+									and &quot;outer function&quot; are in a problem like sin(x²)?
 								</p>
 							</div>
 							<div className="bg-background rounded-xl rounded-tl-sm p-4 border border-border">
@@ -74,16 +74,15 @@ export function Newton() {
 							</div>
 							<div className="bg-primary/10 rounded-xl rounded-tr-sm p-4 border border-primary/20">
 								<p className="text-sm text-foreground">
-									Exactly right! So the chain rule says: take the derivative
-									of the outer, evaluated at the inner, then multiply by the
-									derivative of the inner. You already identified the pieces.
-									So what would that look like for sin(x²)?
+									Exactly right! So the chain rule says: take the derivative of
+									the outer, evaluated at the inner, then multiply by the
+									derivative of the inner. You already identified the pieces. So
+									what would that look like for sin(x²)?
 								</p>
 							</div>
 						</div>
 						<p className="text-xs text-muted-foreground mt-4 text-center">
-							Newton guides you to the answer. It does not just give it to
-							you.
+							Newton guides you to the answer. It does not just give it to you.
 						</p>
 					</div>
 				</div>

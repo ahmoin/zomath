@@ -39,7 +39,8 @@ import {
 	type SerializedEditorState,
 } from "lexical";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
-import React, { useEffect, useMemo, useState } from "react";
+import type React from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useBlockViewer } from "@/components/block-viewer-provider";
 import { ContentEditable } from "@/components/editor/editor-ui/content-editable";
 import { DateTimeExtension } from "@/components/editor/extensions/date-time-extension";
@@ -146,7 +147,9 @@ const maxLength = 2147483647;
 
 function EditorReadyPlugin({
 	onReady,
-}: { onReady: (editor: LexicalEditor) => void }) {
+}: {
+	onReady: (editor: LexicalEditor) => void;
+}) {
 	const [editor] = useLexicalComposerContext();
 	useEffect(() => {
 		onReady(editor);

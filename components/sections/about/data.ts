@@ -170,6 +170,6 @@ export const faqItems = [
 		value: "item-6",
 		question: "What does the name Zomath mean?",
 		answer:
-			"The \"Zo\" comes from the Greek word for life, \"zoe.\" Math is not a dead subject frozen in textbooks. It is alive, dynamic, and deeply connected to how we understand the world. Zomath is about bringing that life back into math education, making it feel as vivid and real as it actually is.",
+			'The "Zo" comes from the Greek word for life, "zoe." Math is not a dead subject frozen in textbooks. It is alive, dynamic, and deeply connected to how we understand the world. Zomath is about bringing that life back into math education, making it feel as vivid and real as it actually is.',
 	},
 ];

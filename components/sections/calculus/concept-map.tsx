@@ -1,6 +1,10 @@
 "use client";
 
-import { ArrowRight02Icon, CheckmarkCircle02Icon, Link02Icon } from "@hugeicons/core-free-icons";
+import {
+	ArrowRight02Icon,
+	CheckmarkCircle02Icon,
+	Link02Icon,
+} from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 
 export function ConceptMap() {
@@ -32,9 +36,7 @@ export function ConceptMap() {
 								<span className="text-muted-foreground">Continuity</span>
 							</div>
 							<div className="flex items-center gap-3 rounded-lg border px-4 py-3 bg-muted/50">
-								<span className="font-medium text-foreground">
-									Derivatives
-								</span>
+								<span className="font-medium text-foreground">Derivatives</span>
 								<HugeiconsIcon
 									icon={ArrowRight02Icon}
 									className="size-3.5 text-muted-foreground"
@@ -87,17 +89,15 @@ export function ConceptMap() {
 						</p>
 					</div>
 					<div>
-						<p className="text-sm font-medium text-primary mb-3">
-							Concept Map
-						</p>
+						<p className="text-sm font-medium text-primary mb-3">Concept Map</p>
 						<h2 className="text-3xl lg:text-4xl font-semibold tracking-tight text-foreground mb-4">
 							See the whole picture, not just the next problem
 						</h2>
 						<p className="text-muted-foreground text-lg leading-relaxed mb-6">
-							The Concept Map is your personal knowledge graph for calculus.
-							It shows how every topic connects, highlights where you are
-							strong in green, flags gaps in red, and recommends the most
-							efficient path forward. No more studying blindly.
+							The Concept Map is your personal knowledge graph for calculus. It
+							shows how every topic connects, highlights where you are strong in
+							green, flags gaps in red, and recommends the most efficient path
+							forward. No more studying blindly.
 						</p>
 						<ul className="flex flex-col gap-3">
 							{[

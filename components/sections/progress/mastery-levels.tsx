@@ -22,8 +22,8 @@ export function MasteryLevels() {
 					</h2>
 					<p className="mt-4 text-muted-foreground leading-relaxed">
 						Zomath doesn&apos;t give you a percentage and move on. Mastery has
-						layers, and each one represents a deeper kind of understanding.
-						Here is what each level looks like in practice.
+						layers, and each one represents a deeper kind of understanding. Here
+						is what each level looks like in practice.
 					</p>
 				</div>
 				<div className="mx-auto mt-16 max-w-3xl flex flex-col gap-6">

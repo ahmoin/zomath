@@ -17,8 +17,8 @@ export function Values() {
 						</h2>
 						<p className="text-lg text-muted-foreground leading-relaxed mb-8">
 							The Zomath community is a space where every question matters and
-							every learner belongs. Our guidelines are simple but we take
-							them seriously.
+							every learner belongs. Our guidelines are simple but we take them
+							seriously.
 						</p>
 						<Button variant="outline" asChild>
 							<Link href="/community/guidelines">

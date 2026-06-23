@@ -1,7 +1,10 @@
 "use client";
 
 import { HugeiconsIcon } from "@hugeicons/react";
-import { audienceCards, competitionCard } from "@/components/sections/features/data";
+import {
+	audienceCards,
+	competitionCard,
+} from "@/components/sections/features/data";
 
 export function Audience() {
 	return (

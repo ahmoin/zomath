@@ -46,8 +46,10 @@ export function ProjectView({
 }) {
 	const router = useRouter();
 	const [journals, setJournals] = useState<Journal[]>(initialJournals);
-	const [resources, setResources] = useState<ProjectResource[]>(initialResources);
-	const [availableJournals, setAvailableJournals] = useState<AvailableJournal[]>(initialAvailable);
+	const [resources, setResources] =
+		useState<ProjectResource[]>(initialResources);
+	const [availableJournals, setAvailableJournals] =
+		useState<AvailableJournal[]>(initialAvailable);
 
 	const [addJournalOpen, setAddJournalOpen] = useState(false);
 	const [journalSearch, setJournalSearch] = useState("");
@@ -92,15 +94,21 @@ export function ProjectView({
 	return (
 		<div className="flex flex-1 flex-col">
 			<header className="flex items-center gap-3 border-b border-border px-4 lg:px-6 py-4">
-				<HugeiconsIcon icon={FolderLibraryIcon} className="size-5 text-muted-foreground" strokeWidth={1.5} />
-				<h1 className="text-lg font-semibold tracking-tight">{project.title}</h1>
+				<HugeiconsIcon
+					icon={FolderLibraryIcon}
+					className="size-5 text-muted-foreground"
+					strokeWidth={1.5}
+				/>
+				<h1 className="text-lg font-semibold tracking-tight">
+					{project.title}
+				</h1>
 			</header>
 
 			<div className="flex flex-1 flex-col gap-8 overflow-y-auto px-4 lg:px-6 py-6">
 				<JournalsSection
 					journals={journals}
 					creatingJournal={creatingJournal}
-						setAddJournalOpen={setAddJournalOpen}
+					setAddJournalOpen={setAddJournalOpen}
 					setJournals={setJournals}
 					setAvailableJournals={setAvailableJournals}
 					performCreateJournal={performCreateJournal}
@@ -168,19 +176,29 @@ export function ProjectView({
 								{filteredAvailable.map((j) => (
 									<button
 										key={j.id}
-										onClick={() => performAddExistingJournal(j.id, (updated) => {
-											setJournals((prev) => [...prev, updated]);
-											setAvailableJournals((prev) => prev.filter((j2) => j2.id !== j.id));
-											setAddJournalOpen(false);
-											setJournalSearch("");
-										})}
+										onClick={() =>
+											performAddExistingJournal(j.id, (updated) => {
+												setJournals((prev) => [...prev, updated]);
+												setAvailableJournals((prev) =>
+													prev.filter((j2) => j2.id !== j.id),
+												);
+												setAddJournalOpen(false);
+												setJournalSearch("");
+											})
+										}
 										disabled={addingJournalId === j.id}
 										className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left text-sm transition-colors hover:bg-accent disabled:opacity-50"
 									>
-										<HugeiconsIcon icon={BookOpen01Icon} className="size-4 shrink-0 text-muted-foreground" strokeWidth={1.5} />
+										<HugeiconsIcon
+											icon={BookOpen01Icon}
+											className="size-4 shrink-0 text-muted-foreground"
+											strokeWidth={1.5}
+										/>
 										<span className="truncate">{j.title}</span>
 										{addingJournalId === j.id && (
-											<span className="ml-auto text-xs text-muted-foreground">Adding...</span>
+											<span className="ml-auto text-xs text-muted-foreground">
+												Adding...
+											</span>
 										)}
 									</button>
 								))}
@@ -216,13 +234,20 @@ export function ProjectView({
 						</div>
 					</div>
 					<DialogFooter>
-						<Button variant="outline" onClick={() => setAddLinkOpen(false)}>Cancel</Button>
-						<Button onClick={() => performSaveLink(linkTitle, linkUrl, (resource) => {
-							setResources((prev) => [...prev, resource]);
-							setAddLinkOpen(false);
-							setLinkTitle("");
-							setLinkUrl("");
-						})} disabled={savingLink || !linkTitle.trim() || !linkUrl.trim()}>
+						<Button variant="outline" onClick={() => setAddLinkOpen(false)}>
+							Cancel
+						</Button>
+						<Button
+							onClick={() =>
+								performSaveLink(linkTitle, linkUrl, (resource) => {
+									setResources((prev) => [...prev, resource]);
+									setAddLinkOpen(false);
+									setLinkTitle("");
+									setLinkUrl("");
+								})
+							}
+							disabled={savingLink || !linkTitle.trim() || !linkUrl.trim()}
+						>
 							{savingLink ? "Saving..." : "Add link"}
 						</Button>
 					</DialogFooter>
@@ -255,13 +280,20 @@ export function ProjectView({
 						</div>
 					</div>
 					<DialogFooter>
-						<Button variant="outline" onClick={() => setAddNoteOpen(false)}>Cancel</Button>
-						<Button onClick={() => performSaveNote(noteTitle, noteBody, (resource) => {
-							setResources((prev) => [...prev, resource]);
-							setAddNoteOpen(false);
-							setNoteTitle("");
-							setNoteBody("");
-						})} disabled={savingNote || !noteTitle.trim()}>
+						<Button variant="outline" onClick={() => setAddNoteOpen(false)}>
+							Cancel
+						</Button>
+						<Button
+							onClick={() =>
+								performSaveNote(noteTitle, noteBody, (resource) => {
+									setResources((prev) => [...prev, resource]);
+									setAddNoteOpen(false);
+									setNoteTitle("");
+									setNoteBody("");
+								})
+							}
+							disabled={savingNote || !noteTitle.trim()}
+						>
 							{savingNote ? "Saving..." : "Save note"}
 						</Button>
 					</DialogFooter>
@@ -284,12 +316,19 @@ export function ProjectView({
 						/>
 					</div>
 					<DialogFooter>
-						<Button variant="outline" onClick={() => setAddQuestionOpen(false)}>Cancel</Button>
-						<Button onClick={() => performSaveQuestion(questionText, (resource) => {
-							setResources((prev) => [...prev, resource]);
-							setAddQuestionOpen(false);
-							setQuestionText("");
-						})} disabled={savingQuestion || !questionText.trim()}>
+						<Button variant="outline" onClick={() => setAddQuestionOpen(false)}>
+							Cancel
+						</Button>
+						<Button
+							onClick={() =>
+								performSaveQuestion(questionText, (resource) => {
+									setResources((prev) => [...prev, resource]);
+									setAddQuestionOpen(false);
+									setQuestionText("");
+								})
+							}
+							disabled={savingQuestion || !questionText.trim()}
+						>
 							{savingQuestion ? "Saving..." : "Save question"}
 						</Button>
 					</DialogFooter>
@@ -298,5 +337,3 @@ export function ProjectView({
 		</div>
 	);
 }
-
-

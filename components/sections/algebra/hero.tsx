@@ -11,7 +11,11 @@ export function Hero() {
 			<div className="max-w-7xl mx-auto px-4 lg:px-12">
 				<div className="max-w-3xl">
 					<div className="inline-flex items-center gap-2 rounded-full border bg-muted/50 px-4 py-1.5 text-sm text-muted-foreground mb-6">
-						<HugeiconsIcon icon={CourseIcon} className="size-4" strokeWidth={1.5} />
+						<HugeiconsIcon
+							icon={CourseIcon}
+							className="size-4"
+							strokeWidth={1.5}
+						/>
 						Zomath Subject Guide
 					</div>
 					<h1 className="text-5xl lg:text-6xl font-semibold tracking-tight text-foreground leading-[1.1] mb-6">
@@ -27,7 +31,11 @@ export function Hero() {
 						<Button size="lg" asChild>
 							<Link href="/practice?subject=algebra">
 								Start learning algebra
-								<HugeiconsIcon icon={ArrowRight02Icon} className="size-4 ml-1" strokeWidth={1.5} />
+								<HugeiconsIcon
+									icon={ArrowRight02Icon}
+									className="size-4 ml-1"
+									strokeWidth={1.5}
+								/>
 							</Link>
 						</Button>
 						<Button size="lg" variant="outline" asChild>

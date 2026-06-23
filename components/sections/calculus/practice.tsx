@@ -14,8 +14,8 @@ export function Practice() {
 						Drills that adapt to you, not the other way around
 					</h2>
 					<p className="text-muted-foreground text-lg leading-relaxed">
-						Every calculus skill needs practice. But not all practice is
-						equal. Zomath generates problems calibrated to your current level,
+						Every calculus skill needs practice. But not all practice is equal.
+						Zomath generates problems calibrated to your current level,
 						gradually increasing difficulty so you are always challenged but
 						never overwhelmed.
 					</p>

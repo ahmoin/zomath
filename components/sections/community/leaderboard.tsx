@@ -16,8 +16,8 @@ export function Leaderboard() {
 							Community leaderboard
 						</h2>
 						<p className="text-lg text-muted-foreground leading-relaxed mb-6">
-							Top contributors earn points by solving challenges, helping
-							others in forums, and maintaining daily learning streaks. Every
+							Top contributors earn points by solving challenges, helping others
+							in forums, and maintaining daily learning streaks. Every
 							interaction counts.
 						</p>
 						<p className="text-muted-foreground leading-relaxed mb-8">

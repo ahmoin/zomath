@@ -19,9 +19,9 @@ export function Struggles() {
 							The real reasons students get stuck
 						</h2>
 						<p className="text-muted-foreground text-lg leading-relaxed mb-6">
-							Calculus is not inherently harder than other math. But it
-							exposes gaps in understanding that earlier courses let you hide.
-							Newton identifies those gaps and helps you fill them for good.
+							Calculus is not inherently harder than other math. But it exposes
+							gaps in understanding that earlier courses let you hide. Newton
+							identifies those gaps and helps you fill them for good.
 						</p>
 						<Button variant="outline" asChild>
 							<Link href="/ask">

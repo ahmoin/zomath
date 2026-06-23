@@ -17,10 +17,10 @@ export function Hero() {
 						The story behind how we make math make sense
 					</h1>
 					<p className="mt-6 text-lg text-muted-foreground leading-relaxed max-w-2xl">
-						Zomath helps students genuinely understand mathematics, not just
-						get answers. Powered by an AI tutor named Newton, we are building
-						a world where every learner can build real conceptual mastery at
-						their own pace.
+						Zomath helps students genuinely understand mathematics, not just get
+						answers. Powered by an AI tutor named Newton, we are building a
+						world where every learner can build real conceptual mastery at their
+						own pace.
 					</p>
 					<div className="mt-8 flex flex-wrap gap-3">
 						<Button asChild size="lg">

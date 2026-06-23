@@ -13,8 +13,8 @@ export function Speaking() {
 						Speaking & interview topics
 					</h2>
 					<p className="text-muted-foreground leading-relaxed">
-						Our founders regularly speak at conferences, on podcasts, and in
-						the press about the intersection of AI and education. Here are the
+						Our founders regularly speak at conferences, on podcasts, and in the
+						press about the intersection of AI and education. Here are the
 						topics we care about most.
 					</p>
 				</div>

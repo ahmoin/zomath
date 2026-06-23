@@ -15,8 +15,8 @@ export function Shortcuts() {
 							Keyboard shortcuts
 						</h2>
 						<p className="text-lg text-muted-foreground leading-relaxed mb-6">
-							Speed up your workflow with these keyboard shortcuts. They work
-							on desktop browsers from any page in Zomath.
+							Speed up your workflow with these keyboard shortcuts. They work on
+							desktop browsers from any page in Zomath.
 						</p>
 						<div className="p-5 rounded-2xl border bg-muted/50">
 							<div className="flex items-center gap-2 text-sm text-muted-foreground mb-1">
@@ -29,9 +29,9 @@ export function Shortcuts() {
 							</div>
 							<p className="text-sm text-muted-foreground leading-relaxed">
 								Keyboard shortcuts are not available on mobile, but you can
-								access all the same features through the bottom navigation
-								bar. Tap the camera icon for Solve, the chat icon for Newton,
-								and the map icon for your Concept Map.
+								access all the same features through the bottom navigation bar.
+								Tap the camera icon for Solve, the chat icon for Newton, and the
+								map icon for your Concept Map.
 							</p>
 						</div>
 					</div>

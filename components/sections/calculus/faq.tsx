@@ -19,11 +19,7 @@ export function Faq() {
 					</h2>
 				</div>
 				<div className="max-w-2xl">
-					<Accordion
-						type="single"
-						collapsible
-						className="flex flex-col gap-3"
-					>
+					<Accordion type="single" collapsible className="flex flex-col gap-3">
 						{faqs.map((faq) => (
 							<AccordionItem
 								key={faq.question}

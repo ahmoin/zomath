@@ -1,4 +1,8 @@
-import { Delete01Icon, NoteEditIcon, PlusSignIcon } from "@hugeicons/core-free-icons";
+import {
+	Delete01Icon,
+	NoteEditIcon,
+	PlusSignIcon,
+} from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import type { ProjectResource } from "@/lib/types";
 import { Button } from "@/components/ui/button";
@@ -13,14 +17,26 @@ export function NotesSection({
 }: {
 	notes: ProjectResource[];
 	setAddNoteOpen: (open: boolean) => void;
-	setResources: (resources: ProjectResource[] | ((prev: ProjectResource[]) => ProjectResource[])) => void;
+	setResources: (
+		resources:
+			| ProjectResource[]
+			| ((prev: ProjectResource[]) => ProjectResource[]),
+	) => void;
 	performDeleteResource: (id: string) => Promise<boolean>;
 }) {
 	return (
 		<section className="flex flex-col gap-3">
 			<SectionHeader icon={NoteEditIcon} label="Notes" count={notes.length}>
-				<Button size="sm" variant="outline" onClick={() => setAddNoteOpen(true)}>
-					<HugeiconsIcon icon={PlusSignIcon} className="size-3.5" strokeWidth={2} />
+				<Button
+					size="sm"
+					variant="outline"
+					onClick={() => setAddNoteOpen(true)}
+				>
+					<HugeiconsIcon
+						icon={PlusSignIcon}
+						className="size-3.5"
+						strokeWidth={2}
+					/>
 					New note
 				</Button>
 			</SectionHeader>
@@ -39,17 +55,24 @@ export function NotesSection({
 						>
 							<span className="text-sm font-medium">{n.title}</span>
 							{n.body && (
-								<p className="line-clamp-4 text-xs text-muted-foreground">{n.body}</p>
+								<p className="line-clamp-4 text-xs text-muted-foreground">
+									{n.body}
+								</p>
 							)}
 							<button
 								onClick={() =>
 									performDeleteResource(n.id).then((ok) => {
-										if (ok) setResources((prev) => prev.filter((r) => r.id !== n.id));
+										if (ok)
+											setResources((prev) => prev.filter((r) => r.id !== n.id));
 									})
 								}
 								className="absolute right-2 top-2 hidden rounded-lg p-1 text-muted-foreground transition-colors hover:bg-muted hover:text-destructive group-hover:block"
 							>
-								<HugeiconsIcon icon={Delete01Icon} className="size-3.5" strokeWidth={2} />
+								<HugeiconsIcon
+									icon={Delete01Icon}
+									className="size-3.5"
+									strokeWidth={2}
+								/>
 							</button>
 						</div>
 					))}

@@ -26,11 +26,11 @@ export function Newton() {
 							Newton knows the way
 						</h2>
 						<p className="text-lg text-muted-foreground leading-relaxed mb-6">
-							The Concept Map is not just a reference tool. It is the
-							foundation for how Newton guides your learning. When you ask
-							Newton a question, it does not just answer. It places that
-							answer in context, showing you where the concept lives on the
-							map and what you need to understand it deeply.
+							The Concept Map is not just a reference tool. It is the foundation
+							for how Newton guides your learning. When you ask Newton a
+							question, it does not just answer. It places that answer in
+							context, showing you where the concept lives on the map and what
+							you need to understand it deeply.
 						</p>
 						<div className="space-y-4 mb-8">
 							{bullets.map((item) => (
@@ -70,8 +70,8 @@ export function Newton() {
 								<span className="font-semibold text-foreground">Newton</span>
 							</div>
 							<p className="text-sm text-muted-foreground mb-4">
-								You asked about the quadratic formula. Here is where it sits
-								on your map:
+								You asked about the quadratic formula. Here is where it sits on
+								your map:
 							</p>
 							<div className="space-y-2 text-sm">
 								<div className="flex items-center gap-3">
@@ -104,9 +104,7 @@ export function Newton() {
 								<div className="flex items-center gap-3">
 									<div className="size-3 rounded-full bg-muted-foreground/20" />
 									<span className="text-muted-foreground">Discriminant</span>
-									<span className="text-xs text-muted-foreground">
-										Locked
-									</span>
+									<span className="text-xs text-muted-foreground">Locked</span>
 								</div>
 							</div>
 						</div>

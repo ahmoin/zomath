@@ -97,8 +97,8 @@ export function ConceptChain() {
 									Systems of equations
 								</p>
 								<p className="text-sm text-muted-foreground mt-1">
-									Multiple equations, multiple unknowns. Combine your skills
-									to solve them.
+									Multiple equations, multiple unknowns. Combine your skills to
+									solve them.
 								</p>
 							</div>
 						</div>

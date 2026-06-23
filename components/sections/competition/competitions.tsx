@@ -8,9 +8,7 @@ export function Competitions() {
 		<section className="py-24 lg:py-32 bg-muted">
 			<div className="max-w-7xl mx-auto px-4 lg:px-12">
 				<div className="mb-12">
-					<p className="text-sm font-medium text-primary mb-3">
-						Competitions
-					</p>
+					<p className="text-sm font-medium text-primary mb-3">Competitions</p>
 					<h2 className="text-3xl lg:text-4xl font-semibold tracking-tight text-foreground">
 						Every level. Every goal.
 					</h2>

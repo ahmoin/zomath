@@ -1,6 +1,9 @@
 "use client";
 
-import { ArrowRight02Icon, GraduationScrollIcon } from "@hugeicons/core-free-icons";
+import {
+	ArrowRight02Icon,
+	GraduationScrollIcon,
+} from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";

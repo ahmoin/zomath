@@ -1,6 +1,10 @@
 "use client";
 
-import { ArrowRight02Icon, MailSend02Icon, Shield01Icon } from "@hugeicons/core-free-icons";
+import {
+	ArrowRight02Icon,
+	MailSend02Icon,
+	Shield01Icon,
+} from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -25,8 +29,8 @@ export function Hero() {
 					</h1>
 					<p className="mt-6 text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto">
 						At Zomath, we believe understanding math should never come at the
-						cost of your privacy. Every feature, from Newton to Concept Map,
-						is built with security at its foundation, not bolted on as an
+						cost of your privacy. Every feature, from Newton to Concept Map, is
+						built with security at its foundation, not bolted on as an
 						afterthought.
 					</p>
 					<div className="mt-8 flex flex-wrap items-center justify-center gap-4">

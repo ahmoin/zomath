@@ -14,10 +14,7 @@ import {
 import type { HugeiconsIconProps } from "@hugeicons/react";
 import { HugeiconsIcon } from "@hugeicons/react";
 import type { ChatStatus, FileUIPart } from "ai";
-import {
-	CheckIcon,
-	LoaderIcon,
-} from "lucide-react";
+import { CheckIcon, LoaderIcon } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";

@@ -13,14 +13,18 @@ export function Cta() {
 					Ready to learn math differently?
 				</h2>
 				<p className="mt-4 text-muted-foreground text-lg max-w-xl mx-auto leading-relaxed">
-					Start for free and see how Newton, Concept Maps, and targeted
-					practice can change the way you understand math.
+					Start for free and see how Newton, Concept Maps, and targeted practice
+					can change the way you understand math.
 				</p>
 				<div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
 					<Link href="/sign-up">
 						<Button size="lg" className="rounded-xl">
 							Get started free
-							<HugeiconsIcon icon={ArrowRight02Icon} className="size-4 ml-2" strokeWidth={1.5} />
+							<HugeiconsIcon
+								icon={ArrowRight02Icon}
+								className="size-4 ml-2"
+								strokeWidth={1.5}
+							/>
 						</Button>
 					</Link>
 					<Link href="/ask">

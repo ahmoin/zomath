@@ -27,7 +27,9 @@ export function ServiceHealth() {
 								className="rounded-xl border bg-card p-5 lg:p-6 flex flex-col sm:flex-row sm:items-center gap-4"
 							>
 								<div className="flex items-center gap-4 flex-1 min-w-0">
-									<div className={`rounded-lg ${statusConfig.bgClass} p-2.5 shrink-0`}>
+									<div
+										className={`rounded-lg ${statusConfig.bgClass} p-2.5 shrink-0`}
+									>
 										<HugeiconsIcon
 											icon={service.icon}
 											className={`size-5 ${statusConfig.colorClass}`}
@@ -57,8 +59,12 @@ export function ServiceHealth() {
 										</span>
 									</div>
 									<div className="flex items-center gap-2 shrink-0">
-										<span className={`size-2 rounded-full ${statusConfig.dotClass}`} />
-										<span className={`text-sm font-medium ${statusConfig.colorClass}`}>
+										<span
+											className={`size-2 rounded-full ${statusConfig.dotClass}`}
+										/>
+										<span
+											className={`text-sm font-medium ${statusConfig.colorClass}`}
+										>
 											{statusConfig.label}
 										</span>
 									</div>

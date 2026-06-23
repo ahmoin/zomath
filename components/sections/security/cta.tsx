@@ -23,8 +23,8 @@ export function Cta() {
 					<p className="mt-4 text-muted-foreground max-w-xl mx-auto leading-relaxed">
 						Our security team is here to help. Whether you have found a
 						vulnerability, have questions about our practices, or need
-						assistance exercising your data rights, we want to hear from you.
-						We respond to every inquiry.
+						assistance exercising your data rights, we want to hear from you. We
+						respond to every inquiry.
 					</p>
 					<div className="mt-8 flex flex-wrap items-center justify-center gap-4">
 						<Button asChild size="lg">

@@ -4,7 +4,10 @@ import { CheckmarkCircle02Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { dataRights, ownershipChecklist } from "@/components/sections/security/data";
+import {
+	dataRights,
+	ownershipChecklist,
+} from "@/components/sections/security/data";
 
 export function DataOwnership() {
 	return (

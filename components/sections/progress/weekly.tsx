@@ -21,9 +21,9 @@ export function Weekly() {
 						Small steps, big results
 					</h2>
 					<p className="mt-4 text-muted-foreground leading-relaxed">
-						You do not need to study for hours to make progress. Zomath is
-						built for daily, focused practice that compounds over time. Here
-						is what a typical week looks like.
+						You do not need to study for hours to make progress. Zomath is built
+						for daily, focused practice that compounds over time. Here is what a
+						typical week looks like.
 					</p>
 				</div>
 				<div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">

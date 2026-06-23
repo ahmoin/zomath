@@ -23,9 +23,9 @@ export function Hero() {
 					</h1>
 					<p className="text-lg lg:text-xl text-muted-foreground leading-relaxed mb-8 max-w-2xl">
 						Limits, derivatives, integrals, and series are not a list of
-						formulas to cram. They are a way of seeing change and
-						accumulation. Newton, your AI tutor, helps you build that vision
-						from the ground up.
+						formulas to cram. They are a way of seeing change and accumulation.
+						Newton, your AI tutor, helps you build that vision from the ground
+						up.
 					</p>
 					<div className="flex flex-wrap gap-3">
 						<Button size="lg" asChild>

@@ -18,8 +18,7 @@ export function Topics() {
 					<p className="text-muted-foreground text-lg leading-relaxed">
 						Zomath covers the full breadth of calculus with depth that goes
 						beyond what any textbook can offer. Each topic is broken into
-						skills, connected to prerequisites, and reinforced through
-						practice.
+						skills, connected to prerequisites, and reinforced through practice.
 					</p>
 				</div>
 				<div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">

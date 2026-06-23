@@ -12,8 +12,8 @@ export function Principles() {
 						Our privacy principles
 					</h2>
 					<p className="text-muted-foreground leading-relaxed">
-						These are not just words on a page. They are the foundation of
-						every product decision we make at Zomath.
+						These are not just words on a page. They are the foundation of every
+						product decision we make at Zomath.
 					</p>
 				</div>
 				<div className="grid md:grid-cols-2 gap-6">

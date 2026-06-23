@@ -54,7 +54,10 @@ export function SuggestionPlugin() {
 			<Button variant="destructive" onClick={denyAll}>
 				Deny All
 			</Button>
-			<Button className="bg-green-600 hover:bg-green-700 text-white" onClick={acceptAll}>
+			<Button
+				className="bg-green-600 hover:bg-green-700 text-white"
+				onClick={acceptAll}
+			>
 				Accept All
 			</Button>
 		</div>

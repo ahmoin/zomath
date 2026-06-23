@@ -32,7 +32,11 @@ export function TopicCards({ onCategorySelect }: TopicCardsProps) {
 							className="text-left p-6 rounded-xl border border-border bg-background hover:border-primary/30 transition-colors group"
 						>
 							<div className="size-10 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
-								<HugeiconsIcon icon={topic.icon} className="size-5 text-primary" strokeWidth={1.5} />
+								<HugeiconsIcon
+									icon={topic.icon}
+									className="size-5 text-primary"
+									strokeWidth={1.5}
+								/>
 							</div>
 							<h3 className="font-semibold text-foreground group-hover:text-primary transition-colors">
 								{topic.title}

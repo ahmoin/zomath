@@ -1,6 +1,10 @@
 "use client";
 
-import { Calendar01Icon, Clock01Icon, CloudIcon } from "@hugeicons/core-free-icons";
+import {
+	Calendar01Icon,
+	Clock01Icon,
+	CloudIcon,
+} from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Separator } from "@/components/ui/separator";
 

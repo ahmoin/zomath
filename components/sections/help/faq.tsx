@@ -65,8 +65,8 @@ export function Faq({ searchQuery }: FaqProps) {
 								No results found for &quot;{searchQuery}&quot;
 							</p>
 							<p className="text-sm text-muted-foreground">
-								Try different keywords or browse all questions above by
-								clearing your search.
+								Try different keywords or browse all questions above by clearing
+								your search.
 							</p>
 						</div>
 					)}

@@ -20,8 +20,8 @@ export function Topics() {
 						</h2>
 						<p className="text-muted-foreground leading-relaxed">
 							Competition math demands breadth and depth. Newton covers every
-							core topic area with problems, instruction, and strategic
-							coaching tuned to the level you are training for.
+							core topic area with problems, instruction, and strategic coaching
+							tuned to the level you are training for.
 						</p>
 					</div>
 					<div>

@@ -118,7 +118,9 @@ export function QuizActiveView({
 			<div className="w-[62%] flex flex-col overflow-hidden relative">
 				{practiceUpdating && (
 					<div className="absolute inset-0 z-10 flex items-center justify-center bg-background/70 backdrop-blur-sm">
-						<Shimmer className="text-sm text-muted-foreground">Updating...</Shimmer>
+						<Shimmer className="text-sm text-muted-foreground">
+							Updating...
+						</Shimmer>
 					</div>
 				)}
 				<div className="flex items-center justify-between px-8 pt-6 pb-4 border-b shrink-0">

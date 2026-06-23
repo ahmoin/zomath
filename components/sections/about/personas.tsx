@@ -38,9 +38,9 @@ export function Personas() {
 						Students who learn differently
 					</h2>
 					<p className="text-muted-foreground leading-relaxed">
-						Whether you are catching up, keeping pace, or pushing ahead,
-						Zomath adapts to your goals and your pace. Here are some of the
-						learners we had in mind.
+						Whether you are catching up, keeping pace, or pushing ahead, Zomath
+						adapts to your goals and your pace. Here are some of the learners we
+						had in mind.
 					</p>
 				</div>
 

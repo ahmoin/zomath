@@ -31,9 +31,7 @@ export function Newton() {
 											strokeWidth={1.5}
 										/>
 									</div>
-									<p className="text-foreground leading-relaxed">
-										{item.text}
-									</p>
+									<p className="text-foreground leading-relaxed">{item.text}</p>
 								</div>
 							))}
 						</div>
@@ -41,22 +39,18 @@ export function Newton() {
 					<div className="rounded-2xl border bg-muted/30 p-6 lg:p-8">
 						<div className="space-y-4">
 							<div className="rounded-xl bg-background border p-4">
-								<p className="text-sm text-muted-foreground mb-1">
-									You asked:
-								</p>
+								<p className="text-sm text-muted-foreground mb-1">You asked:</p>
 								<p className="text-foreground">
-									Why does the derivative of sin(x) give cos(x)? My teacher
-									just said &quot;memorize it.&quot;
+									Why does the derivative of sin(x) give cos(x)? My teacher just
+									said &quot;memorize it.&quot;
 								</p>
 							</div>
 							<div className="rounded-xl bg-primary/5 border border-primary/20 p-4">
-								<p className="text-sm font-medium text-primary mb-2">
-									Newton:
-								</p>
+								<p className="text-sm font-medium text-primary mb-2">Newton:</p>
 								<p className="text-foreground leading-relaxed">
-									Great question. Let&apos;s derive it from the limit definition.
-									Think of sin(x) on the unit circle. When you nudge x by a
-									tiny amount, the y-coordinate changes horizontally by
+									Great question. Let&apos;s derive it from the limit
+									definition. Think of sin(x) on the unit circle. When you nudge
+									x by a tiny amount, the y-coordinate changes horizontally by
 									cos(x). Want me to walk through the algebra, or would the
 									geometric intuition help more?
 								</p>
@@ -68,12 +62,10 @@ export function Newton() {
 								<p className="text-foreground">Geometric intuition please!</p>
 							</div>
 							<div className="rounded-xl bg-primary/5 border border-primary/20 p-4">
-								<p className="text-sm font-medium text-primary mb-2">
-									Newton:
-								</p>
+								<p className="text-sm font-medium text-primary mb-2">Newton:</p>
 								<p className="text-foreground leading-relaxed">
-									Picture the unit circle. sin(x) is the height. Move a tiny
-									arc along the circle from angle x. The height changes by
+									Picture the unit circle. sin(x) is the height. Move a tiny arc
+									along the circle from angle x. The height changes by
 									approximately cos(x) times that arc length. That is the
 									derivative. Let me draw it out for you...
 								</p>

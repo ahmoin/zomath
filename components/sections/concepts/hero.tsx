@@ -22,8 +22,8 @@ export function Hero() {
 						See how every math concept connects
 					</h1>
 					<p className="text-lg md:text-xl text-muted-foreground leading-relaxed mb-8">
-						Math is not a list of topics to check off. It is a web of ideas
-						that build on each other. Zomath's Concept Map reveals the hidden
+						Math is not a list of topics to check off. It is a web of ideas that
+						build on each other. Zomath's Concept Map reveals the hidden
 						structure behind everything you learn, so you never study in
 						isolation again.
 					</p>

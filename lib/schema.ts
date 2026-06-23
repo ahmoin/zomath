@@ -233,10 +233,19 @@ export const projectResource = sqliteTable(
 	],
 );
 
-export const projectResourceRelations = relations(projectResource, ({ one }) => ({
-	project: one(project, { fields: [projectResource.projectId], references: [project.id] }),
-	user: one(user, { fields: [projectResource.userId], references: [user.id] }),
-}));
+export const projectResourceRelations = relations(
+	projectResource,
+	({ one }) => ({
+		project: one(project, {
+			fields: [projectResource.projectId],
+			references: [project.id],
+		}),
+		user: one(user, {
+			fields: [projectResource.userId],
+			references: [user.id],
+		}),
+	}),
+);
 
 export const userRelations = relations(user, ({ many }) => ({
 	sessions: many(session),

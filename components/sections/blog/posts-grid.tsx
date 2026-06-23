@@ -16,7 +16,12 @@ interface PostsGridProps {
 	onCategoryChange: (id: string) => void;
 }
 
-export function PostsGrid({ gridPosts, categories, activeCategory, onCategoryChange }: PostsGridProps) {
+export function PostsGrid({
+	gridPosts,
+	categories,
+	activeCategory,
+	onCategoryChange,
+}: PostsGridProps) {
 	return (
 		<section className="py-16 lg:py-24">
 			<div className="max-w-7xl mx-auto px-4 lg:px-12">
@@ -39,7 +44,11 @@ export function PostsGrid({ gridPosts, categories, activeCategory, onCategoryCha
 
 				{gridPosts.length === 0 ? (
 					<div className="text-center py-20">
-						<HugeiconsIcon icon={Search01Icon} className="size-12 text-muted-foreground/40 mx-auto mb-4" strokeWidth={1.5} />
+						<HugeiconsIcon
+							icon={Search01Icon}
+							className="size-12 text-muted-foreground/40 mx-auto mb-4"
+							strokeWidth={1.5}
+						/>
 						<p className="text-lg text-muted-foreground">
 							No articles found. Try a different search or category.
 						</p>
@@ -47,14 +56,24 @@ export function PostsGrid({ gridPosts, categories, activeCategory, onCategoryCha
 				) : (
 					<div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
 						{gridPosts.map((post) => (
-							<Link key={post.slug} href={`/blog/${post.slug}`} className="group">
+							<Link
+								key={post.slug}
+								href={`/blog/${post.slug}`}
+								className="group"
+							>
 								<article className="h-full rounded-xl border border-border bg-card overflow-hidden hover:border-primary/30 transition-colors">
 									<div className="aspect-video bg-muted/50 flex items-center justify-center">
-										<HugeiconsIcon icon={post.icon} className="size-10 text-muted-foreground/30" strokeWidth={1.5} />
+										<HugeiconsIcon
+											icon={post.icon}
+											className="size-10 text-muted-foreground/30"
+											strokeWidth={1.5}
+										/>
 									</div>
 									<div className="p-6">
 										<div className="flex items-center gap-2 text-xs text-muted-foreground mb-3">
-											<span className="capitalize">{post.category.replace("-", " ")}</span>
+											<span className="capitalize">
+												{post.category.replace("-", " ")}
+											</span>
 											<span aria-hidden="true">&middot;</span>
 											<span>{post.readTime}</span>
 										</div>
@@ -65,7 +84,11 @@ export function PostsGrid({ gridPosts, categories, activeCategory, onCategoryCha
 											{post.excerpt}
 										</p>
 										<div className="mt-4 flex items-center gap-1.5 text-xs text-muted-foreground">
-											<HugeiconsIcon icon={Calendar02Icon} className="size-3.5" strokeWidth={1.5} />
+											<HugeiconsIcon
+												icon={Calendar02Icon}
+												className="size-3.5"
+												strokeWidth={1.5}
+											/>
 											{formatDate(post.date)}
 										</div>
 									</div>

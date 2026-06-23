@@ -15,8 +15,8 @@ export function Contact() {
 					</h2>
 					<p className="text-muted-foreground leading-relaxed mb-6">
 						If you are experiencing an issue not listed here, or if you have
-						questions about our infrastructure and reliability practices, we
-						are here to help.
+						questions about our infrastructure and reliability practices, we are
+						here to help.
 					</p>
 					<div className="flex items-center justify-center gap-3">
 						<Button asChild>

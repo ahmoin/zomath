@@ -22,11 +22,11 @@ export function About() {
 							</p>
 							<p>
 								Our AI tutor, Newton, guides students through problems step by
-								step, asking questions instead of giving solutions. The
-								Concept Map feature lets learners visualize how ideas connect,
-								so algebra feels like a natural extension of arithmetic, and
-								calculus grows logically from the foundations they have
-								already built.
+								step, asking questions instead of giving solutions. The Concept
+								Map feature lets learners visualize how ideas connect, so
+								algebra feels like a natural extension of arithmetic, and
+								calculus grows logically from the foundations they have already
+								built.
 							</p>
 							<p>
 								Zomath serves over 120,000 active learners across high school

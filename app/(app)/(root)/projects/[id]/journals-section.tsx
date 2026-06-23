@@ -27,7 +27,11 @@ export function JournalsSection({
 	creatingJournal: boolean;
 	setAddJournalOpen: (open: boolean) => void;
 	setJournals: (journals: Journal[] | ((prev: Journal[]) => Journal[])) => void;
-	setAvailableJournals: (journals: AvailableJournal[] | ((prev: AvailableJournal[]) => AvailableJournal[])) => void;
+	setAvailableJournals: (
+		journals:
+			| AvailableJournal[]
+			| ((prev: AvailableJournal[]) => AvailableJournal[]),
+	) => void;
 	performCreateJournal: () => void;
 	performRemoveJournal: (journalId: string) => Promise<boolean>;
 }) {
@@ -38,12 +42,29 @@ export function JournalsSection({
 				label="Journals"
 				count={journals.length}
 			>
-				<Button size="sm" variant="outline" onClick={() => setAddJournalOpen(true)}>
-					<HugeiconsIcon icon={BookOpen01Icon} className="size-3.5" strokeWidth={2} />
+				<Button
+					size="sm"
+					variant="outline"
+					onClick={() => setAddJournalOpen(true)}
+				>
+					<HugeiconsIcon
+						icon={BookOpen01Icon}
+						className="size-3.5"
+						strokeWidth={2}
+					/>
 					Add existing
 				</Button>
-				<Button size="sm" variant="outline" onClick={performCreateJournal} disabled={creatingJournal}>
-					<HugeiconsIcon icon={PlusSignIcon} className="size-3.5" strokeWidth={2} />
+				<Button
+					size="sm"
+					variant="outline"
+					onClick={performCreateJournal}
+					disabled={creatingJournal}
+				>
+					<HugeiconsIcon
+						icon={PlusSignIcon}
+						className="size-3.5"
+						strokeWidth={2}
+					/>
 					{creatingJournal ? "Creating..." : "New journal"}
 				</Button>
 			</SectionHeader>
@@ -70,21 +91,36 @@ export function JournalsSection({
 									)}
 								</div>
 								<div className="mt-3 flex items-center justify-between">
-									<span className="text-sm font-medium text-foreground">{j.title}</span>
-									<span className="text-xs text-muted-foreground">{formatDate(j.updatedAt)}</span>
+									<span className="text-sm font-medium text-foreground">
+										{j.title}
+									</span>
+									<span className="text-xs text-muted-foreground">
+										{formatDate(j.updatedAt)}
+									</span>
 								</div>
 							</Link>
 							<button
-								onClick={() => performRemoveJournal(j.id).then((ok) => {
-									if (ok) {
-										setJournals((prev) => prev.filter((j2) => j2.id !== j.id));
-										setAvailableJournals((prev) => [...prev, { id: j.id, title: j.title }]);
-									}
-								})}
+								onClick={() =>
+									performRemoveJournal(j.id).then((ok) => {
+										if (ok) {
+											setJournals((prev) =>
+												prev.filter((j2) => j2.id !== j.id),
+											);
+											setAvailableJournals((prev) => [
+												...prev,
+												{ id: j.id, title: j.title },
+											]);
+										}
+									})
+								}
 								className="absolute right-2 top-2 hidden rounded-lg p-1 text-muted-foreground transition-colors hover:bg-muted hover:text-destructive group-hover:flex"
 								title="Remove from project"
 							>
-								<HugeiconsIcon icon={Delete01Icon} className="size-3.5" strokeWidth={2} />
+								<HugeiconsIcon
+									icon={Delete01Icon}
+									className="size-3.5"
+									strokeWidth={2}
+								/>
 							</button>
 						</div>
 					))}

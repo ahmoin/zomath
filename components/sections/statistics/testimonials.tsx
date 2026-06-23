@@ -22,10 +22,7 @@ export function Testimonials() {
 							className="rounded-xl border border-border bg-background p-6 lg:p-8"
 						>
 							<div className="flex gap-0.5 mb-4">
-								<FiveStars
-									className="size-4 text-primary"
-									strokeWidth={1.5}
-								/>
+								<FiveStars className="size-4 text-primary" strokeWidth={1.5} />
 							</div>
 							<p className="text-foreground text-sm leading-relaxed mb-4">
 								{testimonial.quote}

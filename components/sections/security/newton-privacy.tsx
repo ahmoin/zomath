@@ -16,18 +16,18 @@ export function NewtonPrivacy() {
 							Your AI tutor respects your boundaries
 						</h2>
 						<p className="mt-4 text-muted-foreground leading-relaxed">
-							Newton is the heart of Zomath. It is also the feature that
-							handles your most personal learning moments: the questions you
-							are embarrassed to ask in class, the mistakes you make when
-							nobody is watching, the concepts that just will not click. We
-							take that trust seriously.
+							Newton is the heart of Zomath. It is also the feature that handles
+							your most personal learning moments: the questions you are
+							embarrassed to ask in class, the mistakes you make when nobody is
+							watching, the concepts that just will not click. We take that
+							trust seriously.
 						</p>
 						<p className="mt-4 text-muted-foreground leading-relaxed">
-							Newton processes your questions in real time and responds
-							without human oversight of your individual conversations. The AI
-							model that powers Newton is not trained on your personal chats.
-							Any model improvement uses only aggregated, anonymized patterns
-							that cannot be traced back to you.
+							Newton processes your questions in real time and responds without
+							human oversight of your individual conversations. The AI model
+							that powers Newton is not trained on your personal chats. Any
+							model improvement uses only aggregated, anonymized patterns that
+							cannot be traced back to you.
 						</p>
 					</div>
 					<div className="space-y-4">

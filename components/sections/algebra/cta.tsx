@@ -11,7 +11,11 @@ export function Cta() {
 			<div className="max-w-7xl mx-auto px-4 lg:px-12">
 				<div className="rounded-2xl border bg-card p-12 lg:p-16 text-center">
 					<div className="inline-flex items-center justify-center size-14 rounded-2xl bg-primary/10 mb-6">
-						<HugeiconsIcon icon={Rocket01Icon} className="size-7 text-primary" strokeWidth={1.5} />
+						<HugeiconsIcon
+							icon={Rocket01Icon}
+							className="size-7 text-primary"
+							strokeWidth={1.5}
+						/>
 					</div>
 					<h2 className="text-3xl lg:text-4xl font-semibold tracking-tight text-foreground mb-4">
 						Start understanding algebra today
@@ -25,7 +29,11 @@ export function Cta() {
 						<Button size="lg" asChild>
 							<Link href="/practice?subject=algebra">
 								Start practicing now
-								<HugeiconsIcon icon={ArrowRight02Icon} className="size-4 ml-1" strokeWidth={1.5} />
+								<HugeiconsIcon
+									icon={ArrowRight02Icon}
+									className="size-4 ml-1"
+									strokeWidth={1.5}
+								/>
 							</Link>
 						</Button>
 						<Button size="lg" variant="outline" asChild>

@@ -14,8 +14,8 @@ export function Cta() {
 						Start understanding math today
 					</h2>
 					<p className="text-lg text-muted-foreground max-w-xl mx-auto mb-8 leading-relaxed">
-						Join thousands of students who are learning math the right way.
-						Not by memorizing, but by truly understanding.
+						Join thousands of students who are learning math the right way. Not
+						by memorizing, but by truly understanding.
 					</p>
 					<div className="flex flex-col sm:flex-row items-center justify-center gap-4">
 						<Link href="/pricing">

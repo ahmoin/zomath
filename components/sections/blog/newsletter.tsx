@@ -10,7 +10,11 @@ export function Newsletter() {
 			<div className="max-w-7xl mx-auto px-4 lg:px-12">
 				<div className="max-w-2xl mx-auto text-center">
 					<div className="size-12 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-6">
-						<HugeiconsIcon icon={Mail01Icon} className="size-6 text-primary" strokeWidth={1.5} />
+						<HugeiconsIcon
+							icon={Mail01Icon}
+							className="size-6 text-primary"
+							strokeWidth={1.5}
+						/>
 					</div>
 					<h2 className="text-3xl lg:text-4xl font-semibold tracking-tight text-foreground">
 						Stay in the loop

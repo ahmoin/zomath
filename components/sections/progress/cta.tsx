@@ -1,6 +1,9 @@
 "use client";
 
-import { ArrowRight02Icon, ChartLineData01Icon } from "@hugeicons/core-free-icons";
+import {
+	ArrowRight02Icon,
+	ChartLineData01Icon,
+} from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -20,9 +23,9 @@ export function Cta() {
 					</h2>
 					<p className="mt-4 text-muted-foreground leading-relaxed">
 						Every concept you master, every streak you build, every insight
-						Newton shares. It all begins with your first problem. Start
-						tracking your real understanding today, and never wonder where you
-						stand again.
+						Newton shares. It all begins with your first problem. Start tracking
+						your real understanding today, and never wonder where you stand
+						again.
 					</p>
 					<div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
 						<Button asChild size="lg">
@@ -40,8 +43,8 @@ export function Cta() {
 						</Button>
 					</div>
 					<p className="mt-6 text-xs text-muted-foreground">
-						Free to start. No credit card required. Track your math journey
-						from day one.
+						Free to start. No credit card required. Track your math journey from
+						day one.
 					</p>
 				</div>
 			</div>

@@ -1,9 +1,6 @@
 "use client";
 
-import {
-	$createListItemNode,
-	$createListNode,
-} from "@lexical/list";
+import { $createListItemNode, $createListNode } from "@lexical/list";
 import { $createHeadingNode, $createQuoteNode } from "@lexical/rich-text";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import {
@@ -19,7 +16,7 @@ import {
 	type SerializedLexicalNode,
 	type Spread,
 } from "lexical";
-import React from "react";
+import type React from "react";
 import { Button } from "@/components/ui/button";
 import type { SuggestionBlock } from "@/lib/types";
 
@@ -39,7 +36,9 @@ function clean(text: string): string {
 		.trim();
 }
 
-export function $createLexicalNodeFromBlock(block: SuggestionBlock): LexicalNode {
+export function $createLexicalNodeFromBlock(
+	block: SuggestionBlock,
+): LexicalNode {
 	switch (block.type) {
 		case "h1":
 		case "h2":
@@ -90,19 +89,29 @@ function SuggestionPreview({ block }: { block: SuggestionBlock }) {
 		case "blockquote":
 			return (
 				<blockquote className="border-l-2 border-green-400 pl-3 italic text-sm text-foreground/80">
-					{block.lines.map((l, i) => <p key={i}>{l}</p>)}
+					{block.lines.map((l, i) => (
+						<p key={i}>{l}</p>
+					))}
 				</blockquote>
 			);
 		case "bullet":
 			return (
 				<ul className="list-disc pl-4 space-y-0.5">
-					{block.lines.map((l, i) => <li key={i} className="text-sm">{l}</li>)}
+					{block.lines.map((l, i) => (
+						<li key={i} className="text-sm">
+							{l}
+						</li>
+					))}
 				</ul>
 			);
 		case "numbered":
 			return (
 				<ol className="list-decimal pl-4 space-y-0.5">
-					{block.lines.map((l, i) => <li key={i} className="text-sm">{l}</li>)}
+					{block.lines.map((l, i) => (
+						<li key={i} className="text-sm">
+							{l}
+						</li>
+					))}
 				</ol>
 			);
 		default:
@@ -211,9 +220,7 @@ export class SuggestionNode extends DecoratorNode<React.ReactNode> {
 	}
 
 	decorate(_editor: LexicalEditor, _config: EditorConfig): React.ReactNode {
-		return (
-			<SuggestionDecorator nodeKey={this.__key} block={this.__block} />
-		);
+		return <SuggestionDecorator nodeKey={this.__key} block={this.__block} />;
 	}
 }
 
@@ -221,6 +228,8 @@ export function $createSuggestionNode(block: SuggestionBlock): SuggestionNode {
 	return new SuggestionNode(block);
 }
 
-export function $isSuggestionNode(node: LexicalNode | null | undefined): node is SuggestionNode {
+export function $isSuggestionNode(
+	node: LexicalNode | null | undefined,
+): node is SuggestionNode {
 	return node instanceof SuggestionNode;
 }

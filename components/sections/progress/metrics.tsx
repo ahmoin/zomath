@@ -31,8 +31,8 @@ export function Metrics() {
 					</h2>
 					<p className="mt-4 text-muted-foreground leading-relaxed">
 						No more guessing whether you&apos;re improving. Zomath gives you
-						clear, honest metrics that reflect real understanding, not just
-						time spent or problems attempted.
+						clear, honest metrics that reflect real understanding, not just time
+						spent or problems attempted.
 					</p>
 				</div>
 				<div className="mt-16 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">

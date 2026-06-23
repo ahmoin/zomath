@@ -75,8 +75,8 @@ export function UptimeOverview() {
 						))}
 					</div>
 					<p className="text-xs text-muted-foreground mt-6">
-						Uptime is measured across all core services. Each bar represents
-						one day. Hover for details.
+						Uptime is measured across all core services. Each bar represents one
+						day. Hover for details.
 					</p>
 				</div>
 			</div>

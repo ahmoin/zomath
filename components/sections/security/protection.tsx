@@ -17,10 +17,9 @@ export function Protection() {
 						</h2>
 						<p className="mt-4 text-muted-foreground leading-relaxed">
 							Zomath is used by students as young as 13, and many features are
-							designed with younger learners in mind. That responsibility
-							shapes every technical and policy decision we make, from how
-							Newton processes your questions to how we store your uploaded
-							photos.
+							designed with younger learners in mind. That responsibility shapes
+							every technical and policy decision we make, from how Newton
+							processes your questions to how we store your uploaded photos.
 						</p>
 						<p className="mt-4 text-muted-foreground leading-relaxed">
 							We treat every user as if they are our most vulnerable one. If a

@@ -13,8 +13,8 @@ export function Contacts() {
 						Media contacts
 					</h2>
 					<p className="text-muted-foreground leading-relaxed">
-						Reach out to the right person directly. We typically respond
-						within one business day.
+						Reach out to the right person directly. We typically respond within
+						one business day.
 					</p>
 				</div>
 				<div className="grid md:grid-cols-3 gap-6">
@@ -32,9 +32,7 @@ export function Contacts() {
 									/>
 								</div>
 								<div>
-									<p className="font-medium text-foreground">
-										{founder.name}
-									</p>
+									<p className="font-medium text-foreground">{founder.name}</p>
 									<p className="text-sm text-primary">{founder.role}</p>
 								</div>
 							</div>

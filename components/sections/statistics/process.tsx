@@ -8,9 +8,7 @@ export function Process() {
 		<section className="py-24 lg:py-32">
 			<div className="max-w-7xl mx-auto px-4 lg:px-12">
 				<div className="mb-12">
-					<p className="text-sm font-medium text-primary mb-3">
-						How It Works
-					</p>
+					<p className="text-sm font-medium text-primary mb-3">How It Works</p>
 					<h2 className="text-3xl lg:text-4xl font-semibold tracking-tight text-foreground">
 						A systematic approach to data.
 					</h2>

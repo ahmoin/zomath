@@ -19,9 +19,18 @@ export function Stats() {
 
 				<div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
 					{stats.map((stat) => (
-						<div key={stat.label} className="rounded-xl border bg-card p-8 text-center">
-							<HugeiconsIcon icon={AbacusIcon} className="size-6 text-primary mx-auto mb-3" strokeWidth={1.5} />
-							<div className="text-3xl font-semibold text-foreground mb-1">{stat.value}</div>
+						<div
+							key={stat.label}
+							className="rounded-xl border bg-card p-8 text-center"
+						>
+							<HugeiconsIcon
+								icon={AbacusIcon}
+								className="size-6 text-primary mx-auto mb-3"
+								strokeWidth={1.5}
+							/>
+							<div className="text-3xl font-semibold text-foreground mb-1">
+								{stat.value}
+							</div>
 							<div className="text-sm text-muted-foreground">{stat.label}</div>
 						</div>
 					))}

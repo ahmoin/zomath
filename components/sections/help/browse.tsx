@@ -14,8 +14,8 @@ export function Browse() {
 						Browse by topic
 					</h2>
 					<p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-						Jump straight to the guide you need. Each section covers a
-						different part of the Zomath experience.
+						Jump straight to the guide you need. Each section covers a different
+						part of the Zomath experience.
 					</p>
 				</div>
 				<div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">

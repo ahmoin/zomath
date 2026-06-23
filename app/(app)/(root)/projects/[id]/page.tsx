@@ -33,10 +33,7 @@ export default async function ProjectPage({
 			.select({ id: journal.id, title: journal.title })
 			.from(journal)
 			.where(
-				and(
-					eq(journal.userId, session.user.id),
-					isNull(journal.projectId),
-				),
+				and(eq(journal.userId, session.user.id), isNull(journal.projectId)),
 			),
 	]);
 

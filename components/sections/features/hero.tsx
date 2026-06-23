@@ -23,8 +23,8 @@ export function Hero() {
 					</h1>
 					<p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
 						Zomath is not another calculator or answer key. It is a complete
-						learning platform built around one principle: genuine
-						understanding. Here is what that looks like in practice.
+						learning platform built around one principle: genuine understanding.
+						Here is what that looks like in practice.
 					</p>
 				</div>
 			</div>

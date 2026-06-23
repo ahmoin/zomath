@@ -1,6 +1,10 @@
 "use client";
 
-import { Cash02Icon, Mail01Icon, MobileProtectionIcon } from "@hugeicons/core-free-icons";
+import {
+	Cash02Icon,
+	Mail01Icon,
+	MobileProtectionIcon,
+} from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Separator } from "@/components/ui/separator";
 

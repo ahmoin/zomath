@@ -21,9 +21,9 @@ export function Cta() {
 						Stop memorizing. Start connecting.
 					</h2>
 					<p className="text-lg text-muted-foreground leading-relaxed mb-8">
-						The Concept Map is free to explore. Create your account and see
-						the entire landscape of mathematics laid out before you. Your
-						journey to genuine understanding starts with a single node.
+						The Concept Map is free to explore. Create your account and see the
+						entire landscape of mathematics laid out before you. Your journey to
+						genuine understanding starts with a single node.
 					</p>
 					<div className="flex flex-col sm:flex-row gap-3 justify-center">
 						<Button size="lg" asChild>

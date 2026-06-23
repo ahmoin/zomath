@@ -8,7 +8,11 @@ import {
 	postRequestBodySchema,
 	quizSchema,
 } from "@/app/api/practice/generate/schema";
-import { flashCardPrompt, matchUpPrompt, practicePrompt } from "@/lib/ai/prompts";
+import {
+	flashCardPrompt,
+	matchUpPrompt,
+	practicePrompt,
+} from "@/lib/ai/prompts";
 import { auth } from "@/lib/auth";
 import { ChatbotError } from "@/lib/errors";
 import { checkAndIncrementUsage } from "@/lib/usage";

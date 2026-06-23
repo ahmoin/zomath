@@ -13,18 +13,18 @@ export function Comparison() {
 							A map, not a table of contents
 						</h2>
 						<p className="text-lg text-muted-foreground leading-relaxed mb-8">
-							Most math resources present topics in a straight line. Chapter
-							1, then Chapter 2, then Chapter 3. But real understanding does
-							not work that way. Ideas loop back. Concepts in geometry
-							illuminate algebra. Trigonometry unlocks calculus. When you only
-							see a list, you miss the connections that make math click.
+							Most math resources present topics in a straight line. Chapter 1,
+							then Chapter 2, then Chapter 3. But real understanding does not
+							work that way. Ideas loop back. Concepts in geometry illuminate
+							algebra. Trigonometry unlocks calculus. When you only see a list,
+							you miss the connections that make math click.
 						</p>
 						<p className="text-lg text-muted-foreground leading-relaxed mb-8">
 							The Concept Map replaces that flat list with a living, navigable
-							graph of mathematical relationships. You can see the whole
-							terrain at once, or zoom into a single neighborhood. Every
-							connection is visible, every prerequisite accounted for, every
-							shortcut revealed.
+							graph of mathematical relationships. You can see the whole terrain
+							at once, or zoom into a single neighborhood. Every connection is
+							visible, every prerequisite accounted for, every shortcut
+							revealed.
 						</p>
 					</div>
 					<div className="space-y-6">

@@ -128,14 +128,54 @@ export const features = [
 ];
 
 export const learningPath = [
-	{ step: 1, title: "Foundations", topics: "Variables, expressions, order of operations", duration: "1-2 weeks" },
-	{ step: 2, title: "Linear Equations", topics: "One-step through multi-step equations", duration: "2-3 weeks" },
-	{ step: 3, title: "Inequalities", topics: "Solving and graphing inequalities", duration: "1-2 weeks" },
-	{ step: 4, title: "Functions", topics: "Notation, graphing, linear functions", duration: "2-3 weeks" },
-	{ step: 5, title: "Systems", topics: "Substitution, elimination, applications", duration: "2-3 weeks" },
-	{ step: 6, title: "Polynomials", topics: "Operations, factoring, binomials", duration: "2-3 weeks" },
-	{ step: 7, title: "Quadratics", topics: "Factoring, formula, completing the square", duration: "3-4 weeks" },
-	{ step: 8, title: "Advanced", topics: "Rationals, radicals, exponent rules", duration: "3-4 weeks" },
+	{
+		step: 1,
+		title: "Foundations",
+		topics: "Variables, expressions, order of operations",
+		duration: "1-2 weeks",
+	},
+	{
+		step: 2,
+		title: "Linear Equations",
+		topics: "One-step through multi-step equations",
+		duration: "2-3 weeks",
+	},
+	{
+		step: 3,
+		title: "Inequalities",
+		topics: "Solving and graphing inequalities",
+		duration: "1-2 weeks",
+	},
+	{
+		step: 4,
+		title: "Functions",
+		topics: "Notation, graphing, linear functions",
+		duration: "2-3 weeks",
+	},
+	{
+		step: 5,
+		title: "Systems",
+		topics: "Substitution, elimination, applications",
+		duration: "2-3 weeks",
+	},
+	{
+		step: 6,
+		title: "Polynomials",
+		topics: "Operations, factoring, binomials",
+		duration: "2-3 weeks",
+	},
+	{
+		step: 7,
+		title: "Quadratics",
+		topics: "Factoring, formula, completing the square",
+		duration: "3-4 weeks",
+	},
+	{
+		step: 8,
+		title: "Advanced",
+		topics: "Rationals, radicals, exponent rules",
+		duration: "3-4 weeks",
+	},
 ];
 
 export const stats = [
@@ -171,7 +211,8 @@ export const testimonials = [
 
 export const faqs = [
 	{
-		question: "I keep making sign errors in algebra. Can Newton help with that?",
+		question:
+			"I keep making sign errors in algebra. Can Newton help with that?",
 		answer:
 			"Absolutely. Sign errors are one of the most common struggles in algebra, and Newton is specifically designed to catch patterns in your mistakes. When you practice on Zomath, Newton tracks where you slip up and gives you targeted problems to build the habit of checking signs. Over time, you will develop an instinct for it rather than just trying to be more careful.",
 	},
@@ -191,7 +232,8 @@ export const faqs = [
 			"Yes, but with an important distinction. You can snap a photo of a homework problem and Newton will walk you through how to solve it, but he will not just give you the answer. The goal is understanding, not copying. By the time you finish working through it with Newton, you will be able to solve similar problems on your own.",
 	},
 	{
-		question: "I am preparing for a math competition. Is Zomath useful for that?",
+		question:
+			"I am preparing for a math competition. Is Zomath useful for that?",
 		answer:
 			"Definitely. Competition math requires creative problem solving, not just following procedures. Newton can help you see alternative approaches, recognize patterns, and build the algebraic fluency that competition problems demand. Use Practice mode to drill specific techniques and Ask Newton to explore clever solutions to tough problems.",
 	},

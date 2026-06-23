@@ -25,8 +25,15 @@ export function FilesSection({
 }: {
 	files: ProjectResource[];
 	uploadingFile: boolean;
-	setResources: (resources: ProjectResource[] | ((prev: ProjectResource[]) => ProjectResource[])) => void;
-	performUploadFile: (file: File, onSuccess: (resource: ProjectResource) => void) => void;
+	setResources: (
+		resources:
+			| ProjectResource[]
+			| ((prev: ProjectResource[]) => ProjectResource[]),
+	) => void;
+	performUploadFile: (
+		file: File,
+		onSuccess: (resource: ProjectResource) => void,
+	) => void;
 	performDeleteResource: (id: string) => Promise<boolean>;
 }) {
 	const fileInputRef = useRef<HTMLInputElement>(null);
@@ -40,7 +47,11 @@ export function FilesSection({
 					onClick={() => fileInputRef.current?.click()}
 					disabled={uploadingFile}
 				>
-					<HugeiconsIcon icon={Upload01Icon} className="size-3.5" strokeWidth={2} />
+					<HugeiconsIcon
+						icon={Upload01Icon}
+						className="size-3.5"
+						strokeWidth={2}
+					/>
 					{uploadingFile ? "Uploading..." : "Upload file"}
 				</Button>
 				<input
@@ -73,7 +84,8 @@ export function FilesSection({
 							resource={f}
 							onDelete={() =>
 								performDeleteResource(f.id).then((ok) => {
-									if (ok) setResources((prev) => prev.filter((r) => r.id !== f.id));
+									if (ok)
+										setResources((prev) => prev.filter((r) => r.id !== f.id));
 								})
 							}
 						/>
@@ -89,7 +101,8 @@ function fileTypeIcon(mimeType: string | null) {
 	if (mimeType === "application/pdf") return Pdf01Icon;
 	if (mimeType.startsWith("image/")) return Image01Icon;
 	if (mimeType.startsWith("video/")) return Video01Icon;
-	if (mimeType.includes("presentation") || mimeType.includes("powerpoint")) return Presentation01Icon;
+	if (mimeType.includes("presentation") || mimeType.includes("powerpoint"))
+		return Presentation01Icon;
 	return File01Icon;
 }
 
@@ -105,7 +118,11 @@ function FileCard({
 	return (
 		<div className="group relative flex flex-col gap-2 rounded-xl border border-border bg-card p-4 transition-colors hover:border-primary/30 hover:bg-accent/50">
 			<div className="flex items-center gap-2">
-				<HugeiconsIcon icon={icon} className="size-5 shrink-0 text-muted-foreground" strokeWidth={1.5} />
+				<HugeiconsIcon
+					icon={icon}
+					className="size-5 shrink-0 text-muted-foreground"
+					strokeWidth={1.5}
+				/>
 				{resource.url ? (
 					<a
 						href={resource.url}
@@ -126,7 +143,11 @@ function FileCard({
 				onClick={onDelete}
 				className="absolute right-2 top-2 hidden rounded-lg p-1 text-muted-foreground transition-colors hover:bg-muted hover:text-destructive group-hover:block"
 			>
-				<HugeiconsIcon icon={Delete01Icon} className="size-3.5" strokeWidth={2} />
+				<HugeiconsIcon
+					icon={Delete01Icon}
+					className="size-3.5"
+					strokeWidth={2}
+				/>
 			</button>
 		</div>
 	);

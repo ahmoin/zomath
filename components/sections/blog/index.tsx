@@ -17,7 +17,8 @@ export function BlogSection() {
 	const showFeatured = activeCategory === "all" && searchQuery === "";
 
 	const filteredPosts = posts.filter((post) => {
-		const matchesCategory = activeCategory === "all" || post.category === activeCategory;
+		const matchesCategory =
+			activeCategory === "all" || post.category === activeCategory;
 		const matchesSearch =
 			searchQuery === "" ||
 			post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -25,7 +26,9 @@ export function BlogSection() {
 		return matchesCategory && matchesSearch;
 	});
 
-	const gridPosts = showFeatured ? filteredPosts.filter((p) => !p.featured) : filteredPosts;
+	const gridPosts = showFeatured
+		? filteredPosts.filter((p) => !p.featured)
+		: filteredPosts;
 
 	return (
 		<main>

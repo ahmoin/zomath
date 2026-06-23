@@ -1,6 +1,11 @@
 "use client";
 
-import { BubbleChatIcon, Download04Icon, Link01Icon, Mail02Icon } from "@hugeicons/core-free-icons";
+import {
+	BubbleChatIcon,
+	Download04Icon,
+	Link01Icon,
+	Mail02Icon,
+} from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";

@@ -18,15 +18,24 @@ export function Testimonials() {
 
 				<div className="grid md:grid-cols-3 gap-6">
 					{testimonials.map((t) => (
-						<div key={t.name} className="rounded-xl border bg-card p-8 flex flex-col">
+						<div
+							key={t.name}
+							className="rounded-xl border bg-card p-8 flex flex-col"
+						>
 							<div className="mb-4">
-								<HugeiconsIcon icon={t.icon} className="size-5 text-primary" strokeWidth={1.5} />
+								<HugeiconsIcon
+									icon={t.icon}
+									className="size-5 text-primary"
+									strokeWidth={1.5}
+								/>
 							</div>
 							<p className="text-foreground leading-relaxed mb-6 flex-1">
 								&ldquo;{t.quote}&rdquo;
 							</p>
 							<div>
-								<div className="font-semibold text-foreground text-sm">{t.name}</div>
+								<div className="font-semibold text-foreground text-sm">
+									{t.name}
+								</div>
 								<div className="text-xs text-muted-foreground">{t.detail}</div>
 							</div>
 						</div>
