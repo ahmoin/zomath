@@ -1,6 +1,7 @@
 import { generateText } from "ai";
 import { headers } from "next/headers";
 import { z } from "zod";
+import { createOpenRouter } from "@openrouter/ai-sdk-provider";
 import { auth } from "@/lib/auth";
 import { ChatbotError } from "@/lib/errors";
 
@@ -51,8 +52,12 @@ export async function POST(request: Request) {
 
 	const prompt = `Format: ${format}${attachmentContext}\n\nConversation so far:\n${history}\n\nNewton:`;
 
+	const openrouter = createOpenRouter({
+		apiKey: process.env.OPENROUTER_API_KEY,
+	});
+
 	const { text } = await generateText({
-		model: "google/gemini-2.5-flash",
+		model: openrouter.chat("google/gemini-2.5-flash"),
 		prompt,
 		system: SYSTEM,
 	});

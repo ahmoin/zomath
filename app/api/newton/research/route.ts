@@ -1,8 +1,8 @@
 import { generateText, stepCountIs, streamText } from "ai";
 import { and, eq } from "drizzle-orm";
 import { headers } from "next/headers";
-import { DEFAULT_CHAT_MODEL } from "@/lib/ai/models";
 import { researchNewtonPrompt } from "@/lib/ai/prompts";
+import { getLanguageModel } from "@/lib/ai/providers";
 import type { SourceTracker } from "@/lib/ai/tools";
 import {
 	listJournals,
@@ -103,16 +103,17 @@ export async function POST(request: Request) {
 
 	const tracker: SourceTracker = { sources: [], count: 0 };
 
+	const MODEL = "google/gemini-2.5-flash";
 	const classifyPromise = journalId
 		? generateText({
-				model: DEFAULT_CHAT_MODEL,
+				model: getLanguageModel(MODEL),
 				maxOutputTokens: 3,
 				prompt: `A user has a journal open and sent this message to an AI assistant: "${query}"\n\nShould the AI's response be offered as journal content to add or apply to the journal? Answer only "yes" or "no".\n\nExamples that should be yes: "add notes about X", "replace Y with Z", "rewrite this", "summarize into notes", "write an intro", "fix the grammar".\nExamples that should be no: "what does this mean?", "is this correct?", "explain this to me", "what is this journal about?", "review my notes".`,
 			}).catch(() => null)
 		: Promise.resolve(null);
 
 	const result = streamText({
-		model: DEFAULT_CHAT_MODEL,
+		model: getLanguageModel(MODEL),
 		system: researchNewtonPrompt + currentJournalContext,
 		// biome-ignore lint/suspicious/noExplicitAny: AI SDK union type
 		messages: [{ role: "user", content: messageContent as any }],

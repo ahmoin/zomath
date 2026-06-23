@@ -1,6 +1,7 @@
 import { generateText, Output } from "ai";
 import { headers } from "next/headers";
 import { z } from "zod";
+import { createOpenRouter } from "@openrouter/ai-sdk-provider";
 import {
 	flashCardSchema,
 	matchUpSchema,
@@ -29,9 +30,13 @@ export async function POST(request: Request) {
 	const { formatId, current, instructions } = body;
 	const currentJson = JSON.stringify(current, null, 2);
 
+	const openrouter = createOpenRouter({
+		apiKey: process.env.OPENROUTER_API_KEY,
+	});
+
 	if (formatId === "match-up") {
 		const { output } = await generateText({
-			model: "google/gemini-2.5-flash",
+			model: openrouter.chat("google/gemini-2.5-flash"),
 			output: Output.object({ schema: matchUpSchema }),
 			prompt: `Here is the current match-up activity data:\n${currentJson}\n\nThe student has requested the following change: "${instructions}"\n\nReturn the updated match-up data incorporating their request. Keep everything else the same unless it needs to change.`,
 		});
@@ -40,7 +45,7 @@ export async function POST(request: Request) {
 
 	if (formatId === "flash-cards") {
 		const { output } = await generateText({
-			model: "google/gemini-2.5-flash",
+			model: openrouter.chat("google/gemini-2.5-flash"),
 			output: Output.object({ schema: flashCardSchema }),
 			prompt: `Here is the current flash card deck:\n${currentJson}\n\nThe student has requested the following change: "${instructions}"\n\nReturn the updated flash card deck incorporating their request. Keep everything else the same unless it needs to change.`,
 		});
@@ -48,7 +53,7 @@ export async function POST(request: Request) {
 	}
 
 	const { output } = await generateText({
-		model: "google/gemini-2.5-flash",
+		model: openrouter.chat("google/gemini-2.5-flash"),
 		output: Output.object({ schema: quizSchema }),
 		prompt: `Here is the current quiz data:\n${currentJson}\n\nThe student has requested the following change: "${instructions}"\n\nReturn the updated quiz incorporating their request. Keep everything else the same unless it needs to change. Verify all correct answers are mathematically accurate.`,
 	});

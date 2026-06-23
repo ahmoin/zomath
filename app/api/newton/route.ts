@@ -43,7 +43,8 @@ export async function POST(request: Request) {
 		return new ChatbotError("bad_request:api").toResponse();
 	}
 
-	const modelConfig = chatModels.find((m) => m.id === body.selectedChatModel);
+	const MODEL = "google/gemini-2.5-flash";
+	const modelConfig = chatModels.find((m) => m.id === MODEL);
 	const providerOptions = modelConfig?.reasoningEffort
 		? { openai: { reasoningEffort: modelConfig.reasoningEffort } }
 		: undefined;
@@ -101,7 +102,7 @@ export async function POST(request: Request) {
 
 	async function processStream(controller: ReadableStreamDefaultController) {
 		const result = streamText({
-			model: getLanguageModel(body.selectedChatModel),
+			model: getLanguageModel(MODEL),
 			system: newtonPrompt,
 			providerOptions,
 			stopWhen: stepCountIs(5),

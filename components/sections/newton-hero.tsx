@@ -15,11 +15,8 @@ import type { HugeiconsIconProps } from "@hugeicons/react";
 import { HugeiconsIcon } from "@hugeicons/react";
 import type { ChatStatus, FileUIPart } from "ai";
 import {
-	BrainIcon,
 	CheckIcon,
-	ImageIcon,
 	LoaderIcon,
-	WrenchIcon,
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -48,18 +45,6 @@ import {
 	MessageContent,
 	MessageResponse,
 } from "@/components/ai-elements/message";
-import {
-	ModelSelector,
-	ModelSelectorContent,
-	ModelSelectorEmpty,
-	ModelSelectorGroup,
-	ModelSelectorInput,
-	ModelSelectorItem,
-	ModelSelectorList,
-	ModelSelectorLogo,
-	ModelSelectorName,
-	ModelSelectorTrigger,
-} from "@/components/ai-elements/model-selector";
 import type { PersonaState } from "@/components/ai-elements/persona";
 import { Persona } from "@/components/ai-elements/persona";
 import {
@@ -118,7 +103,6 @@ import {
 	TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { useLocalStorage } from "@/hooks/use-local-storage";
-import { chatModels, DEFAULT_CHAT_MODEL } from "@/lib/ai/models";
 import { cn } from "@/lib/utils";
 
 import type {
@@ -207,8 +191,6 @@ function AuthedPersona({
 }) {
 	const pathname = usePathname();
 	const [mode, setMode] = useLocalStorage<Mode>("newton:mode", "text");
-	const [model, setModel] = useLocalStorage("newton:model", DEFAULT_CHAT_MODEL);
-	const [modelSelectorOpen, setModelSelectorOpen] = useState(false);
 	const [personaState, setPersonaState] = useState<PersonaState>("idle");
 	const [messages, setMessages] = useState<ConvMessage[]>(initialMessages);
 	const [streamingText, setStreamingText] = useState("");
@@ -332,7 +314,6 @@ function AuthedPersona({
 					headers: { "Content-Type": "application/json" },
 					body: JSON.stringify({
 						id: crypto.randomUUID(),
-						selectedChatModel: model,
 						selectedVisibilityType: "private",
 						messages: updated.map((m) => ({
 							id: crypto.randomUUID(),
@@ -478,7 +459,7 @@ function AuthedPersona({
 				return null;
 			}
 		},
-		[pathname, model],
+		[pathname],
 	);
 
 	const handleVoiceTranscription = useCallback(
@@ -727,51 +708,6 @@ function AuthedPersona({
 										<PromptInputActionAddAttachments />
 									</PromptInputActionMenuContent>
 								</PromptInputActionMenu>
-								<ModelSelector
-									open={modelSelectorOpen}
-									onOpenChange={setModelSelectorOpen}
-								>
-									<ModelSelectorTrigger asChild>
-										<PromptInputButton>
-											<ModelSelectorLogo provider={model.split("/")[0]} />
-											<ModelSelectorName>
-												{chatModels.find((m) => m.id === model)?.name ?? model}
-											</ModelSelectorName>
-										</PromptInputButton>
-									</ModelSelectorTrigger>
-									<ModelSelectorContent>
-										<ModelSelectorInput placeholder="Search models..." />
-										<ModelSelectorList>
-											<ModelSelectorEmpty>No models found.</ModelSelectorEmpty>
-											<ModelSelectorGroup heading="Models">
-												{chatModels.map((m) => (
-													<ModelSelectorItem
-														key={m.id}
-														value={m.id}
-														onSelect={() => {
-															setModel(m.id);
-															setModelSelectorOpen(false);
-														}}
-													>
-														<ModelSelectorLogo provider={m.provider} />
-														<ModelSelectorName>{m.name}</ModelSelectorName>
-														<div className="ml-auto flex items-center gap-1">
-															{m.caps?.vision && (
-																<ImageIcon className="size-3 text-muted-foreground" />
-															)}
-															{m.caps?.tools && (
-																<WrenchIcon className="size-3 text-muted-foreground" />
-															)}
-															{m.caps?.reasoning && (
-																<BrainIcon className="size-3 text-muted-foreground" />
-															)}
-														</div>
-													</ModelSelectorItem>
-												))}
-											</ModelSelectorGroup>
-										</ModelSelectorList>
-									</ModelSelectorContent>
-								</ModelSelector>
 							</PromptInputTools>
 							<PromptInputSubmit
 								status={chatStatus}

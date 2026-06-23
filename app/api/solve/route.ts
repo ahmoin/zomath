@@ -38,7 +38,7 @@ export async function POST(request: Request) {
 		return new ChatbotError("bad_request:api").toResponse();
 	}
 
-	const { imageUrl, messages = [], selectedChatModel } = body;
+	const { imageUrl, messages = [] } = body;
 
 	const blob = await get(imageUrl, { access: "private" });
 	if (!blob) return new Response("Image not found", { status: 404 });
@@ -47,7 +47,7 @@ export async function POST(request: Request) {
 	const base64 = Buffer.from(arrayBuffer).toString("base64");
 
 	const result = streamText({
-		model: getLanguageModel(selectedChatModel),
+		model: getLanguageModel("google/gemini-2.5-flash"),
 		system: solvePrompt,
 		messages: [
 			{

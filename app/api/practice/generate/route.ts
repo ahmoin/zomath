@@ -1,6 +1,7 @@
 import { generateText, Output } from "ai";
 import { headers } from "next/headers";
 import type { z } from "zod";
+import { createOpenRouter } from "@openrouter/ai-sdk-provider";
 import {
 	flashCardSchema,
 	matchUpSchema,
@@ -42,9 +43,13 @@ export async function POST(request: Request) {
 
 	const { topic, count, formatId } = body;
 
+	const openrouter = createOpenRouter({
+		apiKey: process.env.OPENROUTER_API_KEY,
+	});
+
 	if (formatId === "match-up") {
 		const { output: object } = await generateText({
-			model: "google/gemini-2.5-flash",
+			model: openrouter.chat("google/gemini-2.5-flash"),
 			output: Output.object({ schema: matchUpSchema }),
 			prompt: matchUpPrompt(topic, count),
 		});
@@ -53,7 +58,7 @@ export async function POST(request: Request) {
 
 	if (formatId === "flash-cards") {
 		const { output: object } = await generateText({
-			model: "google/gemini-2.5-flash",
+			model: openrouter.chat("google/gemini-2.5-flash"),
 			output: Output.object({ schema: flashCardSchema }),
 			prompt: flashCardPrompt(topic, count),
 		});
@@ -61,7 +66,7 @@ export async function POST(request: Request) {
 	}
 
 	const { output: object } = await generateText({
-		model: "google/gemini-2.5-flash",
+		model: openrouter.chat("google/gemini-2.5-flash"),
 		output: Output.object({ schema: quizSchema }),
 		prompt: practicePrompt(topic, count),
 	});

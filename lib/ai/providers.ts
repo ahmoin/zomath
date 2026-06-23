@@ -1,6 +1,11 @@
-import { customProvider, gateway } from "ai";
+import { customProvider } from "ai";
+import { createOpenRouter } from "@openrouter/ai-sdk-provider";
 import { titleModel } from "@/lib/ai/models";
 import { isTestEnvironment } from "@/lib/constants";
+
+const openrouter = createOpenRouter({
+	apiKey: process.env.OPENROUTER_API_KEY,
+});
 
 export const myProvider = isTestEnvironment
 	? (() => {
@@ -19,12 +24,12 @@ export function getLanguageModel(modelId: string) {
 		return myProvider.languageModel(modelId);
 	}
 
-	return gateway.languageModel(modelId);
+	return openrouter.chat(modelId);
 }
 
 export function getTitleModel() {
 	if (isTestEnvironment && myProvider) {
 		return myProvider.languageModel("title-model");
 	}
-	return gateway.languageModel(titleModel.id);
+	return openrouter.chat(titleModel.id);
 }

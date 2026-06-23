@@ -1,4 +1,5 @@
 export const DEFAULT_CHAT_MODEL = "google/gemini-2.5-flash";
+export const MODEL_ID = "google/gemini-2.5-flash";
 
 export const titleModel = {
 	id: "mistral/mistral-small",
