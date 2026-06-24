@@ -172,7 +172,7 @@ Please ensure your code passes linting and type checks before submitting.
 
 ## 📝 License
 
-MIT (./LICENSE.md)
+MIT - [LICENSE.md](./LICENSE.md)
 
 ---
 
