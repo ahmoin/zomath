@@ -3,8 +3,8 @@
 import { ArrowRight02Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
 import { leaderboard } from "@/components/sections/community/data";
+import { Button } from "@/components/ui/button";
 
 export function Leaderboard() {
 	return (

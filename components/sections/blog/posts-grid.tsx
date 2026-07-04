@@ -3,8 +3,8 @@
 import { Calendar02Icon, Search01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import Link from "next/link";
-import { formatDate } from "@/components/sections/blog/data";
 import type { categories, posts } from "@/components/sections/blog/data";
+import { formatDate } from "@/components/sections/blog/data";
 
 type Post = (typeof posts)[number];
 type Category = (typeof categories)[number];

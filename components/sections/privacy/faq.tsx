@@ -2,13 +2,13 @@
 
 import { AuctionIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
+import { faqItems } from "@/components/sections/privacy/data";
 import {
 	Accordion,
 	AccordionContent,
 	AccordionItem,
 	AccordionTrigger,
 } from "@/components/ui/accordion";
-import { faqItems } from "@/components/sections/privacy/data";
 
 export function Faq() {
 	return (

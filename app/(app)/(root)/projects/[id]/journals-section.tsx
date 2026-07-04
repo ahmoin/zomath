@@ -5,12 +5,12 @@ import {
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import Link from "next/link";
+import { EditorPreview } from "@/components/sections/editor-preview";
+import { Button } from "@/components/ui/button";
 import type { Journal } from "@/lib/types";
 import { formatDate } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
-import { EditorPreview } from "@/components/sections/editor-preview";
-import { SectionHeader } from "./section-header";
 import { EmptySection } from "./empty-section";
+import { SectionHeader } from "./section-header";
 
 type AvailableJournal = { id: string; title: string };
 

@@ -2,13 +2,13 @@
 
 import { Search01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
+import { faqItems } from "@/components/sections/help/data";
 import {
 	Accordion,
 	AccordionContent,
 	AccordionItem,
 	AccordionTrigger,
 } from "@/components/ui/accordion";
-import { faqItems } from "@/components/sections/help/data";
 
 interface FaqProps {
 	searchQuery: string;

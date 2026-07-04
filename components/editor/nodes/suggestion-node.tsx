@@ -1,15 +1,18 @@
 "use client";
 
+import "katex/dist/katex.min.css";
 import { $createListItemNode, $createListNode } from "@lexical/list";
-import { $createHeadingNode, $createQuoteNode } from "@lexical/rich-text";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
+import { $createHeadingNode, $createQuoteNode } from "@lexical/rich-text";
+import katex from "katex";
 import {
 	$createParagraphNode,
 	$createTextNode,
 	$getNodeByKey,
-	type DOMExportOutput,
 	DecoratorNode,
+	type DOMExportOutput,
 	type EditorConfig,
+	type ElementNode,
 	type LexicalEditor,
 	type LexicalNode,
 	type NodeKey,
@@ -17,7 +20,9 @@ import {
 	type Spread,
 } from "lexical";
 import type React from "react";
+import { $createEquationNode } from "@/components/editor/nodes/equation-node";
 import { Button } from "@/components/ui/button";
+import { parseEquations } from "@/lib/parse-equations";
 import type { SuggestionBlock } from "@/lib/types";
 
 export type SerializedSuggestionNode = Spread<
@@ -36,6 +41,20 @@ function clean(text: string): string {
 		.trim();
 }
 
+function appendSegmentsToNode(node: ElementNode, text: string): void {
+	const segments = parseEquations(text);
+	for (const segment of segments) {
+		if (segment.type === "equation") {
+			node.append($createEquationNode(segment.content, true));
+		} else {
+			const cleaned = clean(segment.content);
+			if (cleaned) {
+				node.append($createTextNode(cleaned));
+			}
+		}
+	}
+}
+
 export function $createLexicalNodeFromBlock(
 	block: SuggestionBlock,
 ): LexicalNode {
@@ -44,19 +63,19 @@ export function $createLexicalNodeFromBlock(
 		case "h2":
 		case "h3": {
 			const node = $createHeadingNode(block.type);
-			node.append($createTextNode(clean(block.lines[0])));
+			appendSegmentsToNode(node, block.lines[0]);
 			return node;
 		}
 		case "blockquote": {
 			const node = $createQuoteNode();
-			node.append($createTextNode(clean(block.lines.join(" "))));
+			appendSegmentsToNode(node, block.lines.join(" "));
 			return node;
 		}
 		case "bullet": {
 			const list = $createListNode("bullet");
 			for (const line of block.lines) {
 				const item = $createListItemNode();
-				item.append($createTextNode(clean(line)));
+				appendSegmentsToNode(item, line);
 				list.append(item);
 			}
 			return list;
@@ -65,32 +84,79 @@ export function $createLexicalNodeFromBlock(
 			const list = $createListNode("number");
 			for (const line of block.lines) {
 				const item = $createListItemNode();
-				item.append($createTextNode(clean(line)));
+				appendSegmentsToNode(item, line);
 				list.append(item);
 			}
 			return list;
 		}
 		default: {
 			const node = $createParagraphNode();
-			node.append($createTextNode(clean(block.lines.join(" "))));
+			appendSegmentsToNode(node, block.lines.join(" "));
 			return node;
 		}
 	}
 }
 
+function TextWithEquations({ text }: { text: string }) {
+	const segments = parseEquations(text);
+	return (
+		<>
+			{segments.map((segment, i) => {
+				if (segment.type === "equation") {
+					return (
+						<span key={i} className="mx-0.5">
+							<EquationRenderer equation={segment.content} />
+						</span>
+					);
+				}
+				return <span key={i}>{clean(segment.content)}</span>;
+			})}
+		</>
+	);
+}
+
+function EquationRenderer({ equation }: { equation: string }) {
+	return (
+		<span
+			dangerouslySetInnerHTML={{
+				__html: katex.renderToString(equation, {
+					displayMode: false,
+					throwOnError: false,
+					output: "html",
+				}),
+			}}
+			className="inline-block align-middle"
+		/>
+	);
+}
+
 function SuggestionPreview({ block }: { block: SuggestionBlock }) {
 	switch (block.type) {
 		case "h1":
-			return <p className="text-xl font-bold">{block.lines[0]}</p>;
+			return (
+				<p className="text-xl font-bold">
+					<TextWithEquations text={block.lines[0]} />
+				</p>
+			);
 		case "h2":
-			return <p className="text-lg font-bold">{block.lines[0]}</p>;
+			return (
+				<p className="text-lg font-bold">
+					<TextWithEquations text={block.lines[0]} />
+				</p>
+			);
 		case "h3":
-			return <p className="text-base font-semibold">{block.lines[0]}</p>;
+			return (
+				<p className="text-base font-semibold">
+					<TextWithEquations text={block.lines[0]} />
+				</p>
+			);
 		case "blockquote":
 			return (
 				<blockquote className="border-l-2 border-green-400 pl-3 italic text-sm text-foreground/80">
 					{block.lines.map((l, i) => (
-						<p key={i}>{l}</p>
+						<p key={i}>
+							<TextWithEquations text={l} />
+						</p>
 					))}
 				</blockquote>
 			);
@@ -99,7 +165,7 @@ function SuggestionPreview({ block }: { block: SuggestionBlock }) {
 				<ul className="list-disc pl-4 space-y-0.5">
 					{block.lines.map((l, i) => (
 						<li key={i} className="text-sm">
-							{l}
+							<TextWithEquations text={l} />
 						</li>
 					))}
 				</ul>
@@ -109,13 +175,17 @@ function SuggestionPreview({ block }: { block: SuggestionBlock }) {
 				<ol className="list-decimal pl-4 space-y-0.5">
 					{block.lines.map((l, i) => (
 						<li key={i} className="text-sm">
-							{l}
+							<TextWithEquations text={l} />
 						</li>
 					))}
 				</ol>
 			);
 		default:
-			return <p className="text-sm leading-relaxed">{block.lines[0]}</p>;
+			return (
+				<p className="text-sm leading-relaxed">
+					<TextWithEquations text={block.lines[0]} />
+				</p>
+			);
 	}
 }
 

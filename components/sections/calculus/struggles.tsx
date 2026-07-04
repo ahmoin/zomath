@@ -3,8 +3,8 @@
 import { ArrowRight02Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
 import { struggles } from "@/components/sections/calculus/data";
+import { Button } from "@/components/ui/button";
 
 export function Struggles() {
 	return (

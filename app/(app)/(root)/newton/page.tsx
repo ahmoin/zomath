@@ -1,8 +1,8 @@
 import { headers } from "next/headers";
+import { redirect } from "next/navigation";
 import { AppSidebar } from "@/components/app-sidebar";
 import { DashboardHeader } from "@/components/dashboard-header";
 import { NewtonHeroSection } from "@/components/sections/newton-hero-loader";
-import { redirect } from "next/navigation";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { auth } from "@/lib/auth";

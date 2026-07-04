@@ -11,6 +11,12 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { FilesSection } from "@/app/(app)/(root)/projects/[id]/files-section";
+import { JournalsSection } from "@/app/(app)/(root)/projects/[id]/journals-section";
+import { LinksSection } from "@/app/(app)/(root)/projects/[id]/links-section";
+import { NotesSection } from "@/app/(app)/(root)/projects/[id]/notes-section";
+import { QuestionsSection } from "@/app/(app)/(root)/projects/[id]/questions-section";
+import { useProjectActions } from "@/app/(app)/(root)/projects/[id]/use-project-actions";
 import { EditorPreview } from "@/components/sections/editor-preview";
 import { Button } from "@/components/ui/button";
 import {
@@ -24,12 +30,6 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import type { Journal, Project, ProjectResource } from "@/lib/types";
-import { useProjectActions } from "@/app/(app)/(root)/projects/[id]/use-project-actions";
-import { JournalsSection } from "@/app/(app)/(root)/projects/[id]/journals-section";
-import { FilesSection } from "@/app/(app)/(root)/projects/[id]/files-section";
-import { LinksSection } from "@/app/(app)/(root)/projects/[id]/links-section";
-import { NotesSection } from "@/app/(app)/(root)/projects/[id]/notes-section";
-import { QuestionsSection } from "@/app/(app)/(root)/projects/[id]/questions-section";
 
 type AvailableJournal = { id: string; title: string };
 

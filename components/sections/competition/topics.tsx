@@ -1,12 +1,12 @@
 "use client";
 
+import { topics } from "@/components/sections/competition/data";
 import {
 	Accordion,
 	AccordionContent,
 	AccordionItem,
 	AccordionTrigger,
 } from "@/components/ui/accordion";
-import { topics } from "@/components/sections/competition/data";
 
 export function Topics() {
 	return (

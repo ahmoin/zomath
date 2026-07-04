@@ -1,8 +1,8 @@
 "use client";
 
 import { HugeiconsIcon } from "@hugeicons/react";
-import { Separator } from "@/components/ui/separator";
 import { navExtras, policySections } from "@/components/sections/privacy/data";
+import { Separator } from "@/components/ui/separator";
 
 export function PolicyContent() {
 	return (

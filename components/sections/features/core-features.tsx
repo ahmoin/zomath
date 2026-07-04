@@ -6,9 +6,9 @@ import {
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import Link from "next/link";
+import { coreFeatures } from "@/components/sections/features/data";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { coreFeatures } from "@/components/sections/features/data";
 
 export function CoreFeatures() {
 	return (

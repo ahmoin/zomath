@@ -25,6 +25,7 @@ import {
 } from "@lexical/markdown";
 import { OverflowNode } from "@lexical/overflow";
 import { CharacterLimitPlugin } from "@lexical/react/LexicalCharacterLimitPlugin";
+import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import { LexicalExtensionComposer } from "@lexical/react/LexicalExtensionComposer";
 import { OnChangePlugin } from "@lexical/react/LexicalOnChangePlugin";
 import { TabIndentationPlugin } from "@lexical/react/LexicalTabIndentationPlugin";
@@ -38,7 +39,6 @@ import {
 	type LexicalEditor,
 	type SerializedEditorState,
 } from "lexical";
-import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import type React from "react";
 import { useEffect, useMemo, useState } from "react";
 import { useBlockViewer } from "@/components/block-viewer-provider";
@@ -51,7 +51,6 @@ import { KeywordsExtension } from "@/components/editor/extensions/keywords-exten
 import { MarkdownShortcutsExtension } from "@/components/editor/extensions/markdown-shortcuts-extension";
 import { MaxLengthExtension } from "@/components/editor/extensions/max-length-extension";
 import { AutocompleteNode } from "@/components/editor/nodes/autocomplete-node";
-import { SuggestionNode } from "@/components/editor/nodes/suggestion-node";
 import { TweetNode } from "@/components/editor/nodes/embeds/tweet-node";
 import { YouTubeNode } from "@/components/editor/nodes/embeds/youtube-node";
 import { EmojiNode } from "@/components/editor/nodes/emoji-node";
@@ -60,6 +59,7 @@ import { LayoutContainerNode } from "@/components/editor/nodes/layout-container-
 import { LayoutItemNode } from "@/components/editor/nodes/layout-item-node";
 import { MentionNode } from "@/components/editor/nodes/mention-node";
 import { SpecialTextNode } from "@/components/editor/nodes/special-text-node";
+import { SuggestionNode } from "@/components/editor/nodes/suggestion-node";
 import { ActionsPlugin } from "@/components/editor/plugins/actions/actions-plugin";
 import { ClearEditorActionPlugin } from "@/components/editor/plugins/actions/clear-editor-plugin";
 import { CounterCharacterPlugin } from "@/components/editor/plugins/actions/counter-character-plugin";
@@ -101,6 +101,7 @@ import {
 	TablePickerPlugin,
 } from "@/components/editor/plugins/picker/table-picker-plugin";
 import SpecialTextPlugin from "@/components/editor/plugins/special-text-plugin";
+import { SuggestionPlugin } from "@/components/editor/plugins/suggestion-plugin";
 import { TabFocusPlugin } from "@/components/editor/plugins/tab-focus-plugin";
 import { FormatBulletedList } from "@/components/editor/plugins/toolbar/block-format/format-bulleted-list";
 import { FormatCheckList } from "@/components/editor/plugins/toolbar/block-format/format-check-list";
@@ -129,7 +130,6 @@ import { HistoryToolbarPlugin } from "@/components/editor/plugins/toolbar/histor
 import { LinkToolbarPlugin } from "@/components/editor/plugins/toolbar/link-toolbar-plugin";
 import { SubSuperToolbarPlugin } from "@/components/editor/plugins/toolbar/subsuper-toolbar-plugin";
 import { ToolbarPlugin } from "@/components/editor/plugins/toolbar/toolbar-plugin";
-import { SuggestionPlugin } from "@/components/editor/plugins/suggestion-plugin";
 import { TypingPerfPlugin } from "@/components/editor/plugins/typing-pref-plugin";
 import { editorTheme } from "@/components/editor/themes/editor-theme";
 import { EMOJI } from "@/components/editor/transformers/markdown-emoji-transformer";

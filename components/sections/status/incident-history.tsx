@@ -3,6 +3,7 @@
 import { ArrowRight02Icon, DiscordIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useState } from "react";
+import { getStatusConfig, incidents } from "@/components/sections/status/data";
 import {
 	Accordion,
 	AccordionContent,
@@ -11,7 +12,6 @@ import {
 } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { getStatusConfig, incidents } from "@/components/sections/status/data";
 
 export function IncidentHistory() {
 	const [showAllIncidents, setShowAllIncidents] = useState(false);

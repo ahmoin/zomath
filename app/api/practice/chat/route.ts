@@ -1,7 +1,7 @@
+import { createOpenRouter } from "@openrouter/ai-sdk-provider";
 import { generateText, Output } from "ai";
 import { headers } from "next/headers";
 import { z } from "zod";
-import { createOpenRouter } from "@openrouter/ai-sdk-provider";
 import { auth } from "@/lib/auth";
 import { ChatbotError } from "@/lib/errors";
 

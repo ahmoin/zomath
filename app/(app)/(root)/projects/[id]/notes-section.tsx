@@ -4,10 +4,10 @@ import {
 	PlusSignIcon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import type { ProjectResource } from "@/lib/types";
 import { Button } from "@/components/ui/button";
-import { SectionHeader } from "./section-header";
+import type { ProjectResource } from "@/lib/types";
 import { EmptySection } from "./empty-section";
+import { SectionHeader } from "./section-header";
 
 export function NotesSection({
 	notes,

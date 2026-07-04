@@ -7,8 +7,8 @@ import {
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
 import { heroStats } from "@/components/sections/security/data";
+import { Button } from "@/components/ui/button";
 
 export function Hero() {
 	return (

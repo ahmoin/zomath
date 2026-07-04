@@ -100,14 +100,13 @@ import {
 	TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { useLocalStorage } from "@/hooks/use-local-storage";
-import { cn } from "@/lib/utils";
-
 import type {
 	NewtonFilePart,
 	NewtonMessage,
 	NewtonMode,
 	NewtonSpeechData,
 } from "@/lib/types";
+import { cn } from "@/lib/utils";
 
 type HugeIcon = HugeiconsIconProps["icon"];
 type Mode = NewtonMode;

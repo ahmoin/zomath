@@ -1,12 +1,12 @@
 "use client";
 
+import { faqItems } from "@/components/sections/students/data";
 import {
 	Accordion,
 	AccordionContent,
 	AccordionItem,
 	AccordionTrigger,
 } from "@/components/ui/accordion";
-import { faqItems } from "@/components/sections/students/data";
 
 export function Faq() {
 	return (

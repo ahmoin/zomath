@@ -10,11 +10,11 @@ import {
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useRef } from "react";
+import { Button } from "@/components/ui/button";
 import type { ProjectResource } from "@/lib/types";
 import { formatDate } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
-import { SectionHeader } from "./section-header";
 import { EmptySection } from "./empty-section";
+import { SectionHeader } from "./section-header";
 
 export function FilesSection({
 	files,

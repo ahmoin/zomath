@@ -1,7 +1,7 @@
+import { createOpenRouter } from "@openrouter/ai-sdk-provider";
 import { generateText, Output } from "ai";
 import { headers } from "next/headers";
 import type { z } from "zod";
-import { createOpenRouter } from "@openrouter/ai-sdk-provider";
 import {
 	flashCardSchema,
 	matchUpSchema,

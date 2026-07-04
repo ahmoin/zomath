@@ -7,8 +7,8 @@ import {
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import Link from "next/link";
-import { formatDate } from "@/components/sections/blog/data";
 import type { posts } from "@/components/sections/blog/data";
+import { formatDate } from "@/components/sections/blog/data";
 
 type Post = (typeof posts)[number];
 

@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { categories, posts } from "@/components/sections/blog/data";
 import { Cta } from "@/components/sections/blog/cta";
+import { categories, posts } from "@/components/sections/blog/data";
 import { FeaturedPost } from "@/components/sections/blog/featured-post";
 import { Hero } from "@/components/sections/blog/hero";
 import { Newsletter } from "@/components/sections/blog/newsletter";

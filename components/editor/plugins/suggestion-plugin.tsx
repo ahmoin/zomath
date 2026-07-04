@@ -3,12 +3,12 @@
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import { $getRoot } from "lexical";
 import { useEffect, useState } from "react";
-import { Button } from "@/components/ui/button";
 import {
 	$createLexicalNodeFromBlock,
 	$isSuggestionNode,
 	type SuggestionNode,
 } from "@/components/editor/nodes/suggestion-node";
+import { Button } from "@/components/ui/button";
 
 export function SuggestionPlugin() {
 	const [editor] = useLexicalComposerContext();

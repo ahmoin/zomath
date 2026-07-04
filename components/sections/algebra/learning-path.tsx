@@ -1,10 +1,10 @@
 "use client";
 
-import { ArrowRight02Icon, AbacusIcon } from "@hugeicons/core-free-icons";
+import { AbacusIcon, ArrowRight02Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
 import { learningPath } from "@/components/sections/algebra/data";
+import { Button } from "@/components/ui/button";
 
 export function LearningPath() {
 	return (
