@@ -27,8 +27,7 @@ import {
 } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { useReducedMotion } from "@/hooks/use-reduced-motion";
-
-const FREE_LIMITS = { newton: 10, solve: 5, practice: 3 } as const;
+import { FREE_LIMITS } from "@/lib/usage";
 
 const MONTHS = [
 	"January",
