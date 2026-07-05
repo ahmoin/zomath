@@ -29,7 +29,7 @@ export async function POST(request: Request) {
 				{
 					error: "rate_limit",
 					message:
-						"You've reached your daily Newton limit (10/day). Upgrade to Plus for unlimited access.",
+						"You've reached your daily Newton limit (100/day).",
 				},
 				{ status: 429 },
 			);

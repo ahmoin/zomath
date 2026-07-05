@@ -187,7 +187,7 @@ export function AppSidebar({
 				<NavSecondary items={data.navSecondary} className="mt-auto" />
 			</SidebarContent>
 			<SidebarFooter>
-				<UpgradeBanner />
+				{/* <UpgradeBanner /> */}
 				<NavUser user={user} />
 			</SidebarFooter>
 		</Sidebar>

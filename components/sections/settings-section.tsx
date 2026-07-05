@@ -323,11 +323,11 @@ export function SettingsSection({
 							<p className="text-xs text-muted-foreground pt-1">
 								Resets daily at midnight UTC.
 							</p>
-							<Button asChild size="sm" className="rounded-full">
+							{/* <Button asChild size="sm" className="rounded-full">
 								<Link href="/pricing">
 									Upgrade to Plus for unlimited access
 								</Link>
-							</Button>
+							</Button> */}
 						</>
 					)}
 				</CardContent>

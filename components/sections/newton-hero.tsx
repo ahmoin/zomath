@@ -328,6 +328,16 @@ function AuthedPersona({
 				});
 
 				if (!res.ok || !res.body) {
+					let errorMessage = "Something went wrong. Please try again.";
+					if (!res.ok) {
+						try {
+							const errorData = (await res.json()) as { message?: string };
+							if (errorData.message) {
+								errorMessage = errorData.message;
+							}
+						} catch {}
+					}
+					setStreamingStatus(errorMessage);
 					setChatStatus("error");
 					return null;
 				}

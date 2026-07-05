@@ -3,7 +3,7 @@ import { db } from "@/lib/db";
 import { usageLog } from "@/lib/schema";
 
 export const FREE_LIMITS = {
-	newton: 10,
+	newton: 100,
 	solve: 5,
 	practice: 3,
 } as const;

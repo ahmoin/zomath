@@ -31,7 +31,7 @@ export async function POST(request: Request) {
 				{
 					error: "rate_limit",
 					message:
-						"You've reached your daily practice limit (3/day). Upgrade to Plus for unlimited access.",
+						"You've reached your daily practice limit (3/day).",
 				},
 				{ status: 429 },
 			);
