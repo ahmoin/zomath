@@ -13,6 +13,7 @@ import {
 	listJournals,
 	listProjects,
 	updateJournal,
+	updateProject,
 } from "@/lib/ai/tools";
 import { auth } from "@/lib/auth";
 import { ChatbotError } from "@/lib/errors";
@@ -95,6 +96,7 @@ export async function POST(request: Request) {
 		listJournals: listJournals({ userId }),
 		listProjects: listProjects({ userId }),
 		createProject: createProject({ userId }),
+		updateProject: updateProject({ userId }),
 		addJournalToProject: addJournalToProject({ userId }),
 	};
 

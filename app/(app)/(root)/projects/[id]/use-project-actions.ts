@@ -13,6 +13,7 @@ export function useProjectActions(
 	const [savingNote, setSavingNote] = useState(false);
 	const [savingQuestion, setSavingQuestion] = useState(false);
 	const [uploadingFile, setUploadingFile] = useState(false);
+	const [renamingProject, setRenamingProject] = useState(false);
 
 	async function createJournal() {
 		setCreatingJournal(true);
@@ -167,6 +168,23 @@ export function useProjectActions(
 		return res.ok;
 	}
 
+	async function renameProject(title: string) {
+		if (!title.trim()) return false;
+		setRenamingProject(true);
+		try {
+			const res = await fetch(`/api/projects/${projectId}`, {
+				method: "PATCH",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({ title: title.trim() }),
+			});
+			if (!res.ok) return false;
+			router.refresh();
+			return true;
+		} finally {
+			setRenamingProject(false);
+		}
+	}
+
 	return {
 		creatingJournal,
 		addingJournalId,
@@ -174,6 +192,7 @@ export function useProjectActions(
 		savingNote,
 		savingQuestion,
 		uploadingFile,
+		renamingProject,
 		createJournal,
 		addExistingJournal,
 		removeJournalFromProject,
@@ -182,5 +201,6 @@ export function useProjectActions(
 		saveNote,
 		saveQuestion,
 		deleteResource,
+		renameProject,
 	};
 }

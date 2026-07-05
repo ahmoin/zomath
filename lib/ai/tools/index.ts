@@ -9,3 +9,4 @@ export { readJournal } from "@/lib/ai/tools/read-journal";
 export { readProject } from "@/lib/ai/tools/read-project";
 export { searchWeb } from "@/lib/ai/tools/search-web";
 export { updateJournal } from "@/lib/ai/tools/update-journal";
+export { updateProject } from "@/lib/ai/tools/update-project";

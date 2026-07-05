@@ -3,6 +3,7 @@
 import {
 	BookOpen01Icon,
 	Delete01Icon,
+	Edit02Icon,
 	FolderLibraryIcon,
 	PlusSignIcon,
 	SearchIcon,
@@ -65,6 +66,9 @@ export function ProjectView({
 	const [addQuestionOpen, setAddQuestionOpen] = useState(false);
 	const [questionText, setQuestionText] = useState("");
 
+	const [renameOpen, setRenameOpen] = useState(false);
+	const [newTitle, setNewTitle] = useState(project.title);
+
 	const {
 		creatingJournal,
 		addingJournalId,
@@ -72,6 +76,7 @@ export function ProjectView({
 		savingNote,
 		savingQuestion,
 		uploadingFile,
+		renamingProject,
 		createJournal: performCreateJournal,
 		addExistingJournal: performAddExistingJournal,
 		removeJournalFromProject: performRemoveJournal,
@@ -80,6 +85,7 @@ export function ProjectView({
 		saveNote: performSaveNote,
 		saveQuestion: performSaveQuestion,
 		deleteResource: performDeleteResource,
+		renameProject: performRenameProject,
 	} = useProjectActions(project.id, (id) => router.push(`/journals/${id}`));
 
 	const files = resources.filter((r) => r.type === "file");
@@ -93,15 +99,24 @@ export function ProjectView({
 
 	return (
 		<div className="flex flex-1 flex-col">
-			<header className="flex items-center gap-3 border-b border-border px-4 lg:px-6 py-4">
-				<HugeiconsIcon
-					icon={FolderLibraryIcon}
-					className="size-5 text-muted-foreground"
-					strokeWidth={1.5}
-				/>
-				<h1 className="text-lg font-semibold tracking-tight">
-					{project.title}
-				</h1>
+			<header className="flex items-center justify-between gap-3 border-b border-border px-4 lg:px-6 py-4">
+				<div className="flex items-center gap-3">
+					<HugeiconsIcon
+						icon={FolderLibraryIcon}
+						className="size-5 text-muted-foreground"
+						strokeWidth={1.5}
+					/>
+					<h1 className="text-lg font-semibold tracking-tight">
+						{project.title}
+					</h1>
+				</div>
+				<Button
+					variant="ghost"
+					size="icon-sm"
+					onClick={() => setRenameOpen(true)}
+				>
+					<HugeiconsIcon icon={Edit02Icon} className="size-4" strokeWidth={2} />
+				</Button>
 			</header>
 
 			<div className="flex flex-1 flex-col gap-8 overflow-y-auto px-4 lg:px-6 py-6">
@@ -330,6 +345,40 @@ export function ProjectView({
 							disabled={savingQuestion || !questionText.trim()}
 						>
 							{savingQuestion ? "Saving..." : "Save question"}
+						</Button>
+					</DialogFooter>
+				</DialogContent>
+			</Dialog>
+
+			{/* Rename Project Dialog */}
+			<Dialog open={renameOpen} onOpenChange={setRenameOpen}>
+				<DialogContent className="max-w-md">
+					<DialogHeader>
+						<DialogTitle>Rename project</DialogTitle>
+					</DialogHeader>
+					<div className="flex flex-col gap-1.5">
+						<Label>Project name</Label>
+						<Input
+							placeholder="Project name"
+							value={newTitle}
+							onChange={(e) => setNewTitle(e.target.value)}
+						/>
+					</div>
+					<DialogFooter>
+						<Button variant="outline" onClick={() => setRenameOpen(false)}>
+							Cancel
+						</Button>
+						<Button
+							onClick={() =>
+								performRenameProject(newTitle).then((success) => {
+									if (success) {
+										setRenameOpen(false);
+									}
+								})
+							}
+							disabled={renamingProject || !newTitle.trim() || newTitle === project.title}
+						>
+							{renamingProject ? "Renaming..." : "Rename"}
 						</Button>
 					</DialogFooter>
 				</DialogContent>
