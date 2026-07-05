@@ -1,7 +1,6 @@
 "use client";
 
 import { CircleUser } from "lucide-react";
-import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Icons } from "@/components/icons";
 import { ModeSwitcher } from "@/components/mode-switcher";
@@ -27,7 +26,7 @@ import {
 } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { useReducedMotion } from "@/hooks/use-reduced-motion";
-import { FREE_LIMITS } from "@/lib/usage";
+import { FREE_LIMITS } from "@/lib/limits";
 
 const MONTHS = [
 	"January",

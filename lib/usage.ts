@@ -1,12 +1,7 @@
 import { and, eq, inArray, sql } from "drizzle-orm";
 import { db } from "@/lib/db";
+import { FREE_LIMITS } from "@/lib/limits";
 import { usageLog } from "@/lib/schema";
-
-export const FREE_LIMITS = {
-	newton: 100,
-	solve: 5,
-	practice: 3,
-} as const;
 
 export type UsageFeature = keyof typeof FREE_LIMITS;
 
