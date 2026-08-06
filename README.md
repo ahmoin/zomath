@@ -1,125 +1,81 @@
 <p align="center">
-  <img src="./public/og.png" alt="Zomath" width="600" />
+  <img src="public/og.png" alt="Zomath" width="800"/>
+  <h1 align="center">Zomath</h1>
 </p>
 
-# Zomath
+<p align="center">
+  Zomath helps students study by using AI to explain concepts, quiz themselves, and organize their notes. You can write notes in Journals and store those Journals and additional files in Projects.
+</p>
 
-Learn math with AI tutoring, problem solving, and practice. Organize your work in Projects and Journals.
+<p align="center">
+   <a title="Build Status" target="_blank" href="https://github.com/ahmoin/zomath"><img src="https://vercelbadge.vercel.app/api/ahmoin/zomath?style=flat-square"></a>
+  <a title="MIT License" target="_blank" href="https://github.com/ahmoin/zomath/blob/main/LICENSE.md"><img src="https://img.shields.io/badge/license-MIT-orange.svg?style=flat-square">
+  <a title="GitHub Commits" target="_blank" href="https://github.com/ahmoin/zomath/commits/main"><img src="https://img.shields.io/github/commit-activity/t/ahmoin/zomath.svg?style=flat-square"></a>
+  <a title="Last Commit" target="_blank" href="https://github.com/ahmoin/zomath/commits/main"><img src="https://img.shields.io/github/last-commit/ahmoin/zomath.svg?style=flat-square&color=FF9900"></a>
+</p>
 
-**Try it:** [zomath.vercel.app](https://zomath.vercel.app)
+---
+
+## About
+
+Zomath is a study math website mainly for math, where you can organize lecture notes and PDFs. You can ask the AI assistant Newton to explain concepts. You can take pictures of math problems and Newton will walk you through it step by step.
+
+_[live website](https://zomath.vercel.app/)_
 
 ## Features
 
-**Projects and Journals**
-Store lecture notes, PDFs, links, questions in Projects. Journals are Lexical text editors with components for LaTeX rendering, code blocks, and text formatting.
+* **Practices** for testing yourself. There are 3 types of practices, quiz, match up, and flash cards. A quiz looks like this:
 
-**Newton AI Tutor**
-Ask Newton to explain concepts, work through problems, or explore different approaches. Explains reasoning, not just answers.
+<img width="300" alt="Screenshot of a practice quiz on the website" src="public/assets/quiz.png">
 
-**Solve**
-Take a picture of a handwritten or printed math problem. Newton walks you through it step by step, with follow up questions and methods to solve it.
+* **Projects** for organizing lecture notes, PDFs, web links, and questions in one place. A project looks like this:
 
----
+<img width="600" alt="Screenshot of a project on the website" src="public/assets/project.png">
 
-## Tech Stack
+* **Journals** for writing notes and documents. Journals use a rich text editor with LaTeX math rendering, code blocks, and text formatting. A journal looks like this:
 
-- **Frontend:** Next.js 16, React 19, TypeScript, Tailwind CSS
-- **Database:** Turso (LibSQL) with Drizzle ORM
-- **Storage:** Vercel Blob for files, Dexie (IndexedDB) for local journal sync
-- **LLM:** Vercel AI SDK with OpenRouter
-- **Auth:** Better Auth (with GitHub and Google OAuth)
-- **Editor:** Lexical based editor forked from [shadcn-editor](https://github.com/htmujahid/shadcn-editor)
-- **UI:** shadcn/ui, Radix UI, Hugeicons
-- **Voice:** Vercel AI Elements with ElevenLabs
-- **Search:** Tavily for web search in AI responses
-- **Code Quality:** Biome for linting and formatting
+<img width="600" alt="Screenshot of a journal document on the website" src="public/assets/journal.png">
 
----
+* **Newton** for explaining concepts, figuring out the steps to solve problems, and learning the reasoning behind the steps. It has a text and voice mode. Newton voice mode looks like this:
+
+<img width="300" alt="Screenshot of the Newton assistant on the website" src="public/assets/newton.png">
+
+* **Solve** for uploading a photo or screenshot of a problem and getting a breakdown / solution. Solve looks like this:
+
+<img width="400" alt="Screenshot of a journal document on the website" src="public/assets/solve.png">
 
 ## Getting Started
 
-### Prerequisites
-- [Node.js](https://nodejs.org/en/download) and [pnpm](https://pnpm.io/installation)
-- OpenRouter API key (get one free at [openrouter.ai](https://openrouter.ai))
+Please visit the _[live website](https://zomath.vercel.app/)_ to get started.
 
-### Setup
+## FAQ
 
-1. Clone and install:
-```bash
-   git clone https://github.com/ahmoin/zomath.git
-   cd zomath
-   pnpm install
-```
+### Is Zomath free to use?
 
-2. Copy environment template:
-```bash
-   cp .env.example .env.local
-```
+Yes. You can try the live web app at [zomath.vercel.app](https://zomath.vercel.app). You can also clone the repository and self host it locally using your own API keys. Check [.env.example](/.env.example) for the required environment variables.
 
-Add these keys:
-- **Better Auth:** `BETTER_AUTH_SECRET`, `BETTER_AUTH_URL`, `BETTER_AUTH_API_KEY`
-- **OAuth:** `GITHUB_CLIENT_ID`, `GITHUB_CLIENT_SECRET`, `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`
-- **AI:** `OPENROUTER_API_KEY`, `TAVILY_API_KEY`, `ELEVENLABS_API_KEY`
-- **Storage:** `BLOB_READ_WRITE_TOKEN` (Vercel Blob)
-- **Database:** `TURSO_DATABASE_URL`, `TURSO_AUTH_TOKEN`
-- **Subscriptions:** `POLAR_ACCESS_TOKEN`, `POLAR_PLUS_MONTHLY_ID`, `POLAR_PLUS_YEARLY_ID`, `POLAR_WEBHOOK_SECRET`
+### What AI models does Newton use?
 
-3. Initialize the database:
-```bash
-   pnpm db:push
-```
+Newton uses the Vercel AI SDK connected through OpenRouter. This makes it flexible to route prompts to different models depending on the task, but the default model is Google's Gemini 2.5 Flash (`google/gemini-2.5-flash`).
 
----
+### How are notes and files stored?
 
-## Running the Project
+Journals use Dexie (IndexedDB) for fast local syncing in your browser, backed up to a Turso (LibSQL) database. History, projects, practices, project resources, and any other user data also goes in the Turso LibSQL database. Uploaded PDFs, images, and attachments inside Projects are stored on Vercel Blob.
 
-**Development:**
-```bash
-pnpm dev
-```
-Opens on [http://localhost:3000](http://localhost:3000)
+### Can I self host or run Zomath locally?
 
-**Production build:**
-```bash
-pnpm build
-pnpm start
-```
-
-**Database:**
-- `pnpm db:push` - apply schema changes
-- `pnpm db:generate` - create migrations
-- `pnpm db:studio` - open Turso studio
-- `pnpm db:reset` - reset database
-
-**Code:**
-- `pnpm lint` - check for issues
-- `pnpm format` - format code
-- `pnpm typecheck` - run TypeScript checks
-- `pnpm check` - run all checks
-
-Deployed on [Vercel](https://vercel.com).
-
----
-
-## Contributing
-
-PRs welcome. Contribute fixes, features, or docs.
-
-1. Fork the repo
-2. Create a branch: `git checkout -b feature/your-feature`
-3. [Commit with a prefix](https://www.conventionalcommits.org/en/v1.0.0/#summary): `feat:`, `fix:`, `docs:`, `refactor:`, `perf:`, `test:`, `chore:`, `ci:`
-4. Push and open a PR
-
-Run `pnpm lint && pnpm format && pnpm check:fix` before submitting.
-
----
+Yes, you can follow the repo and set up your own environment variables for then run `pnpm dev` to locally run the project. Check [.env.example](/.env.example) for the required environment variables.
 
 ## License
 
-MIT - [LICENSE.md](./LICENSE.md)
+This project is licensed under the [MIT license].
 
----
+## Contribution
 
-## Feedback
+We'd love to have you contribute to Zomath! Please make a pull request to get started.
 
-Report bugs or feedback on [GitHub](https://github.com/ahmoin/zomath/issues).
+Unless you explicitly state otherwise, any contribution intentionally submitted
+for inclusion in Zomath by you, shall be licensed as MIT, without any additional
+terms or conditions.
+
+[MIT license]: LICENSE.md
