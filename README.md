@@ -48,6 +48,48 @@ _[live website](https://zomath.vercel.app/)_
 
 Please visit the _[live website](https://zomath.vercel.app/)_ to get started.
 
+### Running locally
+
+1. Clone the repo and install packages with pnpm.
+You can get pnpm here: https://pnpm.io/installation
+
+Run:
+```bash
+git clone https://github.com/ahmoin/zomath.git
+cd zomath
+pnpm install 
+```
+
+2. Make the environment variables file by copying the `.env.example` to `.env.local` and filling in the values.
+```bash
+cp .env.example .env.local
+```
+
+* `BETTER_AUTH_SECRET`: generate one with `openssl rand -base64 32` or click Generate Secret on the [BetterAuth docs](https://better-auth.com/docs/installation)
+* `BETTER_AUTH_URL`: the URL your app runs on. Use `http://localhost:3000` for local development and use your production URL for production.
+* `GITHUB_CLIENT_ID` & `GITHUB_CLIENT_SECRET`: create a GitHub OAuth App at https://github.com/settings/developers and set the callback URL to `http://localhost:3000/api/auth/callback/github` or replace localhost:3000 with your production domain for production deployments.
+* `GOOGLE_CLIENT_ID` & `GOOGLE_CLIENT_SECRET`: create OAuth credentials in https://console.cloud.google.com/apis/credentials. Set the redirect URI to `http://localhost:3000/api/auth/callback/google` or replace localhost:3000 with your production domain for production deployments.
+* `OPENROUTER_API_KEY`: create a key at https://openrouter.ai/keys.
+* `TAVILY_API_KEY`: create a key https://tavily.com.
+* `ELEVENLABS_API_KEY`: create a key at https://elevenlabs.io/app/settings/api-keys.
+* `BLOB_READ_WRITE_KEY`: create a Vercel Blob https://vercel.com/docs/storage/vercel-blob store in a Vercel project and copy the token from the `.env.local` tab.
+* `TURSO_DATABASE_URL` / `TURSO_AUTH_TOKEN`: create a database with the [Turso CLI](https://docs.turso.tech/quickstart) or dashboard (`turso db create zomath`), then get the URL with `turso db show zomath --url` and the token with `turso db tokens create zomath`.
+* `POLAR_ACCESS_TOKEN`: create an organization access token in your [Polar dashboard](https://polar.sh/) under Settings > Developers.
+* `POLAR_PLUS_MONTHLY_ID` / `POLAR_PLUS_YEARLY_ID`: the product IDs of your monthly/yearly subscription tiers, created under Products in your Polar dashboard.
+* `POLAR_WEBHOOK_SECRET`: shown when you create a webhook endpoint in your Polar dashboard under Settings > Webhooks.
+
+3. Push the database schema to your Turso database:
+```bash
+pnpm db:push
+```
+
+4. Start the dev server:
+```bash
+pnpm dev
+```
+
+5. Open http://localhost:3000 in your browser.
+
 ## FAQ
 
 ### Is Zomath free to use?
